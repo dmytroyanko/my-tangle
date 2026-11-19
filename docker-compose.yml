@@ -1,0 +1,32 @@
+# Local development database: docker compose up -d
+# Full production-like stack (app + database): docker compose --profile app up --build
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: my_tangle
+    ports:
+      - '5433:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    profiles: ['app']
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/my_tangle
+    ports:
+      - '3000:3000'
+    volumes:
+      - media:/app/media
+
+volumes:
+  pgdata:
+  media:

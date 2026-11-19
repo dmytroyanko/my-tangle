@@ -54,6 +54,15 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
 - Write admin labels and descriptions in Ukrainian.
 
+## Responsive
+
+- Mobile-first: base classes style phones; `sm:`, `md:`, `lg:`, `xl:` add changes for wider screens. Do not write desktop styles and undo them for mobile.
+- Breakpoints are Tailwind's defaults, listed in `@theme` in `src/app/(frontend)/globals.css`: `sm` 640px, `md` 768px, `lg` 1024px, `xl` 1280px, `2xl` 1536px. Do not add custom breakpoints or arbitrary media queries (`min-[900px]:`).
+- Page content goes in `container`: full width with side padding, capped at 1280px (`--container-site`). Do not add `mx-auto` or `px-*` to it, it already has them.
+- Typical layout: product grid 2 columns on phones, 3 from `md`, 4 from `lg`; the full header navigation from `lg`, a burger menu below.
+- Components that appear in containers of different widths (product cards, cart items) adapt to their container with container queries (`@container` on the parent, `@sm:`, `@md:` on children), not to the viewport.
+- Check layouts at 360, 390, 430, 768, 1024, 1280, 1440 and 1920px.
+
 ## SEO
 
 - Existing URLs and SEO of the current Webflow site must survive the move. Redirects from the old Russian URLs to `/ru/...` are set up at production cutover.

@@ -1,6 +1,9 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { en } from '@payloadcms/translations/languages/en'
+import { ru } from '@payloadcms/translations/languages/ru'
+import { uk } from '@payloadcms/translations/languages/uk'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -27,6 +30,21 @@ export default buildConfig({
   },
   collections: [Products, Categories, Orders, Pages, Media, Users],
   editor: lexicalEditor(),
+  // Content languages. Keep in sync with src/i18n/routing.ts.
+  localization: {
+    locales: [
+      { label: 'Українська', code: 'uk' },
+      { label: 'Русский', code: 'ru' },
+    ],
+    defaultLocale: 'uk',
+    // Untranslated fields show the Ukrainian text instead of being empty.
+    fallback: true,
+  },
+  // Admin panel interface languages.
+  i18n: {
+    supportedLanguages: { uk, ru, en },
+    fallbackLanguage: 'uk',
+  },
   secret: requireEnv('PAYLOAD_SECRET'),
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

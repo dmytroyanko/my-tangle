@@ -11,6 +11,8 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       required: true,
+      // Alt text is read by search engines, so it is written per language.
+      localized: true,
     },
   ],
   upload: {

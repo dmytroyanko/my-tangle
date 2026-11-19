@@ -4,8 +4,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
-import { routing } from '@/i18n/routing'
-import { alternates } from '@/i18n/alternates'
+import { alternates, routing } from '@/shared/i18n'
 import '../globals.css'
 
 type Props = {

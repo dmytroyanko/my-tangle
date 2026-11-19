@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/ui/button'
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params

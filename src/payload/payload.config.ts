@@ -15,7 +15,7 @@ import { Categories } from './collections/Categories'
 import { Products } from './collections/Products'
 import { Pages } from './collections/Pages'
 import { Orders } from './collections/Orders'
-import { requireEnv } from './lib/env'
+import { requireEnv } from '@/shared/lib/env'
 import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,12 +25,13 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: {
-      baseDir: path.resolve(dirname),
+      // Custom admin component paths are resolved from src/.
+      baseDir: path.resolve(dirname, '..'),
     },
   },
   collections: [Products, Categories, Orders, Pages, Media, Users],
   editor: lexicalEditor(),
-  // Content languages. Keep in sync with src/i18n/routing.ts.
+  // Content languages. Keep in sync with src/shared/i18n/routing.ts.
   localization: {
     locales: [
       { label: 'Українська', code: 'uk' },
@@ -53,6 +54,7 @@ export default buildConfig({
     pool: {
       connectionString: requireEnv('DATABASE_URL'),
     },
+    migrationDir: path.resolve(dirname, 'migrations'),
     // Dev uses schema push; production applies these on startup.
     prodMigrations: migrations,
   }),

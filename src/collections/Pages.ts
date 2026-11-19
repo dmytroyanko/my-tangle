@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
 
+import { slugify } from '../lib/slugify'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -14,15 +16,15 @@ export const Pages: CollectionConfig = {
     drafts: true,
   },
   fields: [
-    { name: 'title', type: 'text', required: true },
-    slugField({ useAsSlug: 'title' }),
-    { name: 'content', type: 'richText' },
+    { name: 'title', type: 'text', required: true, localized: true },
+    slugField({ useAsSlug: 'title', localized: true, slugify }),
+    { name: 'content', type: 'richText', localized: true },
     {
       name: 'meta',
       type: 'group',
       fields: [
-        { name: 'title', type: 'text' },
-        { name: 'description', type: 'textarea' },
+        { name: 'title', type: 'text', localized: true },
+        { name: 'description', type: 'textarea', localized: true },
         { name: 'image', type: 'upload', relationTo: 'media' },
       ],
     },

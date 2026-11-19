@@ -98,10 +98,10 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('uk' | 'ru') | ('uk' | 'ru')[];
   globals: {};
   globalsSelect: {};
-  locale: null;
+  locale: 'uk' | 'ru';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -143,7 +143,7 @@ export interface Product {
   slug: string;
   category: number | Category;
   /**
-   * Серия для бейджа на карточке, например «Fine & Fragile»
+   * Серія для бейджа на картці, наприклад «Fine & Fragile»
    */
   series?: string | null;
   /**
@@ -151,7 +151,7 @@ export interface Product {
    */
   price: number;
   /**
-   * Старая цена, грн (если есть скидка)
+   * Стара ціна, грн (якщо є знижка)
    */
   compareAtPrice?: number | null;
   description?: {
@@ -172,12 +172,12 @@ export interface Product {
   variants?:
     | {
         /**
-         * Цвет, например «Radiant Teal»
+         * Колір, наприклад «Radiant Teal»
          */
         name: string;
         sku?: string | null;
         /**
-         * Если отличается от цены товара
+         * Якщо відрізняється від ціни товару
          */
         price?: number | null;
         inStock?: boolean | null;
@@ -223,7 +223,7 @@ export interface Category {
   } | null;
   image?: (number | null) | Media;
   /**
-   * Порядок в меню и на главной
+   * Порядок у меню та на головній
    */
   order?: number | null;
   products?: {

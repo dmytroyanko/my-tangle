@@ -13,6 +13,7 @@ export type ProductVariant = {
 // A product as shown on a card: one series (e.g. "Matte") with its colours.
 export type ProductCardData = {
   id: number
+  slug: string
   title: string
   series: string | null
   tags: string[]

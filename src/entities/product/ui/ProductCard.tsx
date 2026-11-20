@@ -13,7 +13,7 @@ import { ProductGallery } from './ProductGallery'
 // One series with its colours: picking a swatch switches the photo, price and availability;
 // the photo opens the gallery of that colour. Sizes follow the card's container (@container on the parent).
 // A colour without a swatch colour shows a neutral circle.
-export function ProductCard({ product }: { product: ProductCardData }) {
+export function ProductCard({ product, priority = false }: { product: ProductCardData; priority?: boolean }) {
   const t = useTranslations('ProductCard')
   const firstInStock = product.variants.findIndex((variant) => variant.inStock)
   const [selected, setSelected] = useState(Math.max(firstInStock, 0))
@@ -63,6 +63,8 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             alt={image.alt}
             fill
             sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 50vw"
+            loading={priority ? 'eager' : undefined}
+            fetchPriority={priority ? 'high' : undefined}
             className="object-contain transition-transform duration-300 group-hover:scale-105"
           />
         )}

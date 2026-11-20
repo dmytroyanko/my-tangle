@@ -1,13 +1,14 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
+import { cache } from 'react'
 
 import type { Locale } from '@/shared/i18n'
 import { toImage, type ImageData } from '@/shared/lib/media'
 
 import type { ProductCardData } from '../model/types'
 
-// Published products of a category in their admin order, with colours and photos.
-export async function getProductsByCategory(categoryId: number, locale: Locale): Promise<ProductCardData[]> {
+// Published products of a category in their admin order, with colours and photos. Cached per request.
+export const getProductsByCategory = cache(async (categoryId: number, locale: Locale): Promise<ProductCardData[]> => {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'products',
@@ -21,6 +22,7 @@ export async function getProductsByCategory(categoryId: number, locale: Locale):
 
   return docs.map((product) => ({
     id: product.id,
+    slug: product.slug,
     title: product.title,
     series: product.series ?? null,
     tags: product.tags ?? [],
@@ -33,4 +35,4 @@ export async function getProductsByCategory(categoryId: number, locale: Locale):
       images: (variant.images ?? []).map(toImage).filter((image): image is ImageData => image !== null),
     })),
   }))
-}
+})

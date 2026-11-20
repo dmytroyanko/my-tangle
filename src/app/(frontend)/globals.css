@@ -178,3 +178,10 @@
     font-weight: 600;
   }
 }
+
+/* In-page links (#catalog, series links) scroll smoothly unless the user asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}

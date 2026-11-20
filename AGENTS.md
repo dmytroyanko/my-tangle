@@ -34,6 +34,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Slices on the same layer do not import each other. If two features need the same thing, move it down to an entity or `shared`.
 - Import a slice only through its public API, `index.ts` at the slice root (`@/entities/product`), never from its internals. `shared/ui` and `shared/lib` are imported per module (`@/shared/ui/button`).
 - Slice segments: `ui` (components), `model` (client state, types, logic), `api` (server data access and server actions), `lib` (helpers), `config`.
+- Category pages live at the site root, `/[slug]` (`src/app/(frontend)/[locale]/[slug]/page.tsx`), keeping the current site's flat URLs. Information pages will share this route: resolve a category first, then a page, else 404.
 - Route files in `src/app/(frontend)/[locale]/` stay thin: read params, call entity `api` functions, compose widgets. Business logic does not live in them.
 - Add a slice only when something uses it. Do not create empty layers or placeholder slices.
 - Choosing a layer: a user action is a feature; data and how it is shown is an entity; a page section that combines several of them is a widget.

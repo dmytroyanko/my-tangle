@@ -1,3 +1,5 @@
 export { getProductsByCategory } from './api/getProductsByCategory'
+export { seriesKey } from './model/seriesKey'
 export type { ProductCardData, ProductVariant } from './model/types'
 export { ProductCard } from './ui/ProductCard'
+export { ProductGrid } from './ui/ProductGrid'

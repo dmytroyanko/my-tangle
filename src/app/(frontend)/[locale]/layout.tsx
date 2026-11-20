@@ -6,7 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
 import { siteUrl } from '@/shared/config'
-import { alternates, routing } from '@/shared/i18n'
+import { routing } from '@/shared/i18n'
 import { Footer } from '@/widgets/footer'
 import { Header } from '@/widgets/header'
 import '../globals.css'
@@ -35,7 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(siteUrl),
     title: t('title'),
     description: t('description'),
-    alternates: alternates(locale, '/'),
     // Tangle Teezer favicon (files in public/, shared with the admin).
     icons: {
       icon: [

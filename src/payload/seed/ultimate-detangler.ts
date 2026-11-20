@@ -166,12 +166,14 @@ async function run() {
           heading: category.heading.uk,
           subtitle: category.subtitle.uk,
           description: paragraphs(category.description.uk),
+          meta: { title: category.meta.title.uk, description: category.meta.description.uk },
         },
         ru: {
           title: category.title.ru,
           heading: category.heading.ru,
           subtitle: category.subtitle.ru,
           description: paragraphs(category.description.ru),
+          meta: { title: category.meta.title.ru, description: category.meta.description.ru },
         },
       },
     )

@@ -1,9 +1,7 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import Image from 'next/image'
 import { getLocale } from 'next-intl/server'
 
-import { getCategoryBySlug } from '@/entities/category'
-import { getProductsByCategory, ProductCard } from '@/entities/product'
+import { CategoryAbout, getCategoryBySlug } from '@/entities/category'
+import { getProductsByCategory, ProductGrid } from '@/entities/product'
 import type { Locale } from '@/shared/i18n'
 
 type Props = {
@@ -25,7 +23,6 @@ async function load(slug: string, locale: Locale) {
 }
 
 // A category on the home page: heading, its series as cards, then a photo with the category description.
-// Series cards are large (photo, palette, button), so the grid has 2 columns, 3 from md.
 export async function CategoryShowcase({ slug, id, className }: Props) {
   const locale = (await getLocale()) as Locale
   const data = await load(slug, locale)
@@ -43,34 +40,8 @@ export async function CategoryShowcase({ slug, id, className }: Props) {
           {category.subtitle && <p className="mt-3 text-base text-muted-foreground">{category.subtitle}</p>}
         </header>
 
-        <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-10 md:grid-cols-3 md:gap-x-6 lg:gap-x-10">
-          {products.map((product) => (
-            <li key={product.id} className="@container">
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ul>
-
-        {(category.image || category.description) && (
-          <div className="mt-12 grid items-center gap-6 md:mt-16 md:grid-cols-2 md:gap-10 lg:gap-16">
-            {category.image && (
-              <Image
-                src={category.image.url}
-                alt={category.image.alt}
-                width={category.image.width}
-                height={category.image.height}
-                sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
-                className="aspect-square w-full rounded-xl object-cover"
-              />
-            )}
-            {category.description && (
-              <div>
-                <h3 className="text-xl md:text-2xl">{category.title}</h3>
-                <RichText data={category.description} className="mt-4 space-y-3 text-base text-foreground/80" />
-              </div>
-            )}
-          </div>
-        )}
+        <ProductGrid products={products} className="mt-8 md:mt-10" />
+        <CategoryAbout category={category} headingLevel="h3" className="mt-12 md:mt-16" />
       </div>
     </section>
   )

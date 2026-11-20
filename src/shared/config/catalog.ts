@@ -1,4 +1,4 @@
-// Catalog sections in menu order. Paths are the current site's URLs; names live in messages
+// Catalog sections in menu order. Paths are the current site's URLs (Pet Teezer is new); names live in messages
 // (short two-line labels under Navigation, full names under Catalog).
 // Later this moves to Payload categories (order, icon), keeping the same paths.
 export const catalog = [
@@ -10,6 +10,7 @@ export const catalog = [
   { key: 'ultimateStyler', href: '/the-ultimate' },
   { key: 'backCombing', href: '/back-combing-hairbrush' },
   { key: 'scalp', href: '/the-scalp-exfoliator-and-massager' },
+  { key: 'petTeezer', href: '/pet-teezer' },
   { key: 'invisibobble', href: '/rezinki-invisibobble' },
 ] as const
 

@@ -75,13 +75,20 @@ export async function Header() {
             <LocaleSwitcher className="text-base" />
           </MobileMenu>
 
-          <Link href="/" aria-label={t('home')} className="mr-auto shrink-0 text-foreground xl:mr-4">
+          <Link
+            href="/"
+            aria-label={t('home')}
+            className="mr-auto shrink-0 text-foreground xl:mr-4"
+          >
             <Logo className="h-8 w-auto lg:h-10" />
           </Link>
 
           {/* Catalog: one row with equal-width items from xl; below xl it is in the burger menu */}
           <nav aria-label={t('catalog')} className="hidden flex-1 self-stretch xl:block">
-            <ul className="grid h-full grid-cols-9">
+            <ul
+              className="grid h-full"
+              style={{ gridTemplateColumns: `repeat(${navigation.length}, minmax(0, 1fr))` }}
+            >
               {navigation.map(({ key, href, icon }) => (
                 <li key={key}>
                   <NavLink
@@ -93,7 +100,9 @@ export async function Header() {
                       alt=""
                       className="size-[35px] opacity-80 transition-opacity group-hover:opacity-100"
                     />
-                    <span className="text-xs leading-tight font-semibold whitespace-pre-line">{tNav(key)}</span>
+                    <span className="text-xs leading-tight font-semibold whitespace-pre-line">
+                      {tNav(key)}
+                    </span>
                   </NavLink>
                 </li>
               ))}

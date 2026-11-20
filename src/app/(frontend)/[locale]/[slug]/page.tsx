@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { CategoryAbout, getCategoryBySlug } from '@/entities/category'
+import { CategoryAbout, CategoryFaq, getCategoryBySlug } from '@/entities/category'
 import { getProductsByCategory, ProductGrid, seriesKey } from '@/entities/product'
 import { SeriesFilter } from '@/features/series-filter'
 import { siteName, siteUrl } from '@/shared/config'
-import { alternates, getPathname, type Locale } from '@/shared/i18n'
+import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
 import { breadcrumbJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
 import { JsonLd } from '@/shared/ui/json-ld'
@@ -25,7 +26,8 @@ const localePaths = (slugs: Partial<Record<Locale, string>>) =>
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
-  const category = await getCategoryBySlug(slug, locale as Locale)
+  if (!hasLocale(routing.locales, locale)) return {}
+  const category = await getCategoryBySlug(slug, locale)
   if (!category) return {}
 
   const title = category.meta.title || category.heading
@@ -49,12 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CategoryPage({ params }: Props) {
   const { locale, slug } = await params
+  if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
-  const category = await getCategoryBySlug(slug, locale as Locale)
+  const category = await getCategoryBySlug(slug, locale)
   if (!category) notFound()
 
   const [products, t, tCrumbs] = await Promise.all([
-    getProductsByCategory(category.id, locale as Locale),
+    getProductsByCategory(category.id, locale),
     getTranslations('CategoryPage'),
     getTranslations('Breadcrumbs'),
   ])
@@ -66,7 +69,9 @@ export default async function CategoryPage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: tCrumbs('home'), url: absolute('/') },
-          { name: category.title, url: absolute(`/${slug}`) },
+          // The canonical slug of this language, not the requested one (a Russian page may be reached
+          // by the Ukrainian slug).
+          { name: category.title, url: absolute(`/${category.slugs[locale] ?? slug}`) },
         ])}
       />
 
@@ -85,6 +90,9 @@ export default async function CategoryPage({ params }: Props) {
             {t('series', { count: products.length })} · {t('colours', { count: colours })}
           </p>
         </header>
+
+        {/* Outline heading for the cards (h3), visible to screen readers and search engines. */}
+        <h2 className="sr-only">{t('products', { title: category.title })}</h2>
 
         {products.length > 1 ? (
           <SeriesFilter
@@ -107,6 +115,7 @@ export default async function CategoryPage({ params }: Props) {
 
       <div className="container py-12 md:py-16">
         <CategoryAbout category={category} />
+        <CategoryFaq faq={category.faq} className="mt-12 md:mt-16" />
       </div>
     </>
   )

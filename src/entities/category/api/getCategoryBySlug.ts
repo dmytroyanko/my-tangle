@@ -23,16 +23,33 @@ export const getCategoryBySlug = cache(async (slug: string, locale: Locale) => {
   if (!docs.length && locale !== routing.defaultLocale) {
     const fallback = await find(routing.defaultLocale)
     if (fallback.docs[0]) {
-      docs = [await payload.findByID({ collection: 'categories', id: fallback.docs[0].id, locale, depth: 1 })]
+      docs = [
+        await payload.findByID({
+          collection: 'categories',
+          id: fallback.docs[0].id,
+          locale,
+          depth: 1,
+        }),
+      ]
     }
   }
 
   const category = docs[0]
   if (!category) return null
 
-  // Slugs of every language version, for hreflang links.
-  const all = await payload.findByID({ collection: 'categories', id: category.id, locale: 'all', depth: 0 })
-  const slugs = all.slug as unknown as Partial<Record<Locale, string>>
+  // Slugs of every language version, for hreflang links; a locale without its own slug is left out.
+  const all = await payload.findByID({
+    collection: 'categories',
+    id: category.id,
+    locale: 'all',
+    depth: 0,
+    select: { slug: true },
+  })
+  const slugs = Object.fromEntries(
+    Object.entries((all.slug ?? {}) as unknown as Record<string, string | null>).filter(
+      ([, value]) => Boolean(value),
+    ),
+  ) as Partial<Record<Locale, string>>
 
   return {
     id: category.id,
@@ -40,6 +57,7 @@ export const getCategoryBySlug = cache(async (slug: string, locale: Locale) => {
     heading: category.heading || category.title,
     subtitle: category.subtitle ?? null,
     description: category.description ?? null,
+    faq: (category.faq ?? []).map((item) => ({ question: item.question, answer: item.answer })),
     image: toImage(category.image),
     slugs,
     meta: {

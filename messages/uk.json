@@ -66,7 +66,8 @@
   },
   "BundleDiscount": {
     "label": "Знижка на комплект",
-    "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті"
+    "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті",
+    "badge": "−7%"
   },
   "ProductCard": {
     "openGallery": "Відкрити фото: {name}",
@@ -85,7 +86,8 @@
   },
   "CategoryPage": {
     "series": "{count, plural, one {# серія} few {# серії} many {# серій} other {# серії}}",
-    "colours": "{count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}"
+    "colours": "{count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}",
+    "products": "Серії {title}"
   },
   "SeriesFilter": {
     "label": "Фільтр за серією",
@@ -100,5 +102,8 @@
     "paymentTitle": "Оплата",
     "cashOnDelivery": "<b>Накладеним платежем</b> — у відділенні «Нової Пошти» після огляду замовлення.",
     "cardOnline": "<b>Карткою онлайн</b> — перед відправленням замовлення."
+  },
+  "CategoryFaq": {
+    "title": "Часті питання"
   }
 }

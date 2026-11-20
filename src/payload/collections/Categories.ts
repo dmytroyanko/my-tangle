@@ -28,6 +28,19 @@ export const Categories: CollectionConfig = {
       admin: { description: 'Підзаголовок під заголовком блоку' },
     },
     { name: 'description', type: 'richText', localized: true },
+    {
+      name: 'faq',
+      label: 'Часті питання',
+      type: 'array',
+      // Per language, so a translation can have its own set of questions.
+      localized: true,
+      labels: { singular: 'Питання', plural: 'Питання' },
+      admin: { initCollapsed: true },
+      fields: [
+        { name: 'question', label: 'Питання', type: 'text', required: true },
+        { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
+      ],
+    },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {
       name: 'order',

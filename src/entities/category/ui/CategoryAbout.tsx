@@ -1,5 +1,7 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'
+
+import { cn } from '@/shared/lib/utils'
+import { RichText, richTextClassName } from '@/shared/ui/rich-text'
 
 import type { CategoryData } from '../api/getCategoryBySlug'
 
@@ -15,7 +17,7 @@ export function CategoryAbout({ category, headingLevel: Heading = 'h2', classNam
   if (!category.image && !category.description) return null
 
   return (
-    <div className={`grid items-center gap-6 md:grid-cols-2 md:gap-10 lg:gap-16 ${className ?? ''}`}>
+    <div className={cn('grid items-center gap-6 md:grid-cols-2 md:gap-10 lg:gap-16', className)}>
       {category.image && (
         <Image
           src={category.image.url}
@@ -29,7 +31,11 @@ export function CategoryAbout({ category, headingLevel: Heading = 'h2', classNam
       {category.description && (
         <div>
           <Heading className="text-xl md:text-2xl">{category.title}</Heading>
-          <RichText data={category.description} className="mt-4 space-y-3 text-base text-foreground/80" />
+          <RichText
+            data={category.description}
+            headingTag={Heading === 'h2' ? 'h3' : 'h4'}
+            className={cn('mt-4', richTextClassName)}
+          />
         </div>
       )}
     </div>

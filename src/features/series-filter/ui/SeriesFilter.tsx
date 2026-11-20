@@ -20,7 +20,11 @@ const PARAM = 'series'
 // Multi-select filter by series. Every item stays in the HTML (for search engines); unselected ones are
 // hidden with CSS. The selection is kept in the URL (?series=matte,chrome) without a navigation, so the
 // link can be shared.
-export function SeriesFilter({ options, children, className }: Props) {
+export function SeriesFilter({ options: allOptions, children, className }: Props) {
+  // Two products of the same series share one chip.
+  const options = allOptions.filter(
+    (option, index) => allOptions.findIndex((other) => other.value === option.value) === index,
+  )
   const t = useTranslations('SeriesFilter')
   const scope = useId()
   // Selection from a shared link. The page renders per request, so the server output is already filtered.

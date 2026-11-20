@@ -12,7 +12,7 @@ export async function BundleDiscount({ className }: { className?: string }) {
             className="flex size-12 shrink-0 items-center justify-center rounded-full bg-dark text-base font-bold text-dark-foreground md:size-14 md:text-lg"
             aria-hidden="true"
           >
-            −7%
+            {t('badge')}
           </span>
           <p className="text-sm sm:text-base">
             {/* The badge is decorative, so the discount is spelled out for screen readers and search engines. */}

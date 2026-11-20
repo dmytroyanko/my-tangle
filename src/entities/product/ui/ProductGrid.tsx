@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib/utils'
+
 import { seriesKey } from '../model/seriesKey'
 import type { ProductCardData } from '../model/types'
 import { ProductCard } from './ProductCard'
@@ -10,7 +12,10 @@ type Props = { products: ProductCardData[]; eager?: number; className?: string }
 export function ProductGrid({ products, eager = 0, className }: Props) {
   return (
     <ul
-      className={`grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 lg:gap-x-10 ${className ?? ''}`}
+      className={cn(
+        'grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 lg:gap-x-10',
+        className,
+      )}
     >
       {products.map((product, index) => (
         <li

@@ -241,6 +241,27 @@ export interface Category {
     };
     [k: string]: unknown;
   } | null;
+  faq?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
   image?: (number | null) | Media;
   /**
    * Порядок у меню та на головній
@@ -508,6 +529,13 @@ export interface CategoriesSelect<T extends boolean = true> {
   heading?: T;
   subtitle?: T;
   description?: T;
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   image?: T;
   order?: T;
   products?: T;

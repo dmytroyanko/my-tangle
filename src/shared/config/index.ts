@@ -1,0 +1,1 @@
+export { phones } from './contacts'

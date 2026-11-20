@@ -6,5 +6,31 @@
   "HomePage": {
     "lead": "Оригінальні гребінці Tangle Teezer. Новий сайт у розробці.",
     "admin": "Адмінка"
+  },
+  "Header": {
+    "tagline": "магазин оригінальних Tangle Teezer",
+    "home": "My-Tangle — на головну",
+    "menu": "Меню",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню",
+    "catalog": "Каталог",
+    "phones": "Телефони",
+    "call": "Зателефонувати",
+    "account": "Особистий кабінет",
+    "cart": "Кошик"
+  },
+  "LocaleSwitcher": {
+    "label": "Мова сайту"
+  },
+  "Navigation": {
+    "wetDetangler": "The Ultimate\nDetangler",
+    "carebrush": "The Complete\nCarebrush",
+    "childrenMini": "Children\nMini",
+    "compactStyler": "Compact\nStyler",
+    "easyDryGo": "Easy\nDry & Go",
+    "ultimateStyler": "The Ultimate\nStyler",
+    "backCombing": "Back\nCombing",
+    "scalp": "The Scalp\nExfoliator",
+    "invisibobble": "Резинки\nInvisibobble"
   }
 }

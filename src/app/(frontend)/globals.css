@@ -33,6 +33,9 @@
 }
 
 @theme inline {
+    --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
+    --color-dark: var(--dark);
+    --color-dark-foreground: var(--dark-foreground);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
@@ -74,25 +77,28 @@
 }
 
 :root {
+    /* Brand palette. Names in comments are the design names. */
     --radius: 0.625rem;
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
+    --background: #ffffff;          /* primary-bg-color */
+    --foreground: #333333;          /* primary-text-color */
+    --card: #ffffff;
+    --card-foreground: #333333;
+    --popover: #ffffff;
+    --popover-foreground: #333333;
+    --primary: #2a2829;
+    --primary-foreground: #e9e8ee;
+    --secondary: #f8f8f8;
+    --secondary-foreground: #333333;
+    --muted: #f8f8f8;               /* light surfaces: top bar */
+    --muted-foreground: #8e8e8e;    /* secondary-text-color */
+    --accent: #f8f8f8;
+    --accent-foreground: #333333;
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --border: #e8e7e3;              /* primary-border-color */
+    --input: #e8e7e3;
+    --ring: #8e8e8e;
+    --dark: #2a2829;                /* secondary-bg-color */
+    --dark-foreground: #e9e8ee;     /* light-text-color */
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -147,6 +153,24 @@
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
-    }
+    @apply bg-background text-foreground font-sans;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.4;
+  }
+  h1 {
+    font-size: 1.875rem; /* 30px */
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 1.75rem; /* 28px */
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 1.625rem; /* 26px */
+    font-weight: 600;
+  }
+  h4 {
+    font-size: 1.375rem; /* 22px */
+    font-weight: 600;
+  }
 }

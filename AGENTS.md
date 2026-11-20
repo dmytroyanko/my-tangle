@@ -54,19 +54,35 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
 - Write admin labels and descriptions in Ukrainian.
 
+## Design tokens
+
+Colors are CSS variables in `src/app/(frontend)/globals.css` (`:root`), used through Tailwind classes. Use the tokens, never raw hex values in components.
+
+| Design name | Value | Tailwind |
+|---|---|---|
+| primary-text-color | #333333 | `text-foreground` |
+| secondary-text-color | #8e8e8e | `text-muted-foreground` |
+| light-text-color | #e9e8ee | `text-dark-foreground`, `text-primary-foreground` |
+| primary-bg-color | #ffffff | `bg-background` |
+| secondary-bg-color | #2a2829 | `bg-dark`, `bg-primary` (buttons) |
+| light surface (top bar) | #f8f8f8 | `bg-muted`, `bg-secondary`, `bg-accent` |
+| primary-border-color | #e8e7e3 | `border-border` (default for `border`) |
+
+Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-height 1.4. Headings have base sizes: `h1` 30px/700, `h2` 28px/700, `h3` 26px/600, `h4` 22px/600. Use the semantic tag for the outline and override the size with classes only when the design differs.
+
 ## Responsive
 
 - Mobile-first: base classes style phones; `sm:`, `md:`, `lg:`, `xl:` add changes for wider screens. Do not write desktop styles and undo them for mobile.
 - Breakpoints are Tailwind's defaults, listed in `@theme` in `src/app/(frontend)/globals.css`: `sm` 640px, `md` 768px, `lg` 1024px, `xl` 1280px, `2xl` 1536px. Do not add custom breakpoints or arbitrary media queries (`min-[900px]:`).
 - Page content goes in `container`: full width with side padding, capped at 1280px (`--container-site`). Do not add `mx-auto` or `px-*` to it, it already has them.
-- Typical layout: product grid 2 columns on phones, 3 from `md`, 4 from `lg`; the full header navigation from `lg`, a burger menu below.
+- Typical layout: product grid 2 columns on phones, 3 from `md`, 4 from `lg`; the header catalog menu sits in one row with the logo from `xl`, a burger menu below.
 - Components that appear in containers of different widths (product cards, cart items) adapt to their container with container queries (`@container` on the parent, `@sm:`, `@md:` on children), not to the viewport.
 - Check layouts at 360, 390, 430, 768, 1024, 1280, 1440 and 1920px.
 
 ## SEO
 
 - Existing URLs and SEO of the current Webflow site must survive the move. Redirects from the old Russian URLs to `/ru/...` are set up at production cutover.
-- Every image has a meaningful, localized alt.
+- Every content image (products, banners, photos) has a meaningful, localized alt. A purely decorative image whose meaning is already given by text next to it (e.g. a menu icon beside its label) gets `alt=""`, so screen readers do not read the same text twice.
 
 ## Payload
 

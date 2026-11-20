@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { Open_Sans } from 'next/font/google'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
 import { alternates, routing } from '@/shared/i18n'
+import { Header } from '@/widgets/header'
 import '../globals.css'
+
+const openSans = Open_Sans({
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  variable: '--font-open-sans',
+})
 
 type Props = {
   children: React.ReactNode
@@ -35,9 +43,10 @@ export default async function RootLayout({ children, params }: Props) {
   setRequestLocale(locale)
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={openSans.variable}>
       <body>
         <NextIntlClientProvider>
+          <Header />
           <main>{children}</main>
         </NextIntlClientProvider>
       </body>

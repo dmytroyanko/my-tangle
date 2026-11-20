@@ -8,4 +8,8 @@ export default defineConfig([
     // Ignored (parentheses are glob syntax, hence the brackets): the generated Payload admin/API routes, the backend (outside FSD) and Next root files.
     ignores: ['./src/app/[(]payload[)]/**', './src/payload/**', './src/*.ts'],
   },
+  {
+    // While the store is young most slices have one consumer; report it without failing lint.
+    rules: { 'fsd/insignificant-slice': 'warn' },
+  },
 ])

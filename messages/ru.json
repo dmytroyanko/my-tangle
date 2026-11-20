@@ -6,5 +6,31 @@
   "HomePage": {
     "lead": "Оригинальные расчёски Tangle Teezer. Новый сайт в разработке.",
     "admin": "Админка"
+  },
+  "Header": {
+    "tagline": "магазин оригинальных Tangle Teezer",
+    "home": "My-Tangle — на главную",
+    "menu": "Меню",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "catalog": "Каталог",
+    "phones": "Телефоны",
+    "call": "Позвонить",
+    "account": "Личный кабинет",
+    "cart": "Корзина"
+  },
+  "LocaleSwitcher": {
+    "label": "Язык сайта"
+  },
+  "Navigation": {
+    "wetDetangler": "The Ultimate\nDetangler",
+    "carebrush": "The Complete\nCarebrush",
+    "childrenMini": "Children\nMini",
+    "compactStyler": "Compact\nStyler",
+    "easyDryGo": "Easy\nDry & Go",
+    "ultimateStyler": "The Ultimate\nStyler",
+    "backCombing": "Back\nCombing",
+    "scalp": "The Scalp\nExfoliator",
+    "invisibobble": "Резинки\nInvisibobble"
   }
 }

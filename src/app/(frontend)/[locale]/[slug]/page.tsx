@@ -3,7 +3,12 @@ import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { CategoryAbout, CategoryFaq, getCategoryBySlug } from '@/entities/category'
+import {
+  CategoryAbout,
+  CategoryBenefits,
+  CategoryFaq,
+  getCategoryBySlug,
+} from '@/entities/category'
 import { getProductsByCategory, ProductGrid, seriesKey } from '@/entities/product'
 import { SeriesFilter } from '@/features/series-filter'
 import { siteName, siteUrl } from '@/shared/config'
@@ -61,7 +66,6 @@ export default async function CategoryPage({ params }: Props) {
     getTranslations('CategoryPage'),
     getTranslations('Breadcrumbs'),
   ])
-  const colours = products.reduce((sum, product) => sum + product.variants.length, 0)
   const absolute = (href: string) => new URL(getPathname({ locale, href }), siteUrl).href
 
   return (
@@ -86,9 +90,6 @@ export default async function CategoryPage({ params }: Props) {
           {category.subtitle && (
             <p className="mt-3 max-w-2xl text-base text-muted-foreground">{category.subtitle}</p>
           )}
-          <p className="mt-2 text-sm text-muted-foreground">
-            {t('series', { count: products.length })} · {t('colours', { count: colours })}
-          </p>
         </header>
 
         {/* Outline heading for the cards (h3), visible to screen readers and search engines. */}
@@ -108,7 +109,11 @@ export default async function CategoryPage({ params }: Props) {
           <ProductGrid products={products} eager={3} className="mt-8 md:mt-10" />
         )}
 
-        <DeliveryInfo className="mt-12 md:mt-16" />
+        <CategoryBenefits
+          benefits={category.benefits}
+          className="mt-12 rounded-xl bg-muted px-5 py-5 md:mt-16 md:px-6"
+        />
+        <DeliveryInfo className="mt-6" />
       </div>
 
       <BundleDiscount />

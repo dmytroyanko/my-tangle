@@ -27,6 +27,42 @@ export const Categories: CollectionConfig = {
       localized: true,
       admin: { description: 'Підзаголовок під заголовком блоку' },
     },
+    {
+      name: 'benefits',
+      label: 'Переваги',
+      type: 'array',
+      // Per language, like the FAQ. Shown as a row of icons under the category heading; 4 fit one row.
+      localized: true,
+      maxRows: 4,
+      labels: { singular: 'Перевага', plural: 'Переваги' },
+      admin: {
+        initCollapsed: true,
+        description: 'Короткі переваги з іконками під заголовком сторінки категорії',
+      },
+      fields: [
+        {
+          name: 'icon',
+          label: 'Іконка',
+          type: 'select',
+          required: true,
+          // Keys match src/entities/category/model/benefitIcons.ts.
+          options: [
+            { label: 'Краплі (вологе волосся)', value: 'droplets' },
+            { label: 'Шари (дворівневі зубчики)', value: 'layers' },
+            { label: 'Рука (ручка, хват)', value: 'hand' },
+            { label: 'Душ', value: 'shower' },
+            { label: 'Блиск', value: 'sparkles' },
+            { label: 'Валіза (подорожі)', value: 'luggage' },
+            { label: 'Дитина', value: 'baby' },
+            { label: 'Подарунок', value: 'gift' },
+            { label: 'Щит (захист, оригінал)', value: 'shield' },
+            { label: 'Листок (природні матеріали)', value: 'leaf' },
+          ],
+        },
+        { name: 'title', label: 'Назва', type: 'text', required: true },
+        { name: 'text', label: 'Пояснення', type: 'text' },
+      ],
+    },
     { name: 'description', type: 'richText', localized: true },
     {
       name: 'faq',

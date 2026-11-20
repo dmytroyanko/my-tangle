@@ -85,8 +85,6 @@
     "home": "Главная"
   },
   "CategoryPage": {
-    "series": "{count, plural, one {# серия} few {# серии} many {# серий} other {# серии}}",
-    "colours": "{count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}",
     "products": "Серии {title}"
   },
   "SeriesFilter": {

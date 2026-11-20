@@ -236,6 +236,7 @@ async function run() {
           subtitle: category.subtitle.uk,
           description: richText(category.description.uk),
           meta: { title: category.meta.title.uk, description: category.meta.description.uk },
+          benefits: category.benefits.uk,
           faq: category.faq.uk.map((item) => ({
             question: item.question,
             answer: richText(item.answer),
@@ -247,6 +248,7 @@ async function run() {
           subtitle: category.subtitle.ru,
           description: richText(category.description.ru),
           meta: { title: category.meta.title.ru, description: category.meta.description.ru },
+          benefits: category.benefits.ru,
           faq: category.faq.ru.map((item) => ({
             question: item.question,
             answer: richText(item.answer),

@@ -226,6 +226,17 @@ export interface Category {
    * Підзаголовок під заголовком блоку
    */
   subtitle?: string | null;
+  /**
+   * Короткі переваги з іконками під заголовком сторінки категорії
+   */
+  benefits?:
+    | {
+        icon: 'droplets' | 'layers' | 'hand' | 'shower' | 'sparkles' | 'luggage' | 'baby' | 'gift' | 'shield' | 'leaf';
+        title: string;
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   description?: {
     root: {
       type: string;
@@ -528,6 +539,14 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   heading?: T;
   subtitle?: T;
+  benefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        id?: T;
+      };
   description?: T;
   faq?:
     | T

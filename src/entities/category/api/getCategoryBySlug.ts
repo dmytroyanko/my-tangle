@@ -58,6 +58,11 @@ export const getCategoryBySlug = cache(async (slug: string, locale: Locale) => {
     subtitle: category.subtitle ?? null,
     description: category.description ?? null,
     faq: (category.faq ?? []).map((item) => ({ question: item.question, answer: item.answer })),
+    benefits: (category.benefits ?? []).map((item) => ({
+      icon: item.icon,
+      title: item.title,
+      text: item.text ?? null,
+    })),
     image: toImage(category.image),
     slugs,
     meta: {

@@ -3,10 +3,6 @@
     "title": "My-Tangle",
     "description": "Оригінальні гребінці Tangle Teezer та резинки Invisibobble"
   },
-  "HomePage": {
-    "lead": "Оригінальні гребінці Tangle Teezer. Новий сайт у розробці.",
-    "admin": "Адмінка"
-  },
   "Header": {
     "tagline": "магазин оригінальних Tangle Teezer",
     "home": "My-Tangle — на головну",
@@ -59,5 +55,15 @@
   "Organization": {
     "streetAddress": "вул. Верховинна, 41",
     "locality": "Київ"
+  },
+  "HomeHero": {
+    "title": "<line>Інноваційні гребінці</line> <line>Tangle Teezer</line>",
+    "lead": "Професійний догляд за волоссям у домашніх умовах: легке розчісування без болю й ламкості для будь-якого типу волосся.",
+    "cta": "Обрати гребінець",
+    "imageAlt": "Гребінець Tangle Teezer The Ultimate Detangler і масажер The Scalp Exfoliator на полиці у ванній"
+  },
+  "BundleDiscount": {
+    "label": "Знижка на комплект",
+    "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті"
   }
 }

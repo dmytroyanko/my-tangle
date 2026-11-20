@@ -3,10 +3,6 @@
     "title": "My-Tangle",
     "description": "Оригинальные расчёски Tangle Teezer и резинки Invisibobble"
   },
-  "HomePage": {
-    "lead": "Оригинальные расчёски Tangle Teezer. Новый сайт в разработке.",
-    "admin": "Админка"
-  },
   "Header": {
     "tagline": "магазин оригинальных Tangle Teezer",
     "home": "My-Tangle — на главную",
@@ -59,5 +55,15 @@
   "Organization": {
     "streetAddress": "ул. Верховинная, 41",
     "locality": "Киев"
+  },
+  "HomeHero": {
+    "title": "<line>Инновационные расчески</line> <line>Tangle Teezer</line>",
+    "lead": "Профессиональный уход за волосами в домашних условиях: легкое расчесывание без боли и ломкости для любого типа волос.",
+    "cta": "Выбрать расческу",
+    "imageAlt": "Расческа Tangle Teezer The Ultimate Detangler и массажер The Scalp Exfoliator на полке в ванной"
+  },
+  "BundleDiscount": {
+    "label": "Скидка на комплект",
+    "text": "<sr>Скидка 7%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте"
   }
 }

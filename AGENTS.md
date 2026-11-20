@@ -67,6 +67,7 @@ Colors are CSS variables in `src/app/(frontend)/globals.css` (`:root`), used thr
 | secondary-bg-color | #2a2829 | `bg-dark`, `bg-primary` (buttons) |
 | light surface (top bar) | #f8f8f8 | `bg-muted`, `bg-secondary`, `bg-accent` |
 | primary-border-color | #e8e7e3 | `border-border` (default for `border`) |
+| warm cream surface (promo blocks) | #f4ede4 | `bg-warm`, `text-warm-foreground` |
 
 Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-height 1.4. Headings have base sizes: `h1` 30px/700, `h2` 28px/700, `h3` 26px/600, `h4` 22px/600. Use the semantic tag for the outline and override the size with classes only when the design differs.
 

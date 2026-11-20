@@ -36,6 +36,8 @@
     --font-sans: var(--font-open-sans), ui-sans-serif, system-ui, sans-serif;
     --color-dark: var(--dark);
     --color-dark-foreground: var(--dark-foreground);
+    --color-warm: var(--warm);
+    --color-warm-foreground: var(--warm-foreground);
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
@@ -99,6 +101,8 @@
     --ring: #8e8e8e;
     --dark: #2a2829;                /* secondary-bg-color */
     --dark-foreground: #e9e8ee;     /* light-text-color */
+    --warm: #f4ede4;                /* warm cream surface: promo blocks, matches the hero photography */
+    --warm-foreground: #333333;
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);

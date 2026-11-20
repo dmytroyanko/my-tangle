@@ -55,5 +55,9 @@
     "address": "м. Київ, вул. Верховинна, 41",
     "rights": "Усі права захищені.",
     "madeIn": "Designed, manufactured and made in Great Britain"
+  },
+  "Organization": {
+    "streetAddress": "вул. Верховинна, 41",
+    "locality": "Київ"
   }
 }

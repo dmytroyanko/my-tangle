@@ -5,6 +5,7 @@ import { Open_Sans } from 'next/font/google'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
+import { siteUrl } from '@/shared/config'
 import { alternates, routing } from '@/shared/i18n'
 import { Footer } from '@/widgets/footer'
 import { Header } from '@/widgets/header'
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     // Absolute base for canonical and hreflang URLs.
-    metadataBase: new URL(process.env.SITE_URL || 'https://my-tangle.com.ua'),
+    metadataBase: new URL(siteUrl),
     title: t('title'),
     description: t('description'),
     alternates: alternates(locale, '/'),

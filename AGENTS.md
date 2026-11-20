@@ -82,6 +82,7 @@ Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-heigh
 ## SEO
 
 - Existing URLs and SEO of the current Webflow site must survive the move. Redirects from the old Russian URLs to `/ru/...` are set up at production cutover.
+- Structured data (schema.org JSON-LD) is rendered with `JsonLd` from `@/shared/ui/json-ld`. The home page has the store (`OnlineStore`) and `WebSite` from `storeJsonLd()` in `@/shared/lib/structured-data`; absolute URLs use `siteUrl` from `@/shared/config`.
 - Every content image (products, banners, photos) has a meaningful, localized alt. A purely decorative image whose meaning is already given by text next to it (e.g. a menu icon beside its label) gets `alt=""`, so screen readers do not read the same text twice.
 
 ## Payload

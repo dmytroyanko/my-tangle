@@ -55,5 +55,9 @@
     "address": "г. Киев, ул. Верховинная, 41",
     "rights": "Все права защищены.",
     "madeIn": "Designed, manufactured and made in Great Britain"
+  },
+  "Organization": {
+    "streetAddress": "ул. Верховинная, 41",
+    "locality": "Киев"
   }
 }

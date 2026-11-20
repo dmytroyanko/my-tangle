@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
 import { alternates, routing } from '@/shared/i18n'
+import { Footer } from '@/widgets/footer'
 import { Header } from '@/widgets/header'
 import '../globals.css'
 
@@ -44,10 +45,11 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className={openSans.variable}>
-      <body>
+      <body className="flex min-h-svh flex-col">
         <NextIntlClientProvider>
           <Header />
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

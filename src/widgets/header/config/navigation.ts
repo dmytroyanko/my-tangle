@@ -1,5 +1,7 @@
 import type { StaticImageData } from 'next/image'
 
+import { catalog, type CatalogKey } from '@/shared/config'
+
 import backCombing from '../ui/nav-icons/back-combing.png'
 import carebrush from '../ui/nav-icons/carebrush.png'
 import childrenMini from '../ui/nav-icons/children-mini.png'
@@ -10,22 +12,17 @@ import scalp from '../ui/nav-icons/scalp.png'
 import ultimateStyler from '../ui/nav-icons/ultimate-styler.png'
 import wetDetangler from '../ui/nav-icons/wet-detangler.png'
 
-// Catalog menu. Paths are the current site's URLs; labels live in messages under Navigation.
-// Icons are the current site's PNGs. Later this moves to Payload categories (order, icon), keeping the same paths.
-export type NavItem = {
-  key: string
-  href: string
-  icon: StaticImageData
+// Catalog menu icons are the current site's PNGs. Later they move to Payload categories.
+const icons: Record<CatalogKey, StaticImageData> = {
+  wetDetangler,
+  carebrush,
+  childrenMini,
+  compactStyler,
+  easyDryGo,
+  ultimateStyler,
+  backCombing,
+  scalp,
+  invisibobble,
 }
 
-export const navigation: NavItem[] = [
-  { key: 'wetDetangler', href: '/the-wet-detangler', icon: wetDetangler },
-  { key: 'carebrush', href: '/the-complete-carebrush', icon: carebrush },
-  { key: 'childrenMini', href: '/the-original-children-mini', icon: childrenMini },
-  { key: 'compactStyler', href: '/compact-styler', icon: compactStyler },
-  { key: 'easyDryGo', href: '/easy-dry-go', icon: easyDryGo },
-  { key: 'ultimateStyler', href: '/the-ultimate', icon: ultimateStyler },
-  { key: 'backCombing', href: '/back-combing-hairbrush', icon: backCombing },
-  { key: 'scalp', href: '/the-scalp-exfoliator-and-massager', icon: scalp },
-  { key: 'invisibobble', href: '/rezinki-invisibobble', icon: invisibobble },
-]
+export const navigation = catalog.map((item) => ({ ...item, icon: icons[item.key] }))

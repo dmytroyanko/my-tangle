@@ -32,5 +32,28 @@
     "backCombing": "Back\nCombing",
     "scalp": "The Scalp\nExfoliator",
     "invisibobble": "Резинки\nInvisibobble"
+  },
+  "Catalog": {
+    "wetDetangler": "The Ultimate Detangler",
+    "carebrush": "The Complete Carebrush",
+    "childrenMini": "The Original Children Mini",
+    "compactStyler": "Compact Styler",
+    "easyDryGo": "Easy Dry & Go",
+    "ultimateStyler": "The Ultimate",
+    "backCombing": "Back-Combing Hairbrush",
+    "scalp": "The Scalp Exfoliator and Massager",
+    "invisibobble": "Резинки Invisibobble"
+  },
+  "Footer": {
+    "home": "My-Tangle — на головну",
+    "about": "Магазин оригінальних гребінців Tangle Teezer та резинок Invisibobble з 2007 року. Доставка по всій Україні.",
+    "catalog": "Каталог",
+    "info": "Покупцям",
+    "howToSpotOriginal": "Як відрізнити оригінал",
+    "howToClean": "Як мити Tangle Teezer",
+    "contacts": "Контакти",
+    "address": "м. Київ, вул. Верховинна, 41",
+    "rights": "Усі права захищені.",
+    "madeIn": "Designed, manufactured and made in Great Britain"
   }
 }

@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
 
-import { slugify } from '../lib/slugify'
+import { slugify } from '@/shared/lib/slugify'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',

@@ -24,7 +24,7 @@ const eslintConfig = [
     },
   },
   {
-    ignores: ['.next/', 'src/app/(payload)/admin/importMap.js', 'src/migrations/', 'src/payload-types.ts', 'src/payload-generated-schema.ts'],
+    ignores: ['.next/', 'src/app/(payload)/admin/importMap.js', 'src/payload/migrations/', 'src/payload/payload-types.ts', 'src/payload/payload-generated-schema.ts'],
   },
 ]
 

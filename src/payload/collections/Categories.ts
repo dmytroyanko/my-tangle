@@ -15,6 +15,18 @@ export const Categories: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
     slugField({ useAsSlug: 'title', localized: true, slugify }),
+    {
+      name: 'heading',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Заголовок блоку на головній, якщо відрізняється від назви' },
+    },
+    {
+      name: 'subtitle',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Підзаголовок під заголовком блоку' },
+    },
     { name: 'description', type: 'richText', localized: true },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {

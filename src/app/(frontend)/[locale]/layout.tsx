@@ -36,6 +36,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: t('title'),
     description: t('description'),
     alternates: alternates(locale, '/'),
+    // Tangle Teezer favicon (files in public/, shared with the admin).
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+        { url: '/icon.png', type: 'image/png', sizes: '134x134' },
+      ],
+      apple: '/icon.png',
+    },
   }
 }
 

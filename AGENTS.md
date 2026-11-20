@@ -76,7 +76,7 @@ Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-heigh
 - Mobile-first: base classes style phones; `sm:`, `md:`, `lg:`, `xl:` add changes for wider screens. Do not write desktop styles and undo them for mobile.
 - Breakpoints are Tailwind's defaults, listed in `@theme` in `src/app/(frontend)/globals.css`: `sm` 640px, `md` 768px, `lg` 1024px, `xl` 1280px, `2xl` 1536px. Do not add custom breakpoints or arbitrary media queries (`min-[900px]:`).
 - Page content goes in `container`: full width with side padding, capped at 1280px (`--container-site`). Do not add `mx-auto` or `px-*` to it, it already has them.
-- Typical layout: product grid 2 columns on phones, 3 from `md`, 4 from `lg`; the header catalog menu sits in one row with the logo from `xl`, a burger menu below.
+- Typical layout: product grid 2 columns on phones, 3 from `md`, 4 from `lg` (large series cards with a palette, as in the home category showcase: 2, then 3 from `md`); the header catalog menu sits in one row with the logo from `xl`, a burger menu below.
 - Components that appear in containers of different widths (product cards, cart items) adapt to their container with container queries (`@container` on the parent, `@sm:`, `@md:` on children), not to the viewport.
 - Check layouts at 360, 390, 430, 768, 1024, 1280, 1440 and 1920px.
 
@@ -92,6 +92,8 @@ Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-heigh
 - After changing collections: `pnpm generate:types`; `pnpm generate:importmap` if admin components were added.
 - Dev uses schema push. Schema changes for production are migrations: `pnpm payload migrate:create <name>`, committed in `src/payload/migrations/`. Production applies them on startup.
 - Required env vars are read with `requireEnv()` from `@/shared/lib/env`.
+- Seed scripts live in `src/payload/seed/` (data as JSON next to the script) and run with `pnpm payload run <file>`. They must be safe to re-run: match existing documents by slug and media by file name.
+- Product swatch colours are `variants[].color` (#rrggbb); card labels are `series` and `tags`.
 
 ## UI
 

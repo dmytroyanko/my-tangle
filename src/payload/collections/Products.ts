@@ -31,6 +31,19 @@ export const Products: CollectionConfig = {
       admin: { description: 'Серія для бейджа на картці, наприклад «Fine & Fragile»' },
     },
     {
+      name: 'order',
+      type: 'number',
+      defaultValue: 0,
+      admin: { position: 'sidebar', description: 'Порядок у категорії, менше — вище' },
+    },
+    {
+      name: 'tags',
+      type: 'text',
+      hasMany: true,
+      localized: true,
+      admin: { description: 'Короткі ярлики на картці, наприклад «Вологе й сухе волосся»' },
+    },
+    {
       type: 'row',
       fields: [
         { name: 'price', type: 'number', required: true, min: 0, admin: { description: 'грн' } },
@@ -55,6 +68,13 @@ export const Products: CollectionConfig = {
             { name: 'name', type: 'text', required: true, admin: { description: 'Колір, наприклад «Radiant Teal»' } },
             { name: 'sku', type: 'text' },
           ],
+        },
+        {
+          name: 'color',
+          type: 'text',
+          admin: { description: 'Колір кружечка в палітрі, HEX, наприклад #e3b8c0' },
+          validate: (value: string | null | undefined) =>
+            !value || /^#[0-9a-f]{6}$/i.test(value) || 'Формат #rrggbb',
         },
         {
           type: 'row',

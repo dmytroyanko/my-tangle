@@ -77,6 +77,30 @@ Is snapshot column in _pages_v table created or renamed from another column?
 
   `docker compose down` зупиняє і видаляє контейнер Postgres, `-v` — разом із томами з `docker-compose.yml`: `pgdata`, тобто всі дані локальної бази (користувачі, товари, сторінки), і `media`, якщо запускали `docker compose --profile app`. `docker compose up -d` створює порожню базу; Payload заповнить схему при першому запуску `pnpm dev`, а адміністратора треба створити знову на http://localhost:3000/admin. Продакшен, R2 і папку `media/` у проєкті (куди `pnpm dev` зберігає фото) це не зачіпає.
 
+### Наповнення каталогу
+
+Категорію The Ultimate Detangler (7 серій, 41 колір, фото) можна завантажити в базу скриптом:
+
+```bash
+pnpm payload run src/payload/seed/ultimate-detangler.ts
+```
+
+Дані лежать у `src/payload/seed/ultimate-detangler.json`: назви, ціни й серії зі старого сайту, фото з tangleteezer.com (для кольорів, яких там уже немає, — зі старого сайту). Скрипт завантажує фото, стискає їх до WebP (до 1600px) і зберігає в медіа Payload. Повторний запуск безпечний: він лише додає те, чого ще немає, і не чіпає категорію й товари, які вже є в базі (їх редагують в адмінці). Щоб перезаписати їх даними з JSON, запустіть з `SEED_UPDATE=1`:
+
+```bash
+SEED_UPDATE=1 pnpm payload run src/payload/seed/ultimate-detangler.ts
+```
+
+Фото не дублюються: скрипт знаходить уже завантажені за назвою файлу.
+
+## Редіректи при переїзді
+
+Під час переходу з Webflow старі (російськомовні) адреси перенаправляються 301 на `/ru/...`. Адреси, які на новому сайті змінилися:
+
+| Стара адреса | Нова адреса |
+|---|---|
+| `/the-wet-detangler` | `/ru/the-ultimate-detangler` |
+
 ## Docker (продакшен)
 
 ```bash

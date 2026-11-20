@@ -1,8 +1,9 @@
-// Catalog sections in menu order. Paths are the current site's URLs (Pet Teezer is new); names live in messages
+// Catalog sections in menu order. Paths are the current site's URLs except where noted; names live in messages
 // (short two-line labels under Navigation, full names under Catalog).
 // Later this moves to Payload categories (order, icon), keeping the same paths.
 export const catalog = [
-  { key: 'wetDetangler', href: '/the-wet-detangler' },
+  // New path; /the-wet-detangler of the current site redirects here at cutover.
+  { key: 'wetDetangler', href: '/the-ultimate-detangler' },
   { key: 'carebrush', href: '/the-complete-carebrush' },
   { key: 'childrenMini', href: '/the-original-children-mini' },
   { key: 'compactStyler', href: '/compact-styler' },

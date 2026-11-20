@@ -24,6 +24,13 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+    // Same favicon as the site (files in public/).
+    meta: {
+      icons: [
+        { rel: 'icon', url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+        { rel: 'icon', type: 'image/png', url: '/icon.png', sizes: '134x134' },
+      ],
+    },
     importMap: {
       // Custom admin component paths are resolved from src/.
       baseDir: path.resolve(dirname, '..'),

@@ -67,5 +67,16 @@
   "BundleDiscount": {
     "label": "Знижка на комплект",
     "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті"
+  },
+  "ProductCard": {
+    "openGallery": "Відкрити фото: {name}",
+    "colour": "Колір",
+    "outOfStock": "Очікуємо",
+    "price": "{price, number} грн",
+    "buy": "Купити",
+    "close": "Закрити",
+    "previous": "Попереднє фото",
+    "next": "Наступне фото",
+    "photo": "Фото {index}"
   }
 }

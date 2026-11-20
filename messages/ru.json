@@ -67,5 +67,16 @@
   "BundleDiscount": {
     "label": "Скидка на комплект",
     "text": "<sr>Скидка 7%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте"
+  },
+  "ProductCard": {
+    "openGallery": "Открыть фото: {name}",
+    "colour": "Цвет",
+    "outOfStock": "Ожидаем",
+    "price": "{price, number} грн",
+    "buy": "Купить",
+    "close": "Закрыть",
+    "previous": "Предыдущее фото",
+    "next": "Следующее фото",
+    "photo": "Фото {index}"
   }
 }

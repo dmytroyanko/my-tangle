@@ -147,6 +147,14 @@ export interface Product {
    */
   series?: string | null;
   /**
+   * Порядок у категорії, менше — вище
+   */
+  order?: number | null;
+  /**
+   * Короткі ярлики на картці, наприклад «Вологе й сухе волосся»
+   */
+  tags?: string[] | null;
+  /**
    * грн
    */
   price: number;
@@ -177,6 +185,10 @@ export interface Product {
         name: string;
         sku?: string | null;
         /**
+         * Колір кружечка в палітрі, HEX, наприклад #e3b8c0
+         */
+        color?: string | null;
+        /**
          * Якщо відрізняється від ціни товару
          */
         price?: number | null;
@@ -206,6 +218,14 @@ export interface Category {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Заголовок блоку на головній, якщо відрізняється від назви
+   */
+  heading?: string | null;
+  /**
+   * Підзаголовок під заголовком блоку
+   */
+  subtitle?: string | null;
   description?: {
     root: {
       type: string;
@@ -450,6 +470,8 @@ export interface ProductsSelect<T extends boolean = true> {
   slug?: T;
   category?: T;
   series?: T;
+  order?: T;
+  tags?: T;
   price?: T;
   compareAtPrice?: T;
   description?: T;
@@ -458,6 +480,7 @@ export interface ProductsSelect<T extends boolean = true> {
     | {
         name?: T;
         sku?: T;
+        color?: T;
         price?: T;
         inStock?: T;
         images?: T;
@@ -482,6 +505,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  heading?: T;
+  subtitle?: T;
   description?: T;
   image?: T;
   order?: T;

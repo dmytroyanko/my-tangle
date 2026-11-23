@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
@@ -60,6 +60,10 @@ export default async function CategoryPage({ params }: Props) {
   setRequestLocale(locale)
   const category = await getCategoryBySlug(slug, locale)
   if (!category) notFound()
+  const categoryPath = `/${category.slugs[locale] ?? slug}`
+  // Reached by the slug of another language (/ru/<Ukrainian slug>): one address per page, so redirect to
+  // this language's own one. Filters in the query string are dropped; they are not part of the page.
+  if (categoryPath !== `/${slug}`) permanentRedirect(getPathname({ locale, href: categoryPath }))
 
   const [products, t, tCrumbs] = await Promise.all([
     getProductsByCategory(category.id, locale),
@@ -73,9 +77,7 @@ export default async function CategoryPage({ params }: Props) {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: tCrumbs('home'), url: absolute('/') },
-          // The canonical slug of this language, not the requested one (a Russian page may be reached
-          // by the Ukrainian slug).
-          { name: category.title, url: absolute(`/${category.slugs[locale] ?? slug}`) },
+          { name: category.title, url: absolute(categoryPath) },
         ])}
       />
 
@@ -103,10 +105,20 @@ export default async function CategoryPage({ params }: Props) {
             }))}
             className="mt-6"
           >
-            <ProductGrid products={products} eager={3} className="mt-8 md:mt-10" />
+            <ProductGrid
+              products={products}
+              basePath={categoryPath}
+              eager={3}
+              className="mt-8 md:mt-10"
+            />
           </SeriesFilter>
         ) : (
-          <ProductGrid products={products} eager={3} className="mt-8 md:mt-10" />
+          <ProductGrid
+            products={products}
+            basePath={categoryPath}
+            eager={3}
+            className="mt-8 md:mt-10"
+          />
         )}
 
         <CategoryBenefits

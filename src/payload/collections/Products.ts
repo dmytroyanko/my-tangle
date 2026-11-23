@@ -57,6 +57,43 @@ export const Products: CollectionConfig = {
     },
     { name: 'description', type: 'richText', localized: true },
     {
+      name: 'specs',
+      label: 'Характеристики',
+      type: 'array',
+      // Rows are shared by both languages, only the value is translated, so the list keeps the same order.
+      labels: { singular: 'Характеристика', plural: 'Характеристики' },
+      admin: {
+        initCollapsed: true,
+        description:
+          'Таблиця під описом на сторінці товару. Бренд і країна бренду додаються автоматично.',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'key',
+              label: 'Характеристика',
+              type: 'select',
+              required: true,
+              // Keys match src/entities/product/model/specKeys.ts; site labels are in messages (ProductSpecs).
+              options: [
+                { label: 'Тип волосся', value: 'hairType' },
+                { label: 'Використання', value: 'use' },
+                { label: 'Зубчики', value: 'teeth' },
+                { label: 'Розмір', value: 'size' },
+                { label: 'Покриття', value: 'finish' },
+                { label: 'Особливості', value: 'features' },
+                { label: 'Довжина', value: 'length' },
+                { label: 'Вага', value: 'weight' },
+              ],
+            },
+            { name: 'value', label: 'Значення', type: 'text', required: true, localized: true },
+          ],
+        },
+      ],
+    },
+    {
       name: 'variants',
       type: 'array',
       labels: { singular: 'Варіант', plural: 'Варіанти' },

@@ -103,5 +103,47 @@
   },
   "CategoryFaq": {
     "title": "Часті питання"
+  },
+  "ProductPage": {
+    "inStock": "В наявності",
+    "description": "Опис",
+    "otherSeries": "Інші серії {title}",
+    "metaTitle": "Tangle Teezer {title} — купити в Україні",
+    "metaDescription": "Оригінальний гребінець Tangle Teezer {title}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні."
+  },
+  "ProductSpecs": {
+    "title": "Характеристики",
+    "brand": "Tangle Teezer",
+    "brandCountry": "Велика Британія",
+    "keys": {
+      "hairType": "Тип волосся",
+      "use": "Використання",
+      "teeth": "Зубчики",
+      "size": "Розмір",
+      "finish": "Покриття",
+      "features": "Особливості",
+      "length": "Довжина",
+      "weight": "Вага",
+      "brand": "Бренд",
+      "brandCountry": "Країна бренду"
+    }
+  },
+  "ContactsPage": {
+    "title": "Контакти",
+    "metaTitle": "Контакти магазину Tangle Teezer у Києві — My-Tangle",
+    "metaDescription": "Телефони, адреса й графік роботи My-Tangle — магазину оригінальних гребінців Tangle Teezer у Києві. Доставка Новою Поштою по всій Україні.",
+    "lead": "Магазин оригінальних гребінців Tangle Teezer і резинок Invisibobble з 2007 року. Зателефонуйте нам, щоб оформити замовлення або поставити питання про товар.",
+    "phonesTitle": "Телефони",
+    "phonesHint": "Приймаємо замовлення й відповідаємо на питання.",
+    "addressTitle": "Адреса",
+    "address": "м. Київ, вул. Верховинна, 41",
+    "openMap": "Відкрити на карті",
+    "hoursTitle": "Графік роботи",
+    "weekdays": "Пн – Пт",
+    "weekdaysHours": "10:00 – 19:00",
+    "weekend": "Сб – Нд",
+    "weekendHours": "лише прийом замовлень",
+    "catalogText": "Оберіть гребінець у каталозі — доставимо Новою Поштою по всій Україні.",
+    "catalogLink": "До каталогу"
   }
 }

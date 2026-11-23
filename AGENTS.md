@@ -35,6 +35,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Import a slice only through its public API, `index.ts` at the slice root (`@/entities/product`), never from its internals. `shared/ui` and `shared/lib` are imported per module (`@/shared/ui/button`).
 - Slice segments: `ui` (components), `model` (client state, types, logic), `api` (server data access and server actions), `lib` (helpers), `config`.
 - Category pages live at the site root, `/[slug]` (`src/app/(frontend)/[locale]/[slug]/page.tsx`), keeping the current site's flat URLs. Information pages will share this route: resolve a category first, then a page, else 404.
+- Product pages are nested under their category: `/[slug]/[product]` (`src/app/(frontend)/[locale]/[slug]/[product]/page.tsx`), one page per series with its colours. `?color=<key>` only preselects a colour; the canonical URL has no parameter. Product slugs are short (`matte`, `mini`) and unique across the site.
 - Route files in `src/app/(frontend)/[locale]/` stay thin: read params, call entity `api` functions, compose widgets. Business logic does not live in them.
 - Add a slice only when something uses it. Do not create empty layers or placeholder slices.
 - Choosing a layer: a user action is a feature; data and how it is shown is an entity; a page section that combines several of them is a widget.
@@ -81,12 +82,53 @@ Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-heigh
 - Components that appear in containers of different widths (product cards, cart items) adapt to their container with container queries (`@container` on the parent, `@sm:`, `@md:` on children), not to the viewport.
 - Check layouts at 360, 390, 430, 768, 1024, 1280, 1440 and 1920px.
 
-## SEO
+## SEO (mandatory)
 
-- Existing URLs and SEO of the current Webflow site must survive the move. Redirects from the old Russian URLs to `/ru/...` are set up at production cutover.
-- Structured data (schema.org JSON-LD) is rendered with `JsonLd` from `@/shared/ui/json-ld`. The home page has the store (`OnlineStore`) and `WebSite` from `storeJsonLd()` in `@/shared/lib/structured-data`; absolute URLs use `siteUrl` from `@/shared/config`.
+The main goal of the move: move the site from Webflow to Next.js + Payload with as little SEO loss as possible, then grow the set of search queries the site ranks for and its search potential. Every change is checked against this goal. These rules are mandatory; if a task conflicts with them, stop and tell the user before doing it.
+
+### Keep what already ranks
+
+- Every URL of the current site that is indexed or has backlinks either keeps its exact path on the new site, or gets a **301** to its closest equivalent. No 302, no redirect chains, no mass redirects to the home page, no old URL left as a 404.
+- Old URLs end in `.html` (`/kontakty.html`) and are Russian without a prefix: each `/<slug>.html` goes to `/ru/<slug>` with 301 at production cutover. Every changed path is recorded in the "Редіректи при переїзді" table in `README.md` at the time of the change, not later.
+- A published slug (category, product, page) is never changed without adding a 301 from the old one. Slugs are short, Latin, lowercase, without trailing slashes.
+- A new page is never weaker than the old one it replaces: title, meta description, H1, text, internal links and image alts are kept or improved. Ranking text is not removed; moving it lower on the page is fine, as long as it stays in the HTML.
+- Before cutover: crawl the old site (sitemap and links) and compare it with the new one page by page: status, title, description, H1, canonical, main text. Differences are fixed or agreed with the user.
+
+### Every page
+
+- Content is rendered on the server and is in the initial HTML. Nothing that should rank appears only after JavaScript runs. Collapsible text uses native `<details>`.
+- A unique `<title>` and meta description per page and language (an editor's SEO fields first, a template from messages as the fallback). Exactly one `h1`; headings go down without skipping levels (an `sr-only` heading is fine where the design has none).
+- Every page sets `alternates()` from `@/shared/i18n`: a self canonical without query parameters, and reciprocal hreflang `uk`, `ru`, `x-default`. `<html lang>` matches the locale.
+- A missing page returns a real 404 status (`notFound()`), never a 200 with an error text. Layouts do not set a canonical (it would leak to 404 pages).
+- Query parameters that only filter or preselect (`?color=`, `?series=`) never create new indexable pages: their canonical is the clean URL. Cart, checkout, account, search and `/admin` are `noindex` and stay out of the sitemap.
+- Before cutover the site must have `sitemap.xml` (only canonical, indexable 200 URLs, both languages, with hreflang) and `robots.txt` that points to it.
+
+### Structured data
+
+- Schema.org JSON-LD is rendered with `JsonLd` from `@/shared/ui/json-ld`, built with helpers from `@/shared/lib/structured-data`; absolute URLs use `siteUrl` from `@/shared/config`. Home: `OnlineStore` and `WebSite` (`storeJsonLd()`); every inner page: `BreadcrumbList`; product pages: `Product` with `Offer`/`AggregateOffer` and characteristics; FAQ blocks may add `FAQPage`.
+- Structured data repeats only what is visible on the page. No made-up ratings, reviews, prices or availability.
+
+### Speed
+
+- Core Web Vitals are part of SEO. The LCP image (hero, first product photos) loads with `loading="eager"` and `fetchPriority="high"`; every image goes through `next/image` with correct `sizes` and fixed dimensions or aspect ratio (no layout shift). Fonts only through `next/font`. No heavy client JavaScript where a Server Component will do.
+
+### Links and images
+
+- Internal links use `Link` from `@/shared/i18n`. Every indexable page is reachable through links (menu, breadcrumbs, category → product, related items); no orphan pages.
 - Links to other websites get `rel="nofollow noopener noreferrer"` and `target="_blank"`: we do not pass link weight or the referrer to external sites. Use `externalLinkProps` from `@/shared/lib/links`; Payload rich text rendered with `RichText` from `@/shared/ui/rich-text` adds them automatically. `mailto:` and `tel:` links are not external sites.
-- Every content image (products, banners, photos) has a meaningful, localized alt. A purely decorative image whose meaning is already given by text next to it (e.g. a menu icon beside its label) gets `alt=""`, so screen readers do not read the same text twice.
+- Every content image (products, banners, photos) has a meaningful, localized alt and a meaningful file name. A purely decorative image whose meaning is already given by text next to it (e.g. a menu icon beside its label) gets `alt=""`, so screen readers do not read the same text twice.
+
+### Growing the search reach
+
+- One search intent per URL. Before adding a page, check that no existing page already targets that intent (no cannibalization); extend the existing page instead.
+- New pages (series, categories, guides like "how to tell an original", "how to clean") target a concrete group of queries and are linked from related pages.
+- Texts are written for people, in natural Ukrainian and Russian, and are factual: product facts come from the manufacturer or the user. No invented characteristics, dimensions or claims; product, colour and series names are not changed without the user's request.
+
+### Process
+
+- Changes that affect SEO (URLs and slugs, titles and descriptions templates, canonical, robots/noindex, redirects, removing or moving content off a page) are named in the report to the user; risky ones are agreed before doing them.
+- After changing a page, check: status code, title, description, canonical, hreflang, one `h1` and the heading outline, valid JSON-LD, no horizontal scroll on mobile.
+- After cutover: verify the site in Google Search Console, submit the sitemap, monitor 404s and index coverage, and keep the redirects permanently.
 
 ## Payload
 
@@ -96,6 +138,7 @@ Typography: Open Sans (latin + cyrillic, `next/font`), body 14px with line-heigh
 - Required env vars are read with `requireEnv()` from `@/shared/lib/env`.
 - Seed scripts live in `src/payload/seed/` (data as JSON next to the script) and run with `pnpm payload run <file>`. They must be safe to re-run: match existing documents by slug and media by file name.
 - Product swatch colours are `variants[].color` (#rrggbb); card labels are `series` and `tags`.
+- Media that nothing uses is deleted, not kept: after replacing photos or removing products, run `src/payload/seed/cleanup-media.ts` (lists unused files; `CLEANUP_APPLY=1` deletes them). Show the list to the user before deleting; on production, delete only with their explicit confirmation. Arguments like `--dry-run` do not reach `payload run`, so options are passed as env vars.
 
 ## UI
 

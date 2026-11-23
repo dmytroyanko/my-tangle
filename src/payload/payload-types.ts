@@ -177,6 +177,16 @@ export interface Product {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Таблиця під описом на сторінці товару. Бренд і країна бренду додаються автоматично.
+   */
+  specs?:
+    | {
+        key: 'hairType' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
   variants?:
     | {
         /**
@@ -507,6 +517,13 @@ export interface ProductsSelect<T extends boolean = true> {
   price?: T;
   compareAtPrice?: T;
   description?: T;
+  specs?:
+    | T
+    | {
+        key?: T;
+        value?: T;
+        id?: T;
+      };
   variants?:
     | T
     | {

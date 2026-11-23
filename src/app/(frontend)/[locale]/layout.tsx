@@ -52,7 +52,7 @@ export default async function RootLayout({ children, params }: Props) {
   setRequestLocale(locale)
 
   return (
-    <html lang={locale} className={openSans.variable}>
+    <html lang={locale} className={openSans.variable} data-scroll-behavior="smooth">
       <body className="flex min-h-svh flex-col">
         <NextIntlClientProvider>
           <Header />

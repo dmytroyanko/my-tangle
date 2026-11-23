@@ -18,10 +18,12 @@ export function alternates(
   }
   if (languages[routing.defaultLocale]) languages['x-default'] = languages[routing.defaultLocale]
 
-  // A page without its own path in this locale shows the Ukrainian fallback content, so it is a duplicate
-  // of the Ukrainian page and points its canonical there.
-  const canonical = languages[locale as Locale] ?? languages[routing.defaultLocale]
-  if (!canonical) throw new Error(`alternates(): no path for "${locale}" or the default locale`)
+  // A page without its own path in this locale shows fallback content, so it is a duplicate of another
+  // language version and points its canonical there: the Ukrainian one, or any that has a path.
+  const canonical =
+    languages[locale as Locale] ?? languages[routing.defaultLocale] ?? Object.values(languages)[0]
+  // No path in any language (slugs not filled in yet): better no canonical than a failing page.
+  if (!canonical) return undefined
 
   return { canonical, languages }
 }

@@ -4,6 +4,7 @@ import {
   type JSXConvertersFunction,
 } from '@payloadcms/richtext-lexical/react'
 
+import { Link, routing } from '@/shared/i18n'
 import { externalLinkProps, isExternalUrl } from '@/shared/lib/links'
 
 type Props = {
@@ -13,8 +14,31 @@ type Props = {
   className?: string
 }
 
+type LinkedDoc = { relationTo?: string; value?: unknown }
+
+// Path of a document picked with the editor's "internal link" (populated at depth 1 or more). Categories
+// and pages live at /<slug>, a product under its category; anything else has no page.
+function internalHref(doc: LinkedDoc | null | undefined) {
+  const value = doc?.value as { slug?: string; category?: unknown } | undefined
+  if (!value?.slug) return ''
+  switch (doc?.relationTo) {
+    case 'categories':
+    case 'pages':
+      return `/${value.slug}`
+    case 'products': {
+      const category = value.category as { slug?: string } | undefined
+      return category?.slug ? `/${category.slug}/${value.slug}` : ''
+    }
+    default:
+      return ''
+  }
+}
+
+const hasLocalePrefix = (path: string) =>
+  routing.locales.some((locale) => path === `/${locale}` || path.startsWith(`/${locale}/`))
+
 // Payload rich text with the site's rules: links to other websites get nofollow/noreferrer and open in
-// a new tab; headings follow the surrounding outline.
+// a new tab; links within the site keep the current language; headings follow the surrounding outline.
 export function RichText({ data, headingTag = 'h3', className }: Props) {
   const converters: JSXConvertersFunction = ({ defaultConverters }) => ({
     ...defaultConverters,
@@ -23,10 +47,29 @@ export function RichText({ data, headingTag = 'h3', className }: Props) {
       return <Tag>{nodesToJSX({ nodes: node.children })}</Tag>
     },
     link: ({ node, nodesToJSX }) => {
-      const url: string = node.fields?.url ?? ''
+      const children = nodesToJSX({ nodes: node.children })
+      const href =
+        node.fields?.linkType === 'internal' ? internalHref(node.fields.doc) : (node.fields?.url ?? '')
+      // A link to a document that has no page (yet) is shown as plain text, not as a link to nowhere.
+      if (!href) return <>{children}</>
+      if (isExternalUrl(href))
+        return (
+          <a href={href} {...externalLinkProps}>
+            {children}
+          </a>
+        )
+      const newTab = node.fields?.newTab ? ({ target: '_blank', rel: 'noopener' } as const) : {}
+      // Site paths get the language prefix of the current page (/ru/...), like every internal link. A path
+      // an editor typed with the prefix already (/ru/...) is used as is.
+      if (href.startsWith('/') && !hasLocalePrefix(href))
+        return (
+          <Link href={href} {...newTab}>
+            {children}
+          </Link>
+        )
       return (
-        <a href={url} {...(isExternalUrl(url) ? externalLinkProps : {})}>
-          {nodesToJSX({ nodes: node.children })}
+        <a href={href} {...newTab}>
+          {children}
         </a>
       )
     },

@@ -3,36 +3,25 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 import type { Locale } from '@/shared/i18n'
-import { toImage, type ImageData } from '@/shared/lib/media'
 
 import type { ProductCardData } from '../model/types'
+import { toCardData } from './toCardData'
 
 // Published products of a category in their admin order, with colours and photos. Cached per request.
-export const getProductsByCategory = cache(async (categoryId: number, locale: Locale): Promise<ProductCardData[]> => {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'products',
-    where: { category: { equals: categoryId }, _status: { equals: 'published' } },
-    // Products added in the admin default to order 0; creation date keeps their order stable.
-    sort: ['order', 'createdAt'],
-    locale,
-    depth: 1,
-    pagination: false,
-  })
+export const getProductsByCategory = cache(
+  async (categoryId: number, locale: Locale): Promise<ProductCardData[]> => {
+    const payload = await getPayload({ config })
+    const { docs } = await payload.find({
+      collection: 'products',
+      where: { category: { equals: categoryId }, _status: { equals: 'published' } },
+      // Products added in the admin default to order 0; creation date keeps their order stable.
+      sort: ['order', 'createdAt'],
+      locale,
+      depth: 1,
+      pagination: false,
+    })
 
-  return docs.map((product) => ({
-    id: product.id,
-    slug: product.slug,
-    title: product.title,
-    series: product.series ?? null,
-    tags: product.tags ?? [],
-    variants: (product.variants ?? []).map((variant, index) => ({
-      id: variant.id ?? String(index),
-      name: variant.name,
-      color: variant.color ?? null,
-      price: variant.price ?? product.price,
-      inStock: variant.inStock ?? true,
-      images: (variant.images ?? []).map(toImage).filter((image): image is ImageData => image !== null),
-    })),
-  }))
-})
+    // A product without colours is not ready to sell (see getProductBySlug).
+    return docs.map(toCardData).filter((product) => product.variants.length > 0)
+  },
+)

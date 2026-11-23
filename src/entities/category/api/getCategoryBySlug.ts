@@ -1,55 +1,15 @@
-import config from '@payload-config'
-import { getPayload } from 'payload'
 import { cache } from 'react'
 
-import { routing, type Locale } from '@/shared/i18n'
+import { findBySlug } from '@/payload/lib/findBySlug'
+import type { Locale } from '@/shared/i18n'
 import { toImage } from '@/shared/lib/media'
 
-// Category texts in the given locale. Payload matches slugs only in the stored locale, so a Russian
-// lookup falls back to the Ukrainian slug when the Russian one is not set. Cached per request, so a page
-// and its metadata share one query.
+// Category texts in the given locale, looked up by slug with the Ukrainian fallback (see findBySlug).
+// Cached per request, so a page and its metadata share one query.
 export const getCategoryBySlug = cache(async (slug: string, locale: Locale) => {
-  const payload = await getPayload({ config })
-  const find = (slugLocale: Locale) =>
-    payload.find({
-      collection: 'categories',
-      where: { slug: { equals: slug } },
-      locale: slugLocale,
-      limit: 1,
-      depth: 1,
-    })
-
-  let { docs } = await find(locale)
-  if (!docs.length && locale !== routing.defaultLocale) {
-    const fallback = await find(routing.defaultLocale)
-    if (fallback.docs[0]) {
-      docs = [
-        await payload.findByID({
-          collection: 'categories',
-          id: fallback.docs[0].id,
-          locale,
-          depth: 1,
-        }),
-      ]
-    }
-  }
-
-  const category = docs[0]
-  if (!category) return null
-
-  // Slugs of every language version, for hreflang links; a locale without its own slug is left out.
-  const all = await payload.findByID({
-    collection: 'categories',
-    id: category.id,
-    locale: 'all',
-    depth: 0,
-    select: { slug: true },
-  })
-  const slugs = Object.fromEntries(
-    Object.entries((all.slug ?? {}) as unknown as Record<string, string | null>).filter(
-      ([, value]) => Boolean(value),
-    ),
-  ) as Partial<Record<Locale, string>>
+  const found = await findBySlug({ collection: 'categories', slug, locale })
+  if (!found) return null
+  const { doc: category, slugs } = found
 
   return {
     id: category.id,

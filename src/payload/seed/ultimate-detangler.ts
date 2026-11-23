@@ -208,6 +208,29 @@ async function save(
   return doc.id
 }
 
+// Characteristics are one list for both languages with a translated value. The Russian values are written
+// to the rows saved with the Ukrainian ones (matched by row id); rows sent without ids would replace them.
+async function saveSpecs(
+  payload: Payload,
+  id: number,
+  specs: { key: string; value: Localized<string> }[],
+) {
+  const data = (locale: Locale, ids: (string | null | undefined)[] = []) =>
+    ({
+      specs: specs.map((spec, i) => ({ id: ids[i], key: spec.key, value: spec.value[locale] })),
+    }) as never
+  const doc = await payload.update({ collection: 'products', id, data: data('uk'), locale: 'uk' })
+  await payload.update({
+    collection: 'products',
+    id,
+    data: data(
+      'ru',
+      (doc.specs ?? []).map((row) => row.id),
+    ),
+    locale: 'ru',
+  })
+}
+
 async function run() {
   const payload = await getPayload({ config })
   const { category, products } = data
@@ -268,7 +291,9 @@ async function run() {
     payload.logger.info(`${product.title}: ${product.variants.length} colours`)
     const variants = []
     for (const variant of product.variants) {
-      const name = `${product.slug}-${toSlug(variant.name, 'uk')}`
+      // Photo file names use mediaKey (the first, longer slug), so shortening a product URL does not
+      // upload the photos again.
+      const name = `${product.mediaKey}-${toSlug(variant.name, 'uk')}`
       // A colour's photos are downloaded in parallel; Promise.all keeps their order.
       // Duplicates are dropped first: parallel find-then-create would upload the same photo twice.
       const sources = variant.images.filter(
@@ -293,7 +318,7 @@ async function run() {
       })
     }
 
-    await save(
+    const savedId = await save(
       payload,
       'products',
       productId,
@@ -307,10 +332,19 @@ async function run() {
         _status: 'published',
       },
       {
-        uk: { title: product.title, tags: product.tags.uk },
-        ru: { title: product.title, tags: product.tags.ru },
+        uk: {
+          title: product.title,
+          tags: product.tags.uk,
+          description: richText(product.description.uk),
+        },
+        ru: {
+          title: product.title,
+          tags: product.tags.ru,
+          description: richText(product.description.ru),
+        },
       },
     )
+    await saveSpecs(payload, savedId, product.specs)
   }
 
   payload.logger.info('Done')

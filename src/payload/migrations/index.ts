@@ -2,6 +2,7 @@ import * as migration_20261119_143536_initial from './20261119_143536_initial';
 import * as migration_20261120_181208_showcase_fields from './20261120_181208_showcase_fields';
 import * as migration_20261120_214924_category_faq from './20261120_214924_category_faq';
 import * as migration_20261120_220654_category_benefits from './20261120_220654_category_benefits';
+import * as migration_20261121_221448_product_specs from './20261121_221448_product_specs';
 
 export const migrations = [
   {
@@ -22,6 +23,11 @@ export const migrations = [
   {
     up: migration_20261120_220654_category_benefits.up,
     down: migration_20261120_220654_category_benefits.down,
-    name: '20261120_220654_category_benefits'
+    name: '20261120_220654_category_benefits',
+  },
+  {
+    up: migration_20261121_221448_product_specs.up,
+    down: migration_20261121_221448_product_specs.down,
+    name: '20261121_221448_product_specs'
   },
 ];

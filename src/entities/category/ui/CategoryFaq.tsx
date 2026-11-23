@@ -4,7 +4,7 @@ import { getTranslations } from 'next-intl/server'
 import { cn } from '@/shared/lib/utils'
 import { RichText, richTextClassName } from '@/shared/ui/rich-text'
 
-import type { CategoryData } from '../api/getCategoryBySlug'
+import type { CategoryData } from '../api/toCategoryData'
 
 // Frequently asked questions of a category as native <details>: answers are always in the HTML and open
 // without JavaScript.

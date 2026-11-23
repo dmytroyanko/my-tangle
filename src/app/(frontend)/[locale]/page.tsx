@@ -6,7 +6,7 @@ import { alternates, getPathname } from '@/shared/i18n'
 import { storeJsonLd } from '@/shared/lib/structured-data'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { BundleDiscount } from '@/widgets/bundle-discount'
-import { CategoryShowcase } from '@/widgets/category-showcase'
+import { CategoryShowcases } from '@/widgets/category-showcase'
 import { HomeHero } from '@/widgets/home-hero'
 
 // Products come from Payload, so the page renders per request: the build has no database, and admin edits
@@ -38,15 +38,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
       <HomeHero />
       <BundleDiscount className="pt-4 lg:pt-6" />
-      {/* The banner button scrolls here; the anchor stays even if the category is missing. */}
-      <div id="catalog">
-        <CategoryShowcase slug="the-ultimate-detangler" className="py-12 md:py-16" />
-      </div>
-      <CategoryShowcase slug="the-complete-carebrush" className="border-t border-border py-12 md:py-16" />
-      <CategoryShowcase
-        slug="the-original-children-mini"
-        className="border-t border-border py-12 md:py-16"
-      />
+      {/* Categories marked for the home page in the admin. The banner button scrolls here. */}
+      <CategoryShowcases id="catalog" />
     </>
   )
 }

@@ -74,6 +74,8 @@
     "colour": "Колір",
     "outOfStock": "Очікуємо",
     "price": "{price, number} грн",
+    "oldPrice": "Стара ціна:",
+    "discount": "−{percent}%",
     "buy": "Купити",
     "close": "Закрити",
     "previous": "Попереднє фото",

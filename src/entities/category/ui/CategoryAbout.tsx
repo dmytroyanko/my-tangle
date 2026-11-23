@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { cn } from '@/shared/lib/utils'
 import { RichText, richTextClassName } from '@/shared/ui/rich-text'
 
-import type { CategoryData } from '../api/getCategoryBySlug'
+import type { CategoryData } from '../api/toCategoryData'
 
 type Props = {
   category: Pick<CategoryData, 'title' | 'image' | 'description'>

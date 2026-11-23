@@ -3,7 +3,8 @@ import { toImage, type ImageData } from '@/shared/lib/media'
 
 import type { ProductCardData } from '../model/types'
 
-// A Payload product (depth 1) reduced to what cards and the product page show.
+// A Payload product (depth 1) reduced to what cards and the product page show. A colour without a price
+// (the product has no full price yet) is left out, so it cannot be bought for 0.
 export function toCardData(product: Product): ProductCardData {
   return {
     id: product.id,
@@ -11,15 +12,20 @@ export function toCardData(product: Product): ProductCardData {
     title: product.title,
     series: product.series ?? null,
     tags: product.tags ?? [],
-    variants: (product.variants ?? []).map((variant, index) => ({
-      id: variant.id ?? String(index),
-      name: variant.name,
-      color: variant.color ?? null,
-      price: variant.price ?? product.price,
-      inStock: variant.inStock ?? true,
-      images: (variant.images ?? [])
-        .map(toImage)
-        .filter((image): image is ImageData => image !== null),
-    })),
+    variants: (product.variants ?? []).flatMap((variant, index) => {
+      const price = variant.price ?? product.price
+      if (typeof price !== 'number') return []
+      return {
+        id: variant.id ?? String(index),
+        name: variant.name,
+        color: variant.color ?? null,
+        price,
+        fullPrice: variant.fullPrice ?? product.fullPrice ?? null,
+        inStock: variant.inStock ?? true,
+        images: (variant.images ?? [])
+          .map(toImage)
+          .filter((image): image is ImageData => image !== null),
+      }
+    }),
   }
 }

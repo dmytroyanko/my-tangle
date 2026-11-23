@@ -1,1 +1,1 @@
-export { CategoryShowcase } from './ui/CategoryShowcase'
+export { CategoryShowcases } from './ui/CategoryShowcases'

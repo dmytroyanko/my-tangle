@@ -3,6 +3,7 @@
     "slug": "the-complete-carebrush",
     "mediaKey": "tcc-category",
     "order": 1,
+    "showOnHome": true,
     "title": {
       "uk": "The Complete Carebrush",
       "ru": "The Complete Carebrush"
@@ -126,7 +127,7 @@
       "title": "The Complete Carebrush Straight to Wavy",
       "series": "Straight to Wavy",
       "order": 0,
-      "price": 992,
+      "fullPrice": 1239,
       "tags": {
         "uk": [
           "Пряме й хвилясте волосся",
@@ -238,7 +239,7 @@
       "title": "The Complete Carebrush Fine",
       "series": "Fine",
       "order": 1,
-      "price": 992,
+      "fullPrice": 1239,
       "tags": {
         "uk": [
           "Тонке волосся",
@@ -328,7 +329,7 @@
       "title": "The Complete Carebrush Curly to Coily",
       "series": "Curly to Coily",
       "order": 2,
-      "price": 992,
+      "fullPrice": 1239,
       "tags": {
         "uk": [
           "В’юнке й кучеряве волосся",

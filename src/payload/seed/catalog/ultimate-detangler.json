@@ -3,6 +3,7 @@
     "slug": "the-ultimate-detangler",
     "mediaKey": "ud-category",
     "order": 0,
+    "showOnHome": true,
     "title": {
       "uk": "The Ultimate Detangler",
       "ru": "The Ultimate Detangler"
@@ -142,7 +143,7 @@
       "title": "The Ultimate Detangler",
       "series": "Original",
       "order": 0,
-      "price": 759,
+      "fullPrice": 759,
       "tags": {
         "uk": [
           "Вологе й сухе волосся",
@@ -386,7 +387,7 @@
       "title": "The Ultimate Detangler Fine & Fragile",
       "series": "Fine & Fragile",
       "order": 1,
-      "price": 759,
+      "fullPrice": 759,
       "tags": {
         "uk": [
           "Тонке та ламке волосся",
@@ -464,7 +465,7 @@
       "title": "The Ultimate Detangler Large",
       "series": "Large",
       "order": 2,
-      "price": 839,
+      "fullPrice": 839,
       "tags": {
         "uk": [
           "Густе та довге волосся"
@@ -552,7 +553,7 @@
       "title": "The Ultimate Detangler Matte",
       "series": "Matte",
       "order": 3,
-      "price": 989,
+      "fullPrice": 989,
       "tags": {
         "uk": [
           "Матове покриття"
@@ -647,7 +648,7 @@
       "title": "The Ultimate Detangler Chrome",
       "series": "Chrome",
       "order": 4,
-      "price": 989,
+      "fullPrice": 989,
       "tags": {
         "uk": [
           "Металевий блиск"
@@ -762,7 +763,7 @@
       "title": "The Ultimate Detangler Mini",
       "series": "Mini",
       "order": 5,
-      "price": 659,
+      "fullPrice": 659,
       "tags": {
         "uk": [
           "Компактний розмір",
@@ -979,7 +980,7 @@
       "title": "The Ultimate Detangler Chrome Mini",
       "series": "Chrome Mini",
       "order": 6,
-      "price": 819,
+      "fullPrice": 819,
       "tags": {
         "uk": [
           "Компактний розмір",
@@ -995,7 +996,7 @@
           "name": "The Devil Wears Prada",
           "color": "#4d1112",
           "inStock": true,
-          "price": 789,
+          "fullPrice": 789,
           "images": [
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/PDP_MUD_Chrome_DWP_2000x2000_Global_1.png",
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/PDP_MUD_Chrome_DWP_2000x2000_Global_2.png",

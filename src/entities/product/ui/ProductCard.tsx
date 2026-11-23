@@ -11,6 +11,7 @@ import { colorKey } from '../model/colorKey'
 import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
+import { ProductPrice } from './ProductPrice'
 
 type Props = {
   product: ProductCardData
@@ -97,7 +98,7 @@ export function ProductCard({ product, href, priority = false }: Props) {
       )}
 
       <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-4">
-        <p className="text-lg font-bold">{t('price', { price: variant.price })}</p>
+        <ProductPrice price={variant.price} fullPrice={variant.fullPrice} />
         {/* Buying is not wired yet: the button is a placeholder until the cart exists. */}
         <Button
           type="button"

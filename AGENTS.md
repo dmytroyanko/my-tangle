@@ -55,6 +55,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Every page sets `alternates` (canonical and hreflang) with `alternates()` from `@/shared/i18n`, and `<html lang>` matches the locale.
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
 - Write admin labels and descriptions in Ukrainian.
+- Code comments, `README.md`, `AGENTS.md` and other docs are in English. Ukrainian and Russian appear only in UI text (`messages/`), admin labels and content.
 
 ## Design tokens
 
@@ -89,7 +90,7 @@ The main goal of the move: move the site from Webflow to Next.js + Payload with 
 ### Keep what already ranks
 
 - Every URL of the current site that is indexed or has backlinks either keeps its exact path on the new site, or gets a **301** to its closest equivalent. No 302, no redirect chains, no mass redirects to the home page, no old URL left as a 404.
-- Old URLs end in `.html` (`/kontakty.html`) and are Russian without a prefix: each `/<slug>.html` goes to `/ru/<slug>` with 301 at production cutover. Every changed path is recorded in the "Редіректи при переїзді" table in `README.md` at the time of the change, not later.
+- Old URLs end in `.html` (`/kontakty.html`) and are Russian without a prefix: each `/<slug>.html` goes to `/ru/<slug>` with 301 at production cutover. Every changed path is recorded in the "Redirects at cutover" table in `README.md` at the time of the change, not later.
 - A published slug (category, product, page) is never changed without adding a 301 from the old one. Slugs are short, Latin, lowercase, without trailing slashes.
 - A new page is never weaker than the old one it replaces: title, meta description, H1, text, internal links and image alts are kept or improved. Ranking text is not removed; moving it lower on the page is fine, as long as it stays in the HTML.
 - Before cutover: crawl the old site (sitemap and links) and compare it with the new one page by page: status, title, description, H1, canonical, main text. Differences are fixed or agreed with the user.
@@ -137,7 +138,10 @@ The main goal of the move: move the site from Webflow to Next.js + Payload with 
 - Dev uses schema push. Schema changes for production are migrations: `pnpm payload migrate:create <name>`, committed in `src/payload/migrations/`. Production applies them on startup.
 - Required env vars are read with `requireEnv()` from `@/shared/lib/env`.
 - Seed scripts live in `src/payload/seed/` (data as JSON next to the script) and run with `pnpm payload run <file>`. They must be safe to re-run: match existing documents by slug and media by file name.
-- Product swatch colours are `variants[].color` (#rrggbb); card labels are `series` and `tags`.
+- Product swatch colours are `variants[].color` (#rrggbb); card labels are `series` and `tags`. A product whose variants have no colour (a spray) shows no palette.
+- Prices: the admin enters `fullPrice` (brushes and sprays: the supplier's full price minus 1 UAH; Invisibobble: the supplier's full price as is; a variant may override it). `price` is never typed in: `computeSalePrices` (`src/payload/hooks/salePrices.ts`) sets it to the full price minus the discount from the Shop settings global (20% by default) or the product's own `discountPercent`, rounded to whole UAH. Changing the global discount reprices every product. Cards and product pages show the site price with the full price crossed out and the discount (`ProductPrice`).
+- The home page shows the categories with `showOnHome`, in `order`. Do not hardcode category slugs in pages.
+- Product slugs are unique across all categories (`mini` is taken by The Ultimate Detangler Mini). The seed sets `generateSlug: false`, otherwise Payload makes the Russian slug from the title.
 - Media that nothing uses is deleted, not kept: after replacing photos or removing products, run `src/payload/seed/cleanup-media.ts` (lists unused files; `CLEANUP_APPLY=1` deletes them). Show the list to the user before deleting; on production, delete only with their explicit confirmation. Arguments like `--dry-run` do not reach `payload run`, so options are passed as env vars.
 
 ## UI

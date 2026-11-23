@@ -2,8 +2,8 @@
 // category (the-complete-carebrush.json):
 //   pnpm payload run src/payload/seed/catalog.ts                              (every category)
 //   CATEGORY=the-complete-carebrush pnpm payload run src/payload/seed/catalog.ts   (one category)
-// Data (names, prices, series) comes from the current site; photos from the manufacturer's site, or from
-// the current site or the supplier for colours the manufacturer does not show.
+// Names and series come from the current site, full prices from the supplier; photos from the manufacturer's
+// site, or from the current site or the supplier for colours the manufacturer does not show.
 //
 // Safe to run again. By default it only creates what is missing: a category or product that already
 // exists (matched by slug) is left as edited in the admin. SEED_UPDATE=1 overwrites them with the JSON.
@@ -34,6 +34,8 @@ type CatalogFile = {
     // Base of the category photo's file name.
     mediaKey: string
     order: number
+    // A block on the home page, as on the current site.
+    showOnHome: boolean
     title: Localized<string>
     heading: Localized<string>
     subtitle: Localized<string>
@@ -51,7 +53,8 @@ type CatalogFile = {
     title: string
     series: string
     order: number
-    price: number
+    // Full price: the supplier's price minus 1 UAH. Payload works out the site price (minus the shop discount).
+    fullPrice: number
     tags: Localized<string[]>
     description: Localized<string>
     // What the product is, for photo alt texts; brushes by default ("Щітка"), a spray says so.
@@ -64,7 +67,8 @@ type CatalogFile = {
       // Swatch colour; left out for a product without colours (a spray), which then shows no palette.
       color?: string
       inStock: boolean
-      price?: number
+      // Only when it differs from the product's full price.
+      fullPrice?: number
       images: ImageSource[]
     }[]
   }[]
@@ -298,7 +302,7 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
       'categories',
       categoryId,
       category.slug,
-      { order: category.order, image: categoryImage },
+      { order: category.order, showOnHome: category.showOnHome, image: categoryImage },
       {
         uk: {
           title: category.title.uk,
@@ -360,7 +364,7 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         name: variant.name,
         color: variant.color,
         inStock: variant.inStock,
-        price: variant.price,
+        fullPrice: variant.fullPrice,
         images,
       })
     }
@@ -374,7 +378,7 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         category: categoryId,
         series: product.series,
         order: product.order,
-        price: product.price,
+        fullPrice: product.fullPrice,
         variants,
         _status: 'published',
       },

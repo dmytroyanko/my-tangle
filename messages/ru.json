@@ -74,6 +74,8 @@
     "colour": "Цвет",
     "outOfStock": "Ожидаем",
     "price": "{price, number} грн",
+    "oldPrice": "Старая цена:",
+    "discount": "−{percent}%",
     "buy": "Купить",
     "close": "Закрыть",
     "previous": "Предыдущее фото",

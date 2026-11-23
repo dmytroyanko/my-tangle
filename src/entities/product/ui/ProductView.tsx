@@ -13,6 +13,7 @@ import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 import { ProductGallery } from './ProductGallery'
+import { ProductPrice } from './ProductPrice'
 
 type Props = {
   product: ProductCardData
@@ -144,7 +145,12 @@ export function ProductView({ product, initialColor, children }: Props) {
           </ul>
         )}
 
-        <p className="mt-6 text-3xl font-bold">{t('price', { price: variant.price })}</p>
+        <ProductPrice
+          price={variant.price}
+          fullPrice={variant.fullPrice}
+          size="lg"
+          className="mt-6"
+        />
         <p className="mt-1 flex items-center gap-2 text-sm">
           <span
             className={cn(

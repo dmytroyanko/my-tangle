@@ -8,7 +8,7 @@ import { specKeys, type ProductSpec } from '../model/specKeys'
 import { toCardData } from './toCardData'
 
 // A published product of the given category in the given locale, looked up by slug with the Ukrainian
-// fallback (see findBySlug). A product without colours is not ready to sell and has no page.
+// fallback (see findBySlug). A product without priced colours is not ready to sell and has no page.
 // Cached per request, so the page and its metadata share one query.
 export const getProductBySlug = cache(async (slug: string, categoryId: number, locale: Locale) => {
   const found = await findBySlug({
@@ -17,11 +17,13 @@ export const getProductBySlug = cache(async (slug: string, categoryId: number, l
     locale,
     where: { category: { equals: categoryId }, _status: { equals: 'published' } },
   })
-  if (!found?.doc.variants?.length) return null
+  if (!found) return null
   const { doc: product, slugs } = found
+  const card = toCardData(product)
+  if (!card.variants.length) return null
 
   return {
-    ...toCardData(product),
+    ...card,
     description: product.description ?? null,
     // The same text as plain text, for structured data.
     descriptionText: product.description

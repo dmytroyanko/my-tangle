@@ -99,8 +99,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('uk' | 'ru') | ('uk' | 'ru')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'shop-settings': ShopSetting;
+  };
+  globalsSelect: {
+    'shop-settings': ShopSettingsSelect<false> | ShopSettingsSelect<true>;
+  };
   locale: 'uk' | 'ru';
   widgets: {
     collections: CollectionsWidget;
@@ -155,13 +159,17 @@ export interface Product {
    */
   tags?: string[] | null;
   /**
-   * грн
+   * Ціна постачальника мінус 1 грн
    */
-  price: number;
+  fullPrice?: number | null;
   /**
-   * Стара ціна, грн (якщо є знижка)
+   * Порожньо — знижка з «Налаштувань магазину»
    */
-  compareAtPrice?: number | null;
+  discountPercent?: number | null;
+  /**
+   * Рахується автоматично при збереженні
+   */
+  price?: number | null;
   description?: {
     root: {
       type: string;
@@ -199,8 +207,9 @@ export interface Product {
          */
         color?: string | null;
         /**
-         * Якщо відрізняється від ціни товару
+         * Якщо відрізняється від повної ціни товару
          */
+        fullPrice?: number | null;
         price?: number | null;
         inStock?: boolean | null;
         images?: (number | Media)[] | null;
@@ -288,6 +297,10 @@ export interface Category {
    * Порядок у меню та на головній
    */
   order?: number | null;
+  /**
+   * Блок категорії з серіями на головній, у порядку поля «Порядок»
+   */
+  showOnHome?: boolean | null;
   products?: {
     docs?: (number | Product)[];
     hasNextPage?: boolean;
@@ -514,8 +527,9 @@ export interface ProductsSelect<T extends boolean = true> {
   series?: T;
   order?: T;
   tags?: T;
+  fullPrice?: T;
+  discountPercent?: T;
   price?: T;
-  compareAtPrice?: T;
   description?: T;
   specs?:
     | T
@@ -530,6 +544,7 @@ export interface ProductsSelect<T extends boolean = true> {
         name?: T;
         sku?: T;
         color?: T;
+        fullPrice?: T;
         price?: T;
         inStock?: T;
         images?: T;
@@ -574,6 +589,7 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   image?: T;
   order?: T;
+  showOnHome?: T;
   products?: T;
   meta?:
     | T
@@ -718,6 +734,29 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shop-settings".
+ */
+export interface ShopSetting {
+  id: number;
+  /**
+   * Ціна на сайті = повна ціна мінус знижка, округлено до гривні. Після збереження ціни всіх товарів перераховуються (крім товарів з власною знижкою).
+   */
+  discountPercent: number;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "shop-settings_select".
+ */
+export interface ShopSettingsSelect<T extends boolean = true> {
+  discountPercent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

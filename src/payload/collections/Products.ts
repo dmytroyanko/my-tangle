@@ -3,6 +3,8 @@ import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { computeSalePrices } from '../hooks/salePrices'
+
 export const Products: CollectionConfig = {
   slug: 'products',
   admin: {
@@ -14,6 +16,9 @@ export const Products: CollectionConfig = {
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    beforeValidate: [computeSalePrices],
   },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
@@ -46,12 +51,31 @@ export const Products: CollectionConfig = {
     {
       type: 'row',
       fields: [
-        { name: 'price', type: 'number', required: true, min: 0, admin: { description: 'грн' } },
         {
-          name: 'compareAtPrice',
+          name: 'fullPrice',
+          label: 'Повна ціна, грн',
+          type: 'number',
+          // Checked here instead of `required`, which would make the column NOT NULL and stop the schema
+          // update on products that already exist.
+          validate: (value: number | null | undefined) =>
+            typeof value === 'number' || 'Вкажіть повну ціну',
+          min: 0,
+          admin: { description: 'Ціна постачальника мінус 1 грн' },
+        },
+        {
+          name: 'discountPercent',
+          label: 'Знижка, %',
           type: 'number',
           min: 0,
-          admin: { description: 'Стара ціна, грн (якщо є знижка)' },
+          max: 90,
+          admin: { description: 'Порожньо — знижка з «Налаштувань магазину»' },
+        },
+        {
+          name: 'price',
+          label: 'Ціна на сайті, грн',
+          type: 'number',
+          min: 0,
+          admin: { readOnly: true, description: 'Рахується автоматично при збереженні' },
         },
       ],
     },
@@ -116,7 +140,20 @@ export const Products: CollectionConfig = {
         {
           type: 'row',
           fields: [
-            { name: 'price', type: 'number', min: 0, admin: { description: 'Якщо відрізняється від ціни товару' } },
+            {
+              name: 'fullPrice',
+              label: 'Повна ціна, грн',
+              type: 'number',
+              min: 0,
+              admin: { description: 'Якщо відрізняється від повної ціни товару' },
+            },
+            {
+              name: 'price',
+              label: 'Ціна на сайті, грн',
+              type: 'number',
+              min: 0,
+              admin: { readOnly: true },
+            },
             { name: 'inStock', type: 'checkbox', defaultValue: true },
           ],
         },

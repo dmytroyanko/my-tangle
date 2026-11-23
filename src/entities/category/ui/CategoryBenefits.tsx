@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/utils'
 
-import type { CategoryData } from '../api/getCategoryBySlug'
+import type { CategoryData } from '../api/toCategoryData'
 import { benefitIcons } from '../model/benefitIcons'
 
 // Short benefits with icons, under the product grid: one row from md, 2×2 on phones, where only the

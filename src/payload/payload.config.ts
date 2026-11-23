@@ -15,6 +15,7 @@ import { Categories } from './collections/Categories'
 import { Products } from './collections/Products'
 import { Pages } from './collections/Pages'
 import { Orders } from './collections/Orders'
+import { ShopSettings } from './globals/ShopSettings'
 import { requireEnv } from '@/shared/lib/env'
 import { migrations } from './migrations'
 
@@ -37,6 +38,7 @@ export default buildConfig({
     },
   },
   collections: [Products, Categories, Orders, Pages, Media, Users],
+  globals: [ShopSettings],
   editor: lexicalEditor(),
   // Content languages. Keep in sync with src/shared/i18n/routing.ts.
   localization: {

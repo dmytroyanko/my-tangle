@@ -6,6 +6,8 @@ export type ProductVariant = {
   // Swatch colour, #rrggbb.
   color: string | null
   price: number
+  // Price before the discount, shown crossed out.
+  fullPrice: number | null
   inStock: boolean
   images: ImageData[]
 }

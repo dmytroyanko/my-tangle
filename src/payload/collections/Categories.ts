@@ -85,6 +85,16 @@ export const Categories: CollectionConfig = {
       admin: { position: 'sidebar', description: 'Порядок у меню та на головній' },
     },
     {
+      name: 'showOnHome',
+      label: 'Показувати на головній',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        position: 'sidebar',
+        description: 'Блок категорії з серіями на головній, у порядку поля «Порядок»',
+      },
+    },
+    {
       name: 'products',
       type: 'join',
       collection: 'products',

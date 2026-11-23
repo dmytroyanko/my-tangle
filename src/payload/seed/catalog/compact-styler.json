@@ -195,17 +195,7 @@
           "color": "#f1e9df",
           "inStock": true,
           "images": [
-            {
-              "url": "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/IvoryRoseGold_CS_PDP_1.png",
-              "crop": {
-                "left": 150,
-                "top": 430,
-                "width": 505,
-                "height": 860
-              },
-              "background": "#ffffff",
-              "padding": 0.08
-            },
+            "https://media.sephora.eu/content/dam/gdam/europe/digital/pim/published/T/TANGLE_TEEZER/427283/56602-media_swatch-1.jpeg",
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/IvoryRoseGold_CS_PDP_1.png",
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/IvoryRoseGold_CS_PDP_5.png",
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/IvoryRoseGold_CS_PDP_3.png",

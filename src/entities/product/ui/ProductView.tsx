@@ -9,7 +9,7 @@ import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 
 import { colorKey } from '../model/colorKey'
-import { defaultVariantIndex } from '../model/defaultVariant'
+import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 import { ProductGallery } from './ProductGallery'
@@ -156,16 +156,20 @@ export function ProductView({ product, initialColor, children }: Props) {
           {variant.inStock ? tPage('inStock') : t('outOfStock')}
         </p>
 
-        <p className="mt-6 text-sm text-muted-foreground">
-          {t('colour')}: <span className="font-semibold text-foreground">{variant.name}</span>
-        </p>
-        <ColorSwatches
-          variants={product.variants}
-          selected={selected}
-          onSelect={select}
-          size="lg"
-          className="mt-3"
-        />
+        {hasPalette(product.variants) && (
+          <>
+            <p className="mt-6 text-sm text-muted-foreground">
+              {t('colour')}: <span className="font-semibold text-foreground">{variant.name}</span>
+            </p>
+            <ColorSwatches
+              variants={product.variants}
+              selected={selected}
+              onSelect={select}
+              size="lg"
+              className="mt-3"
+            />
+          </>
+        )}
 
         {/* Buying is not wired yet: the button is a placeholder until the cart exists. */}
         <Button

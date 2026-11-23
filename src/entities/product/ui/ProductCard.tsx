@@ -8,7 +8,7 @@ import { Link } from '@/shared/i18n'
 import { Button } from '@/shared/ui/button'
 
 import { colorKey } from '../model/colorKey'
-import { defaultVariantIndex } from '../model/defaultVariant'
+import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 
@@ -80,17 +80,21 @@ export function ProductCard({ product, href, priority = false }: Props) {
         </ul>
       )}
 
-      <ColorSwatches
-        variants={product.variants}
-        selected={selected}
-        onSelect={setSelected}
-        className="mt-3"
-      />
+      {hasPalette(product.variants) && (
+        <>
+          <ColorSwatches
+            variants={product.variants}
+            selected={selected}
+            onSelect={setSelected}
+            className="mt-3"
+          />
 
-      <p className="mt-2 text-xs text-muted-foreground">
-        {t('colour')}: <span className="font-semibold text-foreground">{variant.name}</span>
-        {!variant.inStock && <span> · {t('outOfStock')}</span>}
-      </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            {t('colour')}: <span className="font-semibold text-foreground">{variant.name}</span>
+            {!variant.inStock && <span> · {t('outOfStock')}</span>}
+          </p>
+        </>
+      )}
 
       <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-4">
         <p className="text-lg font-bold">{t('price', { price: variant.price })}</p>

@@ -79,7 +79,7 @@ Is snapshot column in _pages_v table created or renamed from another column?
 
 ### Наповнення каталогу
 
-Категорії з серіями, кольорами й фото завантажуються в базу скриптом. Кожна категорія — окремий файл у `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`): назви, ціни й серії зі старого сайту, фото з сайту виробника (для кольорів, яких там немає, — зі старого сайту або постачальника).
+Категорії з серіями, кольорами й фото завантажуються в базу скриптом. Кожна категорія — окремий файл у `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`): назви, ціни й серії зі старого сайту, фото з сайту виробника (для кольорів, яких там немає, — зі старого сайту або постачальника).
 
 ```bash
 pnpm payload run src/payload/seed/catalog.ts                                  # усі категорії

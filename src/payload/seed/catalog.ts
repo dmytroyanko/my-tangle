@@ -54,10 +54,15 @@ type CatalogFile = {
     price: number
     tags: Localized<string[]>
     description: Localized<string>
+    // What the product is, for photo alt texts; brushes by default ("Щітка"), a spray says so.
+    noun?: Localized<string>
+    // Own meta title and description, when the product page template (made for brushes) does not fit.
+    meta?: { title: Localized<string>; description: Localized<string> }
     specs: { key: string; value: Localized<string> }[]
     variants: {
       name: string
-      color: string
+      // Swatch colour; left out for a product without colours (a spray), which then shows no palette.
+      color?: string
       inStock: boolean
       price?: number
       images: ImageSource[]
@@ -236,14 +241,15 @@ async function save(
   shared: Record<string, unknown>,
   localized: Localized<Record<string, unknown>>,
 ) {
-  const ukData = { ...shared, ...localized.uk, slug } as never
+  // generateSlug: false keeps the given slug; otherwise Payload makes the Russian one from the title.
+  const ukData = { ...shared, ...localized.uk, slug, generateSlug: false } as never
   const doc = id
     ? await payload.update({ collection, id, data: ukData, locale: 'uk' })
     : await payload.create({ collection, data: ukData, locale: 'uk' })
   await payload.update({
     collection,
     id: doc.id,
-    data: { ...localized.ru, slug } as never,
+    data: { ...localized.ru, slug, generateSlug: false } as never,
     locale: 'ru',
   })
 
@@ -345,8 +351,8 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
       const images = await Promise.all(
         sources.map((url, index) =>
           upsertMedia(payload, url, `${name}-${index + 1}`, {
-            uk: `Щітка Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
-            ru: `Расческа Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
+            uk: `${product.noun?.uk ?? 'Щітка'} Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
+            ru: `${product.noun?.ru ?? 'Расческа'} Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
           }),
         ),
       )
@@ -377,11 +383,17 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
           title: product.title,
           tags: product.tags.uk,
           description: richText(product.description.uk),
+          ...(product.meta && {
+            meta: { title: product.meta.title.uk, description: product.meta.description.uk },
+          }),
         },
         ru: {
           title: product.title,
           tags: product.tags.ru,
           description: richText(product.description.ru),
+          ...(product.meta && {
+            meta: { title: product.meta.title.ru, description: product.meta.description.ru },
+          }),
         },
       },
     )

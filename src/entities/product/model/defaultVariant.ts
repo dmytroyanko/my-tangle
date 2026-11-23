@@ -7,3 +7,7 @@ export const defaultVariantIndex = (variants: ProductVariant[]) =>
     variants.findIndex((variant) => variant.inStock),
     0,
   )
+
+// A product with a palette. Without swatch colours (a spray in one size) there is no colour to pick, so the
+// palette and the colour line are left out.
+export const hasPalette = (variants: ProductVariant[]) => variants.some((variant) => variant.color)

@@ -194,7 +194,7 @@
         {
           "name": "Rosebud Pink",
           "color": "#d9bac9",
-          "inStock": true,
+          "inStock": false,
           "images": [
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RosebudPink_TUD_PDP_1.png",
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RosebudPink_TUD_PDP_2.png",
@@ -995,7 +995,7 @@
         {
           "name": "The Devil Wears Prada",
           "color": "#4d1112",
-          "inStock": true,
+          "inStock": false,
           "fullPrice": 789,
           "images": [
             "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/PDP_MUD_Chrome_DWP_2000x2000_Global_1.png",

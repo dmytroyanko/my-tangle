@@ -2,7 +2,9 @@
 // (Products → specs.key); the admin labels live in src/payload/collections/Products.ts, the site labels in
 // messages (ProductSpecs).
 export const specKeys = [
+  'animal',
   'hairType',
+  'coat',
   'use',
   'teeth',
   'size',

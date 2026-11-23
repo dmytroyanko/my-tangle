@@ -190,7 +190,7 @@ export interface Product {
    */
   specs?:
     | {
-        key: 'hairType' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
+        key: 'animal' | 'hairType' | 'coat' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
         value: string;
         id?: string | null;
       }[]

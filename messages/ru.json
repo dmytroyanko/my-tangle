@@ -72,7 +72,7 @@
   "ProductCard": {
     "openGallery": "Открыть фото: {name}",
     "colour": "Цвет",
-    "outOfStock": "Ожидаем",
+    "outOfStock": "Нет в наличии",
     "price": "{price, number} грн",
     "oldPrice": "Старая цена:",
     "discount": "−{percent}%",
@@ -118,6 +118,8 @@
     "brand": "Tangle Teezer",
     "brandCountry": "Великобритания",
     "keys": {
+      "animal": "Для кого",
+      "coat": "Шерсть",
       "hairType": "Тип волос",
       "use": "Использование",
       "teeth": "Зубчики",

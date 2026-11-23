@@ -151,16 +151,12 @@ export function ProductView({ product, initialColor, children }: Props) {
           size="lg"
           className="mt-6"
         />
-        <p className="mt-1 flex items-center gap-2 text-sm">
-          <span
-            className={cn(
-              'size-2 rounded-full',
-              variant.inStock ? 'bg-emerald-600' : 'bg-muted-foreground',
-            )}
-            aria-hidden="true"
-          />
-          {variant.inStock ? tPage('inStock') : t('outOfStock')}
-        </p>
+        {variant.inStock && (
+          <p className="mt-1 flex items-center gap-2 text-sm">
+            <span className="size-2 rounded-full bg-emerald-600" aria-hidden="true" />
+            {tPage('inStock')}
+          </p>
+        )}
 
         {hasPalette(product.variants) && (
           <>
@@ -177,15 +173,18 @@ export function ProductView({ product, initialColor, children }: Props) {
           </>
         )}
 
-        {/* Buying is not wired yet: the button is a placeholder until the cart exists. */}
-        <Button
-          type="button"
-          size="lg"
-          disabled={!variant.inStock}
-          className="mt-8 h-12 w-full rounded-full px-10 text-sm font-semibold tracking-[0.1em] uppercase sm:w-auto"
-        >
-          {variant.inStock ? t('buy') : t('outOfStock')}
-        </Button>
+        {variant.inStock ? (
+          // Buying is not wired yet: the button is a placeholder until the cart exists.
+          <Button
+            type="button"
+            size="lg"
+            className="mt-8 h-12 w-full rounded-full px-10 text-sm font-semibold tracking-[0.1em] uppercase sm:w-auto"
+          >
+            {t('buy')}
+          </Button>
+        ) : (
+          <p className="mt-8 text-base font-semibold text-muted-foreground">{t('outOfStock')}</p>
+        )}
 
         {children && <div className="mt-8">{children}</div>}
       </div>

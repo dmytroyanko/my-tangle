@@ -21,11 +21,12 @@ import { toSlug } from '@/shared/lib/slugify'
 
 type Locale = 'uk' | 'ru'
 type Localized<T> = Record<Locale, T>
-// A photo URL, or a part of a photo padded onto a larger canvas (a retailer photo, or the brush alone from a
-// packshot with its box, so the card preview matches the close-ups of other colours). `crop` is the area to
-// keep in the downloaded photo (manufacturer photos come at most 1600px wide), `background` the canvas
-// colour, which is lifted to white to match the manufacturer's photos, and `padding` the share of the width
-// added around the photo when it fills the frame edge to edge.
+// A photo URL, or a part of a photo, optionally padded onto a larger canvas: a retailer photo, the brush
+// alone from a packshot with its box (so the card preview matches the close-ups of other colours), or a
+// manufacturer photo without its grey edge (Pet Teezer). `crop` is the area to keep in the downloaded photo
+// (manufacturer photos come at most 1600px wide), `background` the canvas colour, which is lifted to white
+// to match the manufacturer's photos, and `padding` the share of the width added around the photo when it
+// fills the frame edge to edge.
 type Crop = { left: number; top: number; width: number; height: number }
 type ImageSource = string | { url: string; crop: Crop; background?: string; padding?: number }
 

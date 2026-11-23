@@ -102,7 +102,9 @@ export const Products: CollectionConfig = {
               required: true,
               // Keys match src/entities/product/model/specKeys.ts; site labels are in messages (ProductSpecs).
               options: [
+                { label: 'Для кого (тварини)', value: 'animal' },
                 { label: 'Тип волосся', value: 'hairType' },
+                { label: 'Шерсть (тварини)', value: 'coat' },
                 { label: 'Використання', value: 'use' },
                 { label: 'Зубчики', value: 'teeth' },
                 { label: 'Розмір', value: 'size' },

@@ -4,6 +4,7 @@ import * as migration_20261120_214924_category_faq from './20261120_214924_categ
 import * as migration_20261120_220654_category_benefits from './20261120_220654_category_benefits';
 import * as migration_20261121_221448_product_specs from './20261121_221448_product_specs';
 import * as migration_20261123_181611_sale_prices_home_categories from './20261123_181611_sale_prices_home_categories';
+import * as migration_20261123_192748_pet_spec_keys from './20261123_192748_pet_spec_keys';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20261123_181611_sale_prices_home_categories.up,
     down: migration_20261123_181611_sale_prices_home_categories.down,
-    name: '20261123_181611_sale_prices_home_categories'
+    name: '20261123_181611_sale_prices_home_categories',
+  },
+  {
+    up: migration_20261123_192748_pet_spec_keys.up,
+    down: migration_20261123_192748_pet_spec_keys.down,
+    name: '20261123_192748_pet_spec_keys'
   },
 ];

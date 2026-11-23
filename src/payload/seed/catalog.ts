@@ -1,21 +1,23 @@
-// Imports The Ultimate Detangler category with its series and colours from ultimate-detangler.json:
-//   pnpm payload run src/payload/seed/ultimate-detangler.ts
-// Data (names, prices, series) comes from the current site; photos from tangleteezer.com, or from the
-// current site for colours the manufacturer no longer shows.
+// Imports catalog categories with their series and colours from the JSON files in ./catalog, one file per
+// category (the-complete-carebrush.json):
+//   pnpm payload run src/payload/seed/catalog.ts                              (every category)
+//   CATEGORY=the-complete-carebrush pnpm payload run src/payload/seed/catalog.ts   (one category)
+// Data (names, prices, series) comes from the current site; photos from the manufacturer's site, or from
+// the current site or the supplier for colours the manufacturer does not show.
 //
 // Safe to run again. By default it only creates what is missing: a category or product that already
 // exists (matched by slug) is left as edited in the admin. SEED_UPDATE=1 overwrites them with the JSON.
 // A photo is matched by a file name that includes a hash of its source URL, so a changed URL in the
 // JSON uploads the new photo.
 import { createHash } from 'crypto'
+import { readdirSync, readFileSync } from 'fs'
+import path from 'path'
 
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import sharp from 'sharp'
 
 import { toSlug } from '@/shared/lib/slugify'
-
-import data from './ultimate-detangler.json'
 
 type Locale = 'uk' | 'ru'
 type Localized<T> = Record<Locale, T>
@@ -24,6 +26,46 @@ type Localized<T> = Record<Locale, T>
 // of the width added around the photo when it fills the frame edge to edge.
 type Crop = { left: number; top: number; width: number; height: number }
 type ImageSource = string | { url: string; crop: Crop; background?: string; padding?: number }
+
+// One category file. Rich text fields use the light markup described at richText() below.
+type CatalogFile = {
+  category: {
+    slug: string
+    // Base of the category photo's file name.
+    mediaKey: string
+    order: number
+    title: Localized<string>
+    heading: Localized<string>
+    subtitle: Localized<string>
+    description: Localized<string>
+    image: ImageSource
+    imageAlt: Localized<string>
+    meta: { title: Localized<string>; description: Localized<string> }
+    benefits: Localized<{ icon: string; title: string; text?: string }[]>
+    faq: Localized<{ question: string; answer: string }[]>
+  }
+  products: {
+    slug: string
+    // Base of the photo file names; kept when the slug changes, so the photos are not uploaded again.
+    mediaKey: string
+    title: string
+    series: string
+    order: number
+    price: number
+    tags: Localized<string[]>
+    description: Localized<string>
+    specs: { key: string; value: Localized<string> }[]
+    variants: {
+      name: string
+      color: string
+      inStock: boolean
+      price?: number
+      images: ImageSource[]
+    }[]
+  }[]
+}
+
+const CATALOG_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), 'catalog')
 
 // Photos are stored as WebP, at most this many pixels on the long side. Next.js serves smaller sizes.
 const MAX_IMAGE_SIZE = 1600
@@ -231,9 +273,8 @@ async function saveSpecs(
   })
 }
 
-async function run() {
-  const payload = await getPayload({ config })
-  const { category, products } = data
+async function importCategory(payload: Payload, { category, products }: CatalogFile) {
+  payload.logger.info(`== ${category.slug}`)
 
   let categoryId = await findBySlug(payload, 'categories', category.slug)
   if (categoryId && !UPDATE) {
@@ -243,7 +284,7 @@ async function run() {
     const categoryImage = await upsertMedia(
       payload,
       category.image,
-      'ud-category',
+      category.mediaKey,
       category.imageAlt,
     )
     categoryId = await save(
@@ -313,7 +354,7 @@ async function run() {
         name: variant.name,
         color: variant.color,
         inStock: variant.inStock,
-        price: 'price' in variant ? variant.price : undefined,
+        price: variant.price,
         images,
       })
     }
@@ -346,9 +387,18 @@ async function run() {
     )
     await saveSpecs(payload, savedId, product.specs)
   }
-
-  payload.logger.info('Done')
 }
 
-await run()
+const only = process.env.CATEGORY
+const files = readdirSync(CATALOG_DIR)
+  .filter((file) => file.endsWith('.json') && (!only || file === `${only}.json`))
+  .sort()
+if (!files.length) throw new Error(`No catalog file for CATEGORY=${only}`)
+
+const payload = await getPayload({ config })
+for (const file of files) {
+  const data = JSON.parse(readFileSync(path.join(CATALOG_DIR, file), 'utf8')) as CatalogFile
+  await importCategory(payload, data)
+}
+payload.logger.info('Done')
 process.exit(0)

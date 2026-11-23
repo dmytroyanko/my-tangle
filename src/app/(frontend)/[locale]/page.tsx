@@ -42,6 +42,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <div id="catalog">
         <CategoryShowcase slug="the-ultimate-detangler" className="py-12 md:py-16" />
       </div>
+      <CategoryShowcase slug="the-complete-carebrush" className="border-t border-border py-12 md:py-16" />
     </>
   )
 }

@@ -21,9 +21,11 @@ import { toSlug } from '@/shared/lib/slugify'
 
 type Locale = 'uk' | 'ru'
 type Localized<T> = Record<Locale, T>
-// A photo URL, or a retailer photo padded onto a larger canvas: `crop` is the area to keep, `background`
-// the canvas colour, which is lifted to white to match the manufacturer's photos, and `padding` the share
-// of the width added around the photo when it fills the frame edge to edge.
+// A photo URL, or a part of a photo padded onto a larger canvas (a retailer photo, or the brush alone from a
+// packshot with its box, so the card preview matches the close-ups of other colours). `crop` is the area to
+// keep in the downloaded photo (manufacturer photos come at most 1600px wide), `background` the canvas
+// colour, which is lifted to white to match the manufacturer's photos, and `padding` the share of the width
+// added around the photo when it fills the frame edge to edge.
 type Crop = { left: number; top: number; width: number; height: number }
 type ImageSource = string | { url: string; crop: Crop; background?: string; padding?: number }
 
@@ -51,7 +53,8 @@ type CatalogFile = {
     // Base of the photo file names; kept when the slug changes, so the photos are not uploaded again.
     mediaKey: string
     title: string
-    series: string
+    // Card badge and filter chip; left out when the category has a single product.
+    series?: string
     order: number
     // Full price: the supplier's price minus 1 UAH. Payload works out the site price (minus the shop discount).
     fullPrice: number

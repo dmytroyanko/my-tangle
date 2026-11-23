@@ -89,7 +89,7 @@ No page is served until it gets an answer. Two ways out:
 
 ### Catalog import
 
-Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`): names and series from the current site, full prices from the supplier, photos from the manufacturer's site (for colours it does not show, from the current site or the supplier).
+Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`): names and series from the current site, full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
 
 ```bash
 pnpm payload run src/payload/seed/catalog.ts                                  # every category

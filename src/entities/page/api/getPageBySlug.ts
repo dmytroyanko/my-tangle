@@ -12,48 +12,52 @@ const EXCERPT_LENGTH = 160
 function excerpt(text: string, length: number) {
   if (text.length <= length) return text
   const cut = text.slice(0, length)
-  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,.;:—–-]+$/, '')}…`
+  // At the last word break, or mid-word when the start has none (a long link).
+  const space = cut.lastIndexOf(' ')
+  return `${(space > 0 ? cut.slice(0, space) : cut).replace(/[\s,.;:—–-]+$/, '')}…`
 }
 
 // A published information page (an article, delivery terms) in the given locale, looked up by slug, also
-// by another language's slug unless `otherLocales` is false (see findBySlug). Cached per request, so the
+// by another language's slug as `otherLocales` says (see findBySlug). Cached per request, so the
 // page and its metadata share one query.
-export const getPageBySlug = cache(async (slug: string, locale: Locale, otherLocales = true) => {
-  const found = await findBySlug({
-    collection: 'pages',
-    slug,
-    locale,
-    where: { _status: { equals: 'published' } },
-    otherLocales,
-  })
-  if (!found) return null
-  const { doc: page, slugs } = found
-  const text = page.content
-    ? convertLexicalToPlaintext({ data: page.content }).replace(/\s+/g, ' ').trim()
-    : ''
+export const getPageBySlug = cache(
+  async (slug: string, locale: Locale, otherLocales: boolean | 'only' = true) => {
+    const found = await findBySlug({
+      collection: 'pages',
+      slug,
+      locale,
+      where: { _status: { equals: 'published' } },
+      otherLocales,
+    })
+    if (!found) return null
+    const { doc: page, slugs } = found
+    const text = page.content
+      ? convertLexicalToPlaintext({ data: page.content }).replace(/\s+/g, ' ').trim()
+      : ''
 
-  return {
-    id: page.id,
-    title: page.title,
-    content: page.content ?? null,
-    // Questions under the text, by topic; the plain-text answer is for structured data.
-    faq: (page.faq ?? []).map((group) => ({
-      title: group.title,
-      items: (group.items ?? []).map((item) => ({
-        question: item.question,
-        answer: item.answer,
-        answerText: convertLexicalToPlaintext({ data: item.answer }).replace(/\s+/g, ' ').trim(),
+    return {
+      id: page.id,
+      title: page.title,
+      content: page.content ?? null,
+      // Questions under the text, by topic; the plain-text answer is for structured data.
+      faq: (page.faq ?? []).map((group) => ({
+        title: group.title,
+        items: (group.items ?? []).map((item) => ({
+          question: item.question,
+          answer: item.answer,
+          answerText: convertLexicalToPlaintext({ data: item.answer }).replace(/\s+/g, ' ').trim(),
+        })),
       })),
-    })),
-    updatedAt: page.updatedAt,
-    slugs,
-    meta: {
-      title: page.meta?.title || null,
-      // An editor's SEO description, else the start of the text.
-      description: page.meta?.description || (text ? excerpt(text, EXCERPT_LENGTH) : null),
-      image: toImage(page.meta?.image),
-    },
-  }
-})
+      updatedAt: page.updatedAt,
+      slugs,
+      meta: {
+        title: page.meta?.title || null,
+        // An editor's SEO description, else the start of the text.
+        description: page.meta?.description || (text ? excerpt(text, EXCERPT_LENGTH) : null),
+        image: toImage(page.meta?.image),
+      },
+    }
+  },
+)
 
 export type PageData = NonNullable<Awaited<ReturnType<typeof getPageBySlug>>>

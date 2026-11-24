@@ -33,6 +33,7 @@ export const computeSalePrices: CollectionBeforeValidateHook = async ({
   data,
   originalDoc,
   req,
+  context,
 }) => {
   if (!data) return data
   const product = data as ProductPrices
@@ -42,10 +43,14 @@ export const computeSalePrices: CollectionBeforeValidateHook = async ({
   if (typeof fullPrice !== 'number') return data
 
   const own = pick(product, saved, 'discountPercent')
+  // repriceProducts passes the new shop discount: it is not saved yet when the products are.
+  const shop = context.shopDiscount
   const discount =
     typeof own === 'number'
       ? own
-      : (await req.payload.findGlobal({ slug: 'shop-settings', depth: 0, req })).discountPercent
+      : typeof shop === 'number'
+        ? shop
+        : (await req.payload.findGlobal({ slug: 'shop-settings', depth: 0, req })).discountPercent
 
   product.price = salePrice(fullPrice, discount)
   const variants = pick(product, saved, 'variants')
@@ -62,7 +67,9 @@ export const computeSalePrices: CollectionBeforeValidateHook = async ({
 // Only products whose latest save is published are saved here: Payload updates from the latest version, so
 // saving a product with a pending draft would publish the draft or unpublish the product. A draft gets the
 // new prices when it is published.
-// A product that cannot be saved is logged and skipped, so one bad product does not undo the settings.
+// Each product is saved in a transaction of its own, with the new discount passed in `context`: a product
+// update that fails rolls back its transaction, and sharing the settings' transaction would undo the new
+// discount and every product before it. Such a product is logged and skipped.
 export const repriceProducts: GlobalAfterChangeHook = async ({ doc, previousDoc, req }) => {
   if (doc.discountPercent === previousDoc?.discountPercent) return doc
 
@@ -80,7 +87,12 @@ export const repriceProducts: GlobalAfterChangeHook = async ({ doc, previousDoc,
     // A product with its own discount keeps its prices.
     if (typeof product.discountPercent === 'number') continue
     try {
-      await req.payload.update({ collection: 'products', id: product.id, data: {}, req })
+      await req.payload.update({
+        collection: 'products',
+        id: product.id,
+        data: {},
+        context: { shopDiscount: doc.discountPercent },
+      })
     } catch (error) {
       req.payload.logger.error({ err: error, msg: `Repricing product ${product.id} failed` })
     }

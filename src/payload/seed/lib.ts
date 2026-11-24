@@ -132,8 +132,10 @@ async function download(image: ImageSource): Promise<Buffer> {
         )
       }
       const channels = image.background.match(/[0-9a-f]{2}/gi)!.map((hex) => parseInt(hex, 16))
-      pipeline = pipeline.linear(
-        channels.map((value) => 255 / value),
+      // Three bands for three multipliers (a transparent PNG has four), and no division by zero for a
+      // background channel of 00.
+      pipeline = pipeline.flatten({ background: image.background }).linear(
+        channels.map((value) => 255 / Math.max(value, 1)),
         [0, 0, 0],
       )
     }

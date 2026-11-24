@@ -3,9 +3,11 @@ import { getPayload } from 'payload'
 
 import type { Locale } from '@/shared/i18n'
 
+import { variantPrice } from '../model/variantPrice'
+
 type Slugs = Partial<Record<Locale, string | null>>
 
-// Every published product that has a page (a colour with a price, as in toCardData): its slug and its
+// Every published product that has a page (a colour with a price, see variantPrice): its slug and its
 // category's slug per language, and the last change, for the sitemap.
 export async function getProductPaths() {
   const payload = await getPayload({ config })
@@ -22,9 +24,7 @@ export async function getProductPaths() {
   return docs.flatMap((doc) => {
     // A deleted category leaves null, an unpopulated one its id: no page either way.
     const category = doc.category as unknown as { slug?: Slugs } | number | null
-    const priced = (doc.variants ?? []).some(
-      (variant) => typeof (variant.price ?? doc.price) === 'number',
-    )
+    const priced = (doc.variants ?? []).some((variant) => variantPrice(variant, doc) !== null)
     if (!priced || !category || typeof category === 'number' || !category.slug) return []
     return {
       slugs: (doc.slug ?? {}) as unknown as Slugs,

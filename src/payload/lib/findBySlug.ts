@@ -26,8 +26,9 @@ export async function findBySlug<C extends SluggedCollection>({
   locale: Locale
   // Extra conditions, e.g. the category of a product or the published status.
   where?: Where
-  // Off when the caller first tries several collections in the current locale (the /[slug] route).
-  otherLocales?: boolean
+  // false: the current locale only; 'only': the other locales only, when the caller already tried the
+  // current one (the /[slug] route tries every collection in the current locale first).
+  otherLocales?: boolean | 'only'
   depth?: number
 }) {
   const payload = await getPayload({ config })
@@ -44,7 +45,7 @@ export async function findBySlug<C extends SluggedCollection>({
       joins: noJoins,
     })
 
-  let doc = (await find(locale)).docs[0]
+  let doc = otherLocales === 'only' ? undefined : (await find(locale)).docs[0]
   for (const other of otherLocales ? routing.locales : []) {
     if (doc) break
     if (other === locale) continue

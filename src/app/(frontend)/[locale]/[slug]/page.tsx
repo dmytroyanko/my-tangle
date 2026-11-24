@@ -38,7 +38,8 @@ const localePaths = (slugs: Partial<Record<Locale, string>>) =>
 // Both collections are tried in the current language first, so a page's own slug wins over another
 // language's slug of a category; then by another language's slug (the page then redirects to its own).
 async function resolve(slug: string, locale: Locale) {
-  for (const otherLocales of [false, true]) {
+  // The second pass skips the current locale, which the first one already tried.
+  for (const otherLocales of [false, 'only'] as const) {
     const category = await getCategoryBySlug(slug, locale, otherLocales)
     if (category) return { category }
     const page = await getPageBySlug(slug, locale, otherLocales)

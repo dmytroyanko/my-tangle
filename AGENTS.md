@@ -54,6 +54,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Internal links use `Link` from `@/shared/i18n`, not `next/link`. The admin (`/admin`) is the exception.
 - Every page sets `alternates` (canonical and hreflang) with `alternates()` from `@/shared/i18n`, and `<html lang>` matches the locale.
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
+- Paths of pages that live in code (contacts, checkout, later cart and account) are written once, in `src/shared/config/routes.ts` (per language), with `indexableRoutes` for the sitemap; routes, links, the cart and the sitemap read them from there. Pages from Payload are never linked by a hardcoded slug: the footer lists the pages marked "show in the footer" (`getFooterPages`), so a slug renamed in the admin keeps every link.
 - Write admin labels and descriptions in Ukrainian.
 - Code comments, `README.md`, `AGENTS.md` and other docs are in English. Ukrainian and Russian appear only in UI text (`messages/`), admin labels and content.
 

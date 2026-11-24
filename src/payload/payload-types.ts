@@ -379,10 +379,19 @@ export interface Page {
   id: number;
   title: string;
   /**
+   * Для посилань у футері; порожньо — повна назва
+   */
+  navTitle?: string | null;
+  /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
+  showInFooter?: boolean | null;
+  /**
+   * Менше — вище
+   */
+  footerOrder?: number | null;
   content?: {
     root: {
       type: string;
@@ -678,8 +687,11 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  navTitle?: T;
   generateSlug?: T;
   slug?: T;
+  showInFooter?: T;
+  footerOrder?: T;
   content?: T;
   faq?:
     | T

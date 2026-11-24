@@ -27,6 +27,9 @@ type PageFile = {
   // Ukrainian (KMU transliteration of the Ukrainian title) and Russian (the current site's URL).
   slug: Localized<string>
   title: Localized<string>
+  // Short title for the footer link; when set with footerOrder, the page is listed in the footer.
+  navTitle?: Localized<string>
+  footerOrder?: number
   meta: { title: Localized<string>; description: Localized<string> }
   images?: { key: string; url: ImageSource; alt: Localized<string> }[]
   // Key of the photo for social previews and structured data.
@@ -85,16 +88,22 @@ async function importPage(payload: Payload, page: PageFile) {
     'pages',
     id,
     page.slug,
-    { _status: 'published' },
+    {
+      _status: 'published',
+      showInFooter: page.footerOrder !== undefined,
+      footerOrder: page.footerOrder ?? 0,
+    },
     {
       uk: {
         title: page.title.uk,
+        navTitle: page.navTitle?.uk,
         content: content(page.content.uk),
         faq: faq('uk'),
         meta: { ...meta('uk'), image },
       },
       ru: {
         title: page.title.ru,
+        navTitle: page.navTitle?.ru,
         content: content(page.content.ru),
         faq: faq('ru'),
         meta: { ...meta('ru'), image },

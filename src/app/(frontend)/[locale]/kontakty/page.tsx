@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { siteName, siteUrl } from '@/shared/config'
+import { routes, siteName, siteUrl } from '@/shared/config'
 import { alternates, getPathname } from '@/shared/i18n'
 import { breadcrumbJsonLd, contactPageJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
@@ -12,9 +12,9 @@ import { StoreContacts } from '@/widgets/store-contacts'
 
 type Props = { params: Promise<{ locale: string }> }
 
-// The current site's URL (/kontakty.html redirects here at cutover). A static route, so it wins over
-// the category route /[slug].
-const path = '/kontakty'
+// A static route (the folder name is the path in routes.contacts), so it wins over the category route
+// /[slug]. The path is the same in both languages.
+const path = routes.contacts.uk
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params

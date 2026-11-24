@@ -9,6 +9,7 @@ import * as migration_20261123_220805_category_brand from './20261123_220805_cat
 import * as migration_20261123_222456_variant_discount from './20261123_222456_variant_discount';
 import * as migration_20261124_114655_page_faq from './20261124_114655_page_faq';
 import * as migration_20261124_143720_bundle_discount_toggle from './20261124_143720_bundle_discount_toggle';
+import * as migration_20261124_184911_page_footer from './20261124_184911_page_footer';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20261124_143720_bundle_discount_toggle.up,
     down: migration_20261124_143720_bundle_discount_toggle.down,
-    name: '20261124_143720_bundle_discount_toggle'
+    name: '20261124_143720_bundle_discount_toggle',
+  },
+  {
+    up: migration_20261124_184911_page_footer.up,
+    down: migration_20261124_184911_page_footer.down,
+    name: '20261124_184911_page_footer'
   },
 ];

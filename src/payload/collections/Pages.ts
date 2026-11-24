@@ -17,7 +17,33 @@ export const Pages: CollectionConfig = {
   },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
+    {
+      name: 'navTitle',
+      label: 'Коротка назва',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Для посилань у футері; порожньо — повна назва' },
+    },
     slugField({ useAsSlug: 'title', localized: true, slugify }),
+    {
+      type: 'row',
+      admin: { position: 'sidebar' },
+      fields: [
+        {
+          name: 'showInFooter',
+          label: 'Показувати у футері',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'footerOrder',
+          label: 'Порядок у футері',
+          type: 'number',
+          defaultValue: 0,
+          admin: { description: 'Менше — вище' },
+        },
+      ],
+    },
     { name: 'content', type: 'richText', localized: true },
     {
       name: 'faq',

@@ -14,12 +14,11 @@ import {
   useCart,
   type CartLine,
 } from '@/entities/cart/index.client'
+import { routes } from '@/shared/config'
 import { Link, type Locale } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle } from '@/shared/ui/sheet'
-
-import { checkoutPath } from '../config/paths'
 
 // The cart as a side panel: opens after "Buy" and from the header icon. When it opens, the lines are
 // checked on the server, so prices and stock are current; a colour out of stock stays in the cart, muted
@@ -122,7 +121,7 @@ export function CartSheet({ bundlePercent }: { bundlePercent: number | null }) {
                 onClick={close}
               >
                 {totals.count > 0 ? (
-                  <Link href={checkoutPath[locale]}>{t('checkout')}</Link>
+                  <Link href={routes.checkout[locale]}>{t('checkout')}</Link>
                 ) : (
                   t('checkout')
                 )}

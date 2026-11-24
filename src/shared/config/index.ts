@@ -1,4 +1,5 @@
 export { brands, withBrand, type BrandKey } from './brands'
 export { catalog, type CatalogKey } from './catalog'
+export { indexableRoutes, routes, type RouteKey } from './routes'
 export { foundedYear, mapUrl, openingHours, phones } from './contacts'
 export { siteName, siteUrl } from './site'

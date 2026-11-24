@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 import { getCategoryPaths } from '@/entities/category'
 import { getPagePaths } from '@/entities/page'
 import { getProductPaths } from '@/entities/product'
-import { siteUrl } from '@/shared/config'
+import { indexableRoutes, routes, siteUrl } from '@/shared/config'
 import { getPathname, routing, type Locale } from '@/shared/i18n'
 
 // Read from Payload on every request: the build has no database, and new products appear at once.
@@ -80,6 +80,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         page.updatedAt,
       ),
     ),
-    ...entries(all('/kontakty')),
+    // Pages from code, each language at its own path.
+    ...indexableRoutes.flatMap((key) => entries(routes[key])),
   ]
 }

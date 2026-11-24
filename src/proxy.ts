@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware'
 
-import { routing } from './i18n/routing'
+// Imported directly rather than via the public API so the proxy bundle stays small.
+import { routing } from './shared/i18n/routing'
 
 export default createMiddleware(routing)
 

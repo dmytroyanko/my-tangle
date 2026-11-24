@@ -1,12 +1,21 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { Open_Sans } from 'next/font/google'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
-import { routing } from '@/i18n/routing'
-import { alternates } from '@/i18n/alternates'
+import { siteUrl } from '@/shared/config'
+import { routing } from '@/shared/i18n'
+import { Footer } from '@/widgets/footer'
+import { Header } from '@/widgets/header'
 import '../globals.css'
+
+const openSans = Open_Sans({
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  variable: '--font-open-sans',
+})
 
 type Props = {
   children: React.ReactNode
@@ -23,10 +32,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     // Absolute base for canonical and hreflang URLs.
-    metadataBase: new URL(process.env.SITE_URL || 'https://my-tangle.com.ua'),
+    metadataBase: new URL(siteUrl),
     title: t('title'),
     description: t('description'),
-    alternates: alternates(locale, '/'),
+    // Tangle Teezer favicon (files in public/, shared with the admin).
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+        { url: '/icon.png', type: 'image/png', sizes: '134x134' },
+      ],
+      apple: '/icon.png',
+    },
   }
 }
 
@@ -36,10 +52,12 @@ export default async function RootLayout({ children, params }: Props) {
   setRequestLocale(locale)
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} className={openSans.variable} data-scroll-behavior="smooth">
+      <body className="flex min-h-svh flex-col">
         <NextIntlClientProvider>
-          <main>{children}</main>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

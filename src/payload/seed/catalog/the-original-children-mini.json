@@ -1,0 +1,322 @@
+{
+  "category": {
+    "slug": "the-original-children-mini",
+    "mediaKey": "ocm-category",
+    "order": 2,
+    "showOnHome": true,
+    "title": {
+      "uk": "The Original Children Mini",
+      "ru": "The Original Children Mini"
+    },
+    "heading": {
+      "uk": "Tangle Teezer The Original Mini",
+      "ru": "Tangle Teezer The Original Mini"
+    },
+    "subtitle": {
+      "uk": "Серія гребінців для дітей для дбайливого догляду за волоссям.",
+      "ru": "Серия расчесок для детей для бережного ухода за волосами."
+    },
+    "image": "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RainbowtheUnicorn_ORM_PDP_1.png",
+    "imageAlt": {
+      "uk": "Дитячий гребінець Tangle Teezer The Original Mini Rainbow Unicorn з коробкою",
+      "ru": "Детская расческа Tangle Teezer The Original Mini Rainbow Unicorn с коробкой"
+    },
+    "meta": {
+      "title": {
+        "uk": "Дитячі гребінці Tangle Teezer The Original Mini купити в Києві, Україна",
+        "ru": "Детские расчески Tangle Teezer The Original Mini купить в Киеве, Украина"
+      },
+      "description": {
+        "uk": "Маленькі гребінці для дітей The Original Mini від Tangle Teezer для щоденного використання, з єдинорогами. Щітка без ручки, зручно лежить у дитячій руці. Доставка по всій Україні.",
+        "ru": "Маленькие расчески для детей The Original Mini от Тангл Тизер для ежедневного использования, с единорогами. Щетка без ручки, удобно лежит в детской руке. Доставка по всей Украине."
+      }
+    },
+    "description": {
+      "uk": "Tangle Teezer The Original Mini — універсальний дитячий гребінець без ручки. Він підходить для сухого й вологого волосся, трохи менший за класичний The Original і зручно лягає в маленьку руку дитини. Яскравий дизайн подобається дітям, а всі переваги класичної моделі збережено: гребінець легко й дбайливо розчісує навіть найзаплутаніше дитяче волосся, не вириваючи його.\n\n### Як він працює\n\nThe Original Mini має таку саму унікальну дворівневу будову зубчиків, як і The Original. Довгі гнучкі зубчики розплутують вузлики й зменшують ламкість, короткі розгладжують кутикулу, тому волосся стає м'яким, блискучим і слухняним. Гребінець не електризує волосся й приємний на дотик.\n\n### Що обрати\n\n- **Rainbow Unicorn** і **Unicorn Magic** — дитячі дизайни з єдинорогами.\n- **Millennial Pink**, **Marine Splash** і **Buttercup Yellow** — однотонні кольори, які підійдуть і дорослим як компактний гребінець для сумки чи подорожей.\n- **Detangling Spray for Kids** зволожує волосся й полегшує розчісування. Його можна використовувати з 3 років.\n\n### Догляд\n\nТримайте гребінець подалі від високих температур. Регулярно очищуйте зубчики від волосся й залишків засобів — як це зробити, розповідаємо в статті [«Як мити Tangle Teezer»](/yak-myty-tangle-teezer).",
+      "ru": "Tangle Teezer The Original Mini — универсальная детская расческа без ручки. Она подходит для сухих и мокрых волос, немного меньше классической The Original и удобно ложится в маленькую руку ребенка. Яркий дизайн нравится детям, а все преимущества классической модели сохранены: расческа легко и бережно расчесывает даже самые запутанные детские волосы, не вырывая их.\n\n### Как она работает\n\nУ The Original Mini такое же уникальное двухуровневое строение зубчиков, как у The Original. Длинные гибкие зубчики распутывают узелки и уменьшают ломкость, короткие разглаживают кутикулу, поэтому волосы становятся мягкими, блестящими и послушными. Расческа не электризует волосы и приятна на ощупь.\n\n### Что выбрать\n\n- **Rainbow Unicorn** и **Unicorn Magic** — детские дизайны с единорогами.\n- **Millennial Pink**, **Marine Splash** и **Buttercup Yellow** — однотонные цвета, которые подойдут и взрослым как компактная расческа для сумки или путешествий.\n- **Detangling Spray for Kids** увлажняет волосы и облегчает расчесывание. Его можно использовать с 3 лет.\n\n### Уход\n\nБерегите расческу от высоких температур. Регулярно очищайте зубчики от волос и остатков средств — как это сделать, рассказываем в статье [«Как мыть Tangle Teezer»](/ru/kak-myt-tangle-teezer)."
+    },
+    "benefits": {
+      "uk": [
+        {
+          "icon": "baby",
+          "title": "Створений для дітей",
+          "text": "зручно лягає в маленьку руку"
+        },
+        {
+          "icon": "layers",
+          "title": "Дворівневі зубчики",
+          "text": "розплутують без смикання"
+        },
+        {
+          "icon": "droplets",
+          "title": "Для вологого і сухого волосся",
+          "text": "щоденний догляд"
+        },
+        {
+          "icon": "luggage",
+          "title": "Компактний",
+          "text": "без ручки, для сумки й подорожей"
+        }
+      ],
+      "ru": [
+        {
+          "icon": "baby",
+          "title": "Создана для детей",
+          "text": "удобно ложится в маленькую руку"
+        },
+        {
+          "icon": "layers",
+          "title": "Двухуровневые зубчики",
+          "text": "распутывают без рывков"
+        },
+        {
+          "icon": "droplets",
+          "title": "Для влажных и сухих волос",
+          "text": "ежедневный уход"
+        },
+        {
+          "icon": "luggage",
+          "title": "Компактная",
+          "text": "без ручки, для сумки и путешествий"
+        }
+      ]
+    },
+    "faq": {
+      "uk": [
+        {
+          "question": "Чим The Original Mini відрізняється від The Original?",
+          "answer": "The Original Mini — зменшена версія класичного The Original з такою самою дворівневою будовою зубчиків. Він приблизно 9,9 × 6,6 см і зручніше лежить у дитячій руці."
+        },
+        {
+          "question": "Чи підходить гребінець дорослим?",
+          "answer": "Так. Однотонні **Millennial Pink**, **Marine Splash** і **Buttercup Yellow** часто беруть як компактний гребінець для сумки чи подорожей. Якщо потрібен маленький гребінець з ручкою, подивіться **[The Ultimate Detangler Mini](/the-ultimate-detangler/mini)**."
+        },
+        {
+          "question": "Чи можна розчісувати вологе волосся?",
+          "answer": "Так. The Original Mini підходить і для вологого, і для сухого волосся."
+        },
+        {
+          "question": "З якого віку можна використовувати спрей для дітей?",
+          "answer": "Detangling Spray for Kids виробник рекомендує з 3 років. Дітям до 3 років він не підходить."
+        },
+        {
+          "question": "Як доглядати за гребінцем?",
+          "answer": "Тримайте його подалі від високих температур і регулярно очищуйте зубчики. Покрокова інструкція — у статті [«Як мити Tangle Teezer»](/yak-myty-tangle-teezer)."
+        }
+      ],
+      "ru": [
+        {
+          "question": "Чем The Original Mini отличается от The Original?",
+          "answer": "The Original Mini — уменьшенная версия классической The Original с таким же двухуровневым строением зубчиков. Она примерно 9,9 × 6,6 см и удобнее лежит в детской руке."
+        },
+        {
+          "question": "Подходит ли расческа взрослым?",
+          "answer": "Да. Однотонные **Millennial Pink**, **Marine Splash** и **Buttercup Yellow** часто берут как компактную расческу для сумки или путешествий. Если нужна маленькая расческа с ручкой, посмотрите **[The Ultimate Detangler Mini](/ru/the-ultimate-detangler/mini)**."
+        },
+        {
+          "question": "Можно ли расчесывать влажные волосы?",
+          "answer": "Да. The Original Mini подходит и для влажных, и для сухих волос."
+        },
+        {
+          "question": "С какого возраста можно использовать спрей для детей?",
+          "answer": "Detangling Spray for Kids производитель рекомендует с 3 лет. Детям до 3 лет он не подходит."
+        },
+        {
+          "question": "Как ухаживать за расческой?",
+          "answer": "Держите ее подальше от высоких температур и регулярно очищайте зубчики. Пошаговая инструкция — в статье [«Как мыть Tangle Teezer»](/ru/kak-myt-tangle-teezer)."
+        }
+      ]
+    }
+  },
+  "products": [
+    {
+      "slug": "the-original-mini",
+      "mediaKey": "the-original-mini",
+      "title": "The Original Mini",
+      "series": "Mini",
+      "order": 0,
+      "fullPrice": 489,
+      "tags": {
+        "uk": ["Для дітей", "Без ручки"],
+        "ru": ["Для детей", "Без ручки"]
+      },
+      "description": {
+        "uk": "The Original Mini — зменшена версія відзначеного нагородами гребінця The Original. Маленький за розміром, він чудово розплутує й ідеально підходить для дитячих рук.\n\nДворівневі зубчики помірної гнучкості проходять крізь вологе й сухе волосся без смикання. Довгі зубчики розплутують вузлики й зменшують ламкість, короткі розгладжують кутикулу, тому волосся стає гладким, блискучим і повністю розплутаним.\n\nRainbow Unicorn і Unicorn Magic — дитячі дизайни з єдинорогами, Millennial Pink, Marine Splash і Buttercup Yellow — однотонні. Тримайте гребінець подалі від високих температур.",
+        "ru": "The Original Mini — уменьшенная версия отмеченной наградами расчески The Original. Маленькая по размеру, она отлично распутывает и идеально подходит для детских рук.\n\nДвухуровневые зубчики умеренной гибкости проходят сквозь влажные и сухие волосы без рывков. Длинные зубчики распутывают узелки и уменьшают ломкость, короткие разглаживают кутикулу, поэтому волосы становятся гладкими, блестящими и полностью распутанными.\n\nRainbow Unicorn и Unicorn Magic — детские дизайны с единорогами, Millennial Pink, Marine Splash и Buttercup Yellow — однотонные. Держите расческу подальше от высоких температур."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Пряме, хвилясте, кучеряве",
+            "ru": "Прямые, волнистые, кудрявые"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "На вологому й сухому волоссі",
+            "ru": "На влажных и сухих волосах"
+          }
+        },
+        {
+          "key": "teeth",
+          "value": {
+            "uk": "Дворівневі, помірно гнучкі",
+            "ru": "Двухуровневые, умеренно гибкие"
+          }
+        },
+        {
+          "key": "size",
+          "value": {
+            "uk": "9,9 × 6,6 см, без ручки",
+            "ru": "9,9 × 6,6 см, без ручки"
+          }
+        },
+        {
+          "key": "weight",
+          "value": {
+            "uk": "63 г",
+            "ru": "63 г"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Компактний, для дитячих рук",
+            "ru": "Компактная, для детских рук"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Rainbow Unicorn",
+          "color": "#f6c3d4",
+          "inStock": true,
+          "fullPrice": 659,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RainbowtheUnicorn_ORM_PDP_1.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RainbowtheUnicorn_ORM_PDP_5.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RainbowtheUnicorn_ORM_PDP_3.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/RainbowtheUnicorn_ORM_PDP_4.png"
+          ]
+        },
+        {
+          "name": "Unicorn Magic",
+          "color": "#e993c6",
+          "inStock": true,
+          "fullPrice": 659,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/UnicornMagic_ORM_PDP_1.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/UnicornMagic_ORM_PDP_5.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/UnicornMagic_ORM_PDP_3.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/UnicornMagic_ORM_PDP_4.png"
+          ]
+        },
+        {
+          "name": "Millennial Pink",
+          "color": "#ecc6cc",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/MillennialPink_ORM_PDP_1.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/MillennialPink_ORM_PDP_5.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/MillennialPink_ORM_PDP_3.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/MillennialPink_ORM_PDP_4.png"
+          ]
+        },
+        {
+          "name": "Marine Splash",
+          "color": "#a9dcc6",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/64a743958d20c46a82c829dd_oms1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/64a7439654185a7abda70010_oms2.jpg"
+          ]
+        },
+        {
+          "name": "Buttercup Yellow",
+          "color": "#f3cf8e",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/ButtercupYellow_ORM_PDP_1.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/ButtercupYellow_ORM_PDP_5.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/ButtercupYellow_ORM_PDP_3.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/ButtercupYellow_ORM_PDP_4.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "detangling-spray-kids",
+      "mediaKey": "detangling-spray-kids",
+      "title": "Detangling Spray for Kids",
+      "series": "Kids",
+      "order": 1,
+      "fullPrice": 689,
+      "noun": {
+        "uk": "Спрей для розплутування",
+        "ru": "Спрей для распутывания"
+      },
+      "tags": {
+        "uk": ["Від 3 років", "Веганський"],
+        "ru": ["С 3 лет", "Веганский"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Дитячий спрей для розплутування волосся Tangle Teezer Detangling Spray for Kids — купити в Україні",
+          "ru": "Детский спрей для распутывания волос Tangle Teezer Detangling Spray for Kids — купить в Украине"
+        },
+        "description": {
+          "uk": "Оригінальний дитячий спрей Tangle Teezer Detangling Spray for Kids, 150 мл: зволожує волосся й полегшує розчісування, з фруктовим ароматом. Від 3 років. Ціна 552 грн, доставка Новою Поштою по всій Україні.",
+          "ru": "Оригинальный детский спрей Tangle Teezer Detangling Spray for Kids, 150 мл: увлажняет волосы и облегчает расчесывание, с фруктовым ароматом. С 3 лет. Цена 552 грн, доставка Новой Почтой по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Detangling Spray for Kids — легкий спрей для розплутування дитячого волосся без сліз. Він зволожує волосся й робить його слухнянішим, тому розчісування стає легшим і швидшим. Волосся стає м'якшим і гладкішим, але не обтяжується.\n\nСпрей має свіжий фруктовий аромат і сертифікований Vegan Society та PETA. Найкраще працює разом із гребінцем для розплутування, наприклад The Original Mini або The Ultimate Detangler Mini.\n\nСпрей не підходить дітям до 3 років.",
+        "ru": "Detangling Spray for Kids — легкий спрей для распутывания детских волос без слез. Он увлажняет волосы и делает их послушнее, поэтому расчесывание становится легче и быстрее. Волосы становятся мягче и глаже, но не утяжеляются.\n\nУ спрея свежий фруктовый аромат, он сертифицирован Vegan Society и PETA. Лучше всего работает вместе с расческой для распутывания, например The Original Mini или The Ultimate Detangler Mini.\n\nСпрей не подходит детям до 3 лет."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи",
+            "ru": "Все типы"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "На вологому й сухому волоссі",
+            "ru": "На влажных и сухих волосах"
+          }
+        },
+        {
+          "key": "size",
+          "value": {
+            "uk": "150 мл",
+            "ru": "150 мл"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Від 3 років, фруктовий аромат, веганський (Vegan Society, PETA)",
+            "ru": "С 3 лет, фруктовый аромат, веганский (Vegan Society, PETA)"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "150 мл",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/Kids_DS_PDP_1.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/Kids_DS_PDP_3.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/Kids_DS_PDP_5.png",
+            "https://cdn.shopify.com/s/files/1/0781/0514/9772/files/Kids_DS_PDP_6.png"
+          ]
+        }
+      ]
+    }
+  ]
+}

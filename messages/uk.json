@@ -3,8 +3,163 @@
     "title": "My-Tangle",
     "description": "Оригінальні гребінці Tangle Teezer та резинки Invisibobble"
   },
-  "HomePage": {
-    "lead": "Оригінальні гребінці Tangle Teezer. Новий сайт у розробці.",
-    "admin": "Адмінка"
+  "Header": {
+    "tagline": "магазин оригінальних Tangle Teezer",
+    "home": "My-Tangle — на головну",
+    "menu": "Меню",
+    "openMenu": "Відкрити меню",
+    "closeMenu": "Закрити меню",
+    "catalog": "Каталог",
+    "phones": "Телефони",
+    "call": "Зателефонувати",
+    "account": "Особистий кабінет",
+    "cart": "Кошик"
+  },
+  "LocaleSwitcher": {
+    "label": "Мова сайту"
+  },
+  "Navigation": {
+    "wetDetangler": "The Ultimate\nDetangler",
+    "carebrush": "The Complete\nCarebrush",
+    "childrenMini": "Children\nMini",
+    "compactStyler": "Compact\nStyler",
+    "easyDryGo": "Easy\nDry & Go",
+    "ultimateStyler": "The Ultimate\nStyler",
+    "backCombing": "Back\nCombing",
+    "scalp": "The Scalp\nExfoliator",
+    "petTeezer": "Pet\nTeezer",
+    "invisibobble": "Резинки\nInvisibobble"
+  },
+  "Catalog": {
+    "wetDetangler": "The Ultimate Detangler",
+    "carebrush": "The Complete Carebrush",
+    "childrenMini": "The Original Children Mini",
+    "compactStyler": "Compact Styler",
+    "easyDryGo": "Easy Dry & Go",
+    "ultimateStyler": "The Ultimate",
+    "backCombing": "Back-Combing Hairbrush",
+    "scalp": "The Scalp Exfoliator and Massager",
+    "petTeezer": "Pet Teezer",
+    "invisibobble": "Резинки Invisibobble"
+  },
+  "Footer": {
+    "home": "My-Tangle — на головну",
+    "about": "Магазин оригінальних гребінців Tangle Teezer та резинок Invisibobble з 2007 року. Доставка по всій Україні.",
+    "catalog": "Каталог",
+    "info": "Покупцям",
+    "howToSpotOriginal": "Як відрізнити оригінал",
+    "howToClean": "Як мити Tangle Teezer",
+    "faq": "Часті питання",
+    "contacts": "Контакти",
+    "address": "м. Київ, вул. Верховинна, 41",
+    "rights": "Усі права захищені.",
+    "madeIn": "Designed, manufactured and made in Great Britain"
+  },
+  "Organization": {
+    "streetAddress": "вул. Верховинна, 41",
+    "locality": "Київ"
+  },
+  "HomeHero": {
+    "title": "<line>Інноваційні гребінці</line> <line>Tangle Teezer</line>",
+    "lead": "Професійний догляд за волоссям у домашніх умовах: легке розчісування без болю й ламкості для будь-якого типу волосся.",
+    "cta": "Обрати гребінець",
+    "imageAlt": "Гребінець Tangle Teezer The Ultimate Detangler і масажер The Scalp Exfoliator на полиці у ванній"
+  },
+  "BundleDiscount": {
+    "label": "Знижка на комплект",
+    "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті",
+    "badge": "−7%"
+  },
+  "ProductCard": {
+    "openGallery": "Відкрити фото: {name}",
+    "colour": "Колір",
+    "outOfStock": "Немає в наявності",
+    "price": "{price, number} грн",
+    "oldPrice": "Стара ціна:",
+    "discount": "−{percent}%",
+    "buy": "Купити",
+    "close": "Закрити",
+    "previous": "Попереднє фото",
+    "next": "Наступне фото",
+    "photo": "Фото {index}"
+  },
+  "Breadcrumbs": {
+    "label": "Шлях до сторінки",
+    "home": "Головна"
+  },
+  "CategoryPage": {
+    "products": "Серії {title}"
+  },
+  "SeriesFilter": {
+    "label": "Фільтр за серією",
+    "all": "Усі",
+    "shown": "Показано {count} з {total}"
+  },
+  "DeliveryInfo": {
+    "title": "Доставка і оплата",
+    "hint": "Нова Пошта по всій Україні · оплата при отриманні або карткою онлайн",
+    "deliveryTitle": "Доставка",
+    "novaPoshta": "<b>«Нова Пошта»</b> — по всій Україні, за тарифами перевізника.",
+    "paymentTitle": "Оплата",
+    "cashOnDelivery": "<b>Накладеним платежем</b> — у відділенні «Нової Пошти» після огляду замовлення.",
+    "cardOnline": "<b>Карткою онлайн</b> — перед відправленням замовлення."
+  },
+  "CategoryFaq": {
+    "title": "Часті питання"
+  },
+  "ProductPage": {
+    "inStock": "В наявності",
+    "description": "Опис",
+    "otherSeries": "Інші серії {title}",
+    "metaTitle": "{name} — купити в Україні",
+    "metaDescription": "{brand, select, invisibobble {Оригінальний аксесуар для волосся} other {Оригінальний гребінець}} {name}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні."
+  },
+  "ProductSpecs": {
+    "title": "Характеристики",
+    "countries": {
+      "tangle-teezer": "Велика Британія",
+      "invisibobble": "Німеччина"
+    },
+    "keys": {
+      "animal": "Для кого",
+      "coat": "Шерсть",
+      "hairType": "Тип волосся",
+      "use": "Використання",
+      "teeth": "Зубчики",
+      "size": "Розмір",
+      "finish": "Покриття",
+      "features": "Особливості",
+      "length": "Довжина",
+      "weight": "Вага",
+      "brand": "Бренд",
+      "brandCountry": "Країна бренду"
+    }
+  },
+  "NotFound": {
+    "metaTitle": "Сторінку не знайдено — My-Tangle",
+    "title": "Сторінку не знайдено",
+    "text": "Можливо, її перенесли або в адресі є помилка. Перейдіть на головну або оберіть розділ каталогу.",
+    "home": "На головну",
+    "catalog": "Каталог"
+  },
+  "CatalogCta": {
+    "text": "Оберіть гребінець або резинки в каталозі — доставимо Новою Поштою по всій Україні.",
+    "link": "До каталогу"
+  },
+  "ContactsPage": {
+    "title": "Контакти",
+    "metaTitle": "Контакти магазину Tangle Teezer у Києві — My-Tangle",
+    "metaDescription": "Телефони, адреса й графік роботи My-Tangle — магазину оригінальних гребінців Tangle Teezer у Києві. Доставка Новою Поштою по всій Україні.",
+    "lead": "Магазин оригінальних гребінців Tangle Teezer і резинок Invisibobble з 2007 року. Зателефонуйте нам, щоб оформити замовлення або поставити питання про товар.",
+    "phonesTitle": "Телефони",
+    "phonesHint": "Приймаємо замовлення й відповідаємо на питання.",
+    "addressTitle": "Адреса",
+    "address": "м. Київ, вул. Верховинна, 41",
+    "openMap": "Відкрити на карті",
+    "hoursTitle": "Графік роботи",
+    "weekdays": "Пн – Пт",
+    "weekdaysHours": "10:00 – 19:00",
+    "weekend": "Сб – Нд",
+    "weekendHours": "лише прийом замовлень"
   }
 }

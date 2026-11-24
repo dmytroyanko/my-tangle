@@ -3,8 +3,163 @@
     "title": "My-Tangle",
     "description": "Оригинальные расчёски Tangle Teezer и резинки Invisibobble"
   },
-  "HomePage": {
-    "lead": "Оригинальные расчёски Tangle Teezer. Новый сайт в разработке.",
-    "admin": "Админка"
+  "Header": {
+    "tagline": "магазин оригинальных Tangle Teezer",
+    "home": "My-Tangle — на главную",
+    "menu": "Меню",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "catalog": "Каталог",
+    "phones": "Телефоны",
+    "call": "Позвонить",
+    "account": "Личный кабинет",
+    "cart": "Корзина"
+  },
+  "LocaleSwitcher": {
+    "label": "Язык сайта"
+  },
+  "Navigation": {
+    "wetDetangler": "The Ultimate\nDetangler",
+    "carebrush": "The Complete\nCarebrush",
+    "childrenMini": "Children\nMini",
+    "compactStyler": "Compact\nStyler",
+    "easyDryGo": "Easy\nDry & Go",
+    "ultimateStyler": "The Ultimate\nStyler",
+    "backCombing": "Back\nCombing",
+    "scalp": "The Scalp\nExfoliator",
+    "petTeezer": "Pet\nTeezer",
+    "invisibobble": "Резинки\nInvisibobble"
+  },
+  "Catalog": {
+    "wetDetangler": "The Ultimate Detangler",
+    "carebrush": "The Complete Carebrush",
+    "childrenMini": "The Original Children Mini",
+    "compactStyler": "Compact Styler",
+    "easyDryGo": "Easy Dry & Go",
+    "ultimateStyler": "The Ultimate",
+    "backCombing": "Back-Combing Hairbrush",
+    "scalp": "The Scalp Exfoliator and Massager",
+    "petTeezer": "Pet Teezer",
+    "invisibobble": "Резинки Invisibobble"
+  },
+  "Footer": {
+    "home": "My-Tangle — на главную",
+    "about": "Магазин оригинальных расчёсок Tangle Teezer и резинок Invisibobble с 2007 года. Доставка по всей Украине.",
+    "catalog": "Каталог",
+    "info": "Покупателям",
+    "howToSpotOriginal": "Как отличить оригинал",
+    "howToClean": "Как мыть Tangle Teezer",
+    "faq": "Частые вопросы",
+    "contacts": "Контакты",
+    "address": "г. Киев, ул. Верховинная, 41",
+    "rights": "Все права защищены.",
+    "madeIn": "Designed, manufactured and made in Great Britain"
+  },
+  "Organization": {
+    "streetAddress": "ул. Верховинная, 41",
+    "locality": "Киев"
+  },
+  "HomeHero": {
+    "title": "<line>Инновационные расчески</line> <line>Tangle Teezer</line>",
+    "lead": "Профессиональный уход за волосами в домашних условиях: легкое расчесывание без боли и ломкости для любого типа волос.",
+    "cta": "Выбрать расческу",
+    "imageAlt": "Расческа Tangle Teezer The Ultimate Detangler и массажер The Scalp Exfoliator на полке в ванной"
+  },
+  "BundleDiscount": {
+    "label": "Скидка на комплект",
+    "text": "<sr>Скидка 7%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте",
+    "badge": "−7%"
+  },
+  "ProductCard": {
+    "openGallery": "Открыть фото: {name}",
+    "colour": "Цвет",
+    "outOfStock": "Нет в наличии",
+    "price": "{price, number} грн",
+    "oldPrice": "Старая цена:",
+    "discount": "−{percent}%",
+    "buy": "Купить",
+    "close": "Закрыть",
+    "previous": "Предыдущее фото",
+    "next": "Следующее фото",
+    "photo": "Фото {index}"
+  },
+  "Breadcrumbs": {
+    "label": "Путь к странице",
+    "home": "Главная"
+  },
+  "CategoryPage": {
+    "products": "Серии {title}"
+  },
+  "SeriesFilter": {
+    "label": "Фильтр по серии",
+    "all": "Все",
+    "shown": "Показано {count} из {total}"
+  },
+  "DeliveryInfo": {
+    "title": "Доставка и оплата",
+    "hint": "Новая Почта по всей Украине · оплата при получении или картой онлайн",
+    "deliveryTitle": "Доставка",
+    "novaPoshta": "<b>«Новая Почта»</b> — по всей Украине, по тарифам перевозчика.",
+    "paymentTitle": "Оплата",
+    "cashOnDelivery": "<b>Наложенным платежом</b> — в отделении «Новой Почты» после осмотра заказа.",
+    "cardOnline": "<b>Картой онлайн</b> — перед отправкой заказа."
+  },
+  "CategoryFaq": {
+    "title": "Частые вопросы"
+  },
+  "ProductPage": {
+    "inStock": "В наличии",
+    "description": "Описание",
+    "otherSeries": "Другие серии {title}",
+    "metaTitle": "{name} — купить в Украине",
+    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине."
+  },
+  "ProductSpecs": {
+    "title": "Характеристики",
+    "countries": {
+      "tangle-teezer": "Великобритания",
+      "invisibobble": "Германия"
+    },
+    "keys": {
+      "animal": "Для кого",
+      "coat": "Шерсть",
+      "hairType": "Тип волос",
+      "use": "Использование",
+      "teeth": "Зубчики",
+      "size": "Размер",
+      "finish": "Покрытие",
+      "features": "Особенности",
+      "length": "Длина",
+      "weight": "Вес",
+      "brand": "Бренд",
+      "brandCountry": "Страна бренда"
+    }
+  },
+  "NotFound": {
+    "metaTitle": "Страница не найдена — My-Tangle",
+    "title": "Страница не найдена",
+    "text": "Возможно, ее перенесли или в адресе есть ошибка. Перейдите на главную или выберите раздел каталога.",
+    "home": "На главную",
+    "catalog": "Каталог"
+  },
+  "CatalogCta": {
+    "text": "Выберите расческу или резинки в каталоге — доставим Новой Почтой по всей Украине.",
+    "link": "В каталог"
+  },
+  "ContactsPage": {
+    "title": "Контакты",
+    "metaTitle": "Контакты магазина Tangle Teezer в Киеве — My-Tangle",
+    "metaDescription": "Телефоны, адрес и график работы My-Tangle — магазина оригинальных расчесок Tangle Teezer в Киеве. Доставка Новой Почтой по всей Украине.",
+    "lead": "Магазин оригинальных расчесок Tangle Teezer и резинок Invisibobble с 2007 года. Позвоните нам, чтобы оформить заказ или задать вопрос о товаре.",
+    "phonesTitle": "Телефоны",
+    "phonesHint": "Принимаем заказы и отвечаем на вопросы.",
+    "addressTitle": "Адрес",
+    "address": "г. Киев, ул. Верховинная, 41",
+    "openMap": "Открыть на карте",
+    "hoursTitle": "График работы",
+    "weekdays": "Пн – Пт",
+    "weekdaysHours": "10:00 – 19:00",
+    "weekend": "Сб – Вс",
+    "weekendHours": "только прием заказов"
   }
 }

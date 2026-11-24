@@ -1,4 +1,5 @@
 export { getCategoryBySlug, type CategoryData } from './api/getCategoryBySlug'
+export { getCategoryPaths } from './api/getCategoryPaths'
 export { getHomeCategories } from './api/getHomeCategories'
 export { CategoryAbout } from './ui/CategoryAbout'
 export { CategoryBenefits } from './ui/CategoryBenefits'

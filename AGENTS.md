@@ -34,7 +34,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Slices on the same layer do not import each other. If two features need the same thing, move it down to an entity or `shared`.
 - Import a slice only through its public API, `index.ts` at the slice root (`@/entities/product`), never from its internals. A client component must not import an `index.ts` that also exports server code (Payload queries): that pulls Payload into the browser bundle and breaks the build. Such a slice gets an `index.client.ts` with its client-safe exports (`@/entities/product/index.client`); steiger treats any `index.*` file as public API. Entity-to-entity imports go through `@x` (`@/entities/product/@x/cart`). `shared/ui` and `shared/lib` are imported per module (`@/shared/ui/button`).
 - Slice segments: `ui` (components), `model` (client state, types, logic), `api` (server data access and server actions), `lib` (helpers), `config`.
-- Category pages live at the site root, `/[slug]` (`src/app/(frontend)/[locale]/[slug]/page.tsx`), keeping the current site's flat URLs. Information pages will share this route: resolve a category first, then a page, else 404.
+- Category pages live at the site root, `/[slug]` (`src/app/(frontend)/[locale]/[slug]/page.tsx`), keeping the current site's flat URLs. Information pages (Payload `pages`) share this route: a category or a page by the current language's slug first, then by another language's slug (redirecting to its own), else 404. Unmatched deeper paths go to `[...rest]` and render `[locale]/not-found.tsx` inside the site layout.
 - Product pages are nested under their category: `/[slug]/[product]` (`src/app/(frontend)/[locale]/[slug]/[product]/page.tsx`), one page per series with its colours. `?color=<key>` only preselects a colour; the canonical URL has no parameter. Product slugs are short (`matte`, `mini`) and unique across the site.
 - Route files in `src/app/(frontend)/[locale]/` stay thin: read params, call entity `api` functions, compose widgets. Business logic does not live in them.
 - Add a slice only when something uses it. Do not create empty layers or placeholder slices.
@@ -54,6 +54,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Internal links use `Link` from `@/shared/i18n`, not `next/link`. The admin (`/admin`) is the exception.
 - Every page sets `alternates` (canonical and hreflang) with `alternates()` from `@/shared/i18n`, and `<html lang>` matches the locale.
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
+- Slugs are per language. A Ukrainian slug is the official (KMU) transliteration of the Ukrainian title (`/yak-myty-tangle-teezer`); a Russian slug keeps the old site's URL (`/ru/kak-myt-tangle-teezer`), so the 301s from `.html` land on it. Latin brand and product names stay as they are in both (`/the-ultimate-detangler`). Never give the Ukrainian version a Russian slug. Links in Ukrainian text use the Ukrainian slug, links in Russian text the Russian one.
 - Paths of pages that live in code (contacts, checkout, later cart and account) are written once, in `src/shared/config/routes.ts` (per language), with `indexableRoutes` for the sitemap; routes, links, the cart and the sitemap read them from there. Pages from Payload are never linked by a hardcoded slug: the footer lists the pages marked "show in the footer" (`getFooterPages`), so a slug renamed in the admin keeps every link.
 - Write admin labels and descriptions in Ukrainian.
 - Code comments, `README.md`, `AGENTS.md` and other docs are in English. Ukrainian and Russian appear only in UI text (`messages/`), admin labels and content.
@@ -103,7 +104,7 @@ The main goal of the move: move the site from Webflow to Next.js + Payload with 
 - Every page sets `alternates()` from `@/shared/i18n`: a self canonical without query parameters, and reciprocal hreflang `uk`, `ru`, `x-default`. `<html lang>` matches the locale.
 - A missing page returns a real 404 status (`notFound()`), never a 200 with an error text. Layouts do not set a canonical (it would leak to 404 pages).
 - Query parameters that only filter or preselect (`?color=`, `?series=`) never create new indexable pages: their canonical is the clean URL. Cart, checkout, account, search and `/admin` are `noindex` and stay out of the sitemap.
-- Before cutover the site must have `sitemap.xml` (only canonical, indexable 200 URLs, both languages, with hreflang) and `robots.txt` that points to it.
+- `src/app/sitemap.ts` lists every canonical, indexable 200 URL in both languages with hreflang, read from Payload on each request; `src/app/robots.ts` closes `/admin` and the Payload API (`/api`, but not the photos in `/api/media/`) and points to it. A new kind of page (a new route or collection) is added to the sitemap in the same change.
 
 ### Structured data
 

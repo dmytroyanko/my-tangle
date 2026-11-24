@@ -106,7 +106,7 @@ Photos are not duplicated: the script finds already uploaded ones by file name.
 
 ### Information pages
 
-Articles and other information pages are imported the same way, one JSON file per page in `src/payload/seed/pages/`. Texts follow the manufacturer's, adapted for the shop. Each language has its own slug: Ukrainian by transliteration (`/yak-myty-tangle-teezer`, `/yak-vidriznyty-oryhinal`), Russian the old site's (`/ru/kak-myt-tangle-teezer`, `/ru/kak-otlichit-original`). A page opened by the other language's slug redirects to its own. They live at the site root next to categories: `/[slug]` shows a category if one has that slug, otherwise the page.
+Articles and other information pages are imported the same way, one JSON file per page in `src/payload/seed/pages/`. Texts follow the manufacturer's, adapted for the shop. Each language has its own slug: Ukrainian by transliteration (`/yak-myty-tangle-teezer`, `/yak-vidriznyty-oryhinal`), Russian the old site's (`/ru/kak-myt-tangle-teezer`, `/ru/kak-otlichit-original`). A page opened by the other language's slug redirects to its own. A page can also have questions and answers grouped by topic (the FAQ, `/chasti-pytannia`), rendered with `FAQPage` structured data. They live at the site root next to categories: `/[slug]` shows a category if one has that slug, otherwise the page.
 
 ```bash
 pnpm payload run src/payload/seed/pages.ts                            # every page

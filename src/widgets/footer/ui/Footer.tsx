@@ -15,6 +15,7 @@ const infoLinks = [
     href: { uk: '/yak-vidriznyty-oryhinal', ru: '/kak-otlichit-original' },
   },
   { key: 'howToClean', href: { uk: '/yak-myty-tangle-teezer', ru: '/kak-myt-tangle-teezer' } },
+  { key: 'faq', href: { uk: '/chasti-pytannia', ru: '/chastye-voprosy' } },
   { key: 'contacts', href: { uk: '/kontakty', ru: '/kontakty' } },
 ] as const
 

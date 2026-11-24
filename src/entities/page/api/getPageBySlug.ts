@@ -36,6 +36,15 @@ export const getPageBySlug = cache(async (slug: string, locale: Locale, otherLoc
     id: page.id,
     title: page.title,
     content: page.content ?? null,
+    // Questions under the text, by topic; the plain-text answer is for structured data.
+    faq: (page.faq ?? []).map((group) => ({
+      title: group.title,
+      items: (group.items ?? []).map((item) => ({
+        question: item.question,
+        answer: item.answer,
+        answerText: convertLexicalToPlaintext({ data: item.answer }).replace(/\s+/g, ' ').trim(),
+      })),
+    })),
     updatedAt: page.updatedAt,
     slugs,
     meta: {

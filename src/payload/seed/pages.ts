@@ -32,6 +32,8 @@ type PageFile = {
   // Key of the photo for social previews and structured data.
   metaImage?: string
   content: Localized<string>
+  // Questions under the text, by topic; answers use the same markup as `content`.
+  faq?: Localized<{ title: string; items: { question: string; answer: string }[] }[]>
 }
 
 const PAGES_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), 'pages')
@@ -68,6 +70,11 @@ async function importPage(payload: Payload, page: PageFile) {
   if (page.metaImage && !media[page.metaImage])
     throw new Error(`${page.slug.uk}: no image "${page.metaImage}" for metaImage`)
   const image = page.metaImage ? media[page.metaImage] : undefined
+  const faq = (locale: 'uk' | 'ru') =>
+    (page.faq?.[locale] ?? []).map((group) => ({
+      title: group.title,
+      items: group.items.map((item) => ({ question: item.question, answer: content(item.answer) })),
+    }))
   const meta = (locale: 'uk' | 'ru') => ({
     title: page.meta.title[locale],
     description: page.meta.description[locale],
@@ -83,11 +90,13 @@ async function importPage(payload: Payload, page: PageFile) {
       uk: {
         title: page.title.uk,
         content: content(page.content.uk),
+        faq: faq('uk'),
         meta: { ...meta('uk'), image },
       },
       ru: {
         title: page.title.ru,
         content: content(page.content.ru),
+        faq: faq('ru'),
         meta: { ...meta('ru'), image },
       },
     },

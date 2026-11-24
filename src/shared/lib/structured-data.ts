@@ -117,6 +117,19 @@ export function articleJsonLd({
   }
 }
 
+// Questions and answers shown on a page (answers as plain text).
+export function faqJsonLd(items: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  }
+}
+
 // Breadcrumb trail for search results. `url` is absolute.
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {

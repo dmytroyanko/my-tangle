@@ -38,8 +38,9 @@ function internalHref(doc: LinkedDoc | null | undefined) {
   }
 }
 
+// "/ru", "/ru/…", "/ru#…" and "/ru?…" already name the language.
 const hasLocalePrefix = (path: string) =>
-  routing.locales.some((locale) => path === `/${locale}` || path.startsWith(`/${locale}/`))
+  routing.locales.some((locale) => new RegExp(`^/${locale}(?:$|[/#?])`).test(path))
 
 // Payload rich text with the site's rules: links to other websites get nofollow/noreferrer and open in
 // a new tab; links within the site keep the current language; headings follow the surrounding outline.

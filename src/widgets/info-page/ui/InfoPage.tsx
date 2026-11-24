@@ -4,8 +4,9 @@ import type { ReactNode } from 'react'
 import type { PageData } from '@/entities/page'
 import { siteUrl } from '@/shared/config'
 import { getPathname, type Locale } from '@/shared/i18n'
-import { articleJsonLd, breadcrumbJsonLd } from '@/shared/lib/structured-data'
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
+import { FaqList } from '@/shared/ui/faq-list'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { articleClassName, RichText } from '@/shared/ui/rich-text'
 
@@ -18,8 +19,8 @@ type Props = {
   children?: ReactNode
 }
 
-// An information page from Payload (an article such as "How to clean a Tangle Teezer"): title, text with
-// photos, and what the route adds under it.
+// An information page from Payload (an article such as "How to clean a Tangle Teezer", or the FAQ): title,
+// text with photos, questions by topic, and what the route adds under it.
 export async function InfoPage({ page, path, locale, children }: Props) {
   const tCrumbs = await getTranslations('Breadcrumbs')
   const absolute = (href: string) => new URL(getPathname({ locale, href }), siteUrl).href
@@ -36,6 +37,15 @@ export async function InfoPage({ page, path, locale, children }: Props) {
           locale,
         })}
       />
+      {page.faq.length > 0 && (
+        <JsonLd
+          data={faqJsonLd(
+            page.faq.flatMap((group) =>
+              group.items.map((item) => ({ question: item.question, answer: item.answerText })),
+            ),
+          )}
+        />
+      )}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: tCrumbs('home'), url: absolute('/') },
@@ -58,6 +68,14 @@ export async function InfoPage({ page, path, locale, children }: Props) {
               className={`mt-6 ${articleClassName}`}
             />
           )}
+          {page.faq.map((group, i) => (
+            <section key={`${i}-${group.title}`} aria-labelledby={`faq-${i}`} className="mt-10">
+              <h2 id={`faq-${i}`} className="text-xl leading-snug font-semibold md:text-2xl">
+                {group.title}
+              </h2>
+              <FaqList items={group.items} className="mt-4" />
+            </section>
+          ))}
         </article>
 
         {children}

@@ -7,8 +7,8 @@ import type { Locale } from '@/shared/i18n'
 import { specKeys, type ProductSpec } from '../model/specKeys'
 import { toCardData } from './toCardData'
 
-// A published product of the given category in the given locale, looked up by slug with the Ukrainian
-// fallback (see findBySlug). A product without priced colours is not ready to sell and has no page.
+// A published product of the given category in the given locale, looked up by slug, also by another
+// language's slug (see findBySlug). A product without priced colours is not ready to sell and has no page.
 // Cached per request, so the page and its metadata share one query.
 export const getProductBySlug = cache(async (slug: string, categoryId: number, locale: Locale) => {
   const found = await findBySlug({

@@ -9,6 +9,7 @@ import {
   CategoryFaq,
   getCategoryBySlug,
 } from '@/entities/category'
+import { getPageBySlug } from '@/entities/page'
 import { getProductsByCategory, ProductGrid, seriesKey } from '@/entities/product'
 import { SeriesFilter } from '@/features/series-filter'
 import { siteName, siteUrl } from '@/shared/config'
@@ -17,9 +18,14 @@ import { breadcrumbJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { BundleDiscount } from '@/widgets/bundle-discount'
+import { CatalogCta } from '@/widgets/catalog-cta'
 import { DeliveryInfo } from '@/widgets/delivery-info'
+import { InfoPage } from '@/widgets/info-page'
 
 type Props = { params: Promise<{ locale: string; slug: string }> }
+
+// Pages at the site root (/<slug>): a category if one has this slug, else an information page from Payload
+// (an article), else 404.
 
 // Products come from Payload, so the page renders per request (see the home page).
 export const dynamic = 'force-dynamic'
@@ -29,11 +35,42 @@ const localePaths = (slugs: Partial<Record<Locale, string>>) =>
     Record<Locale, string>
   >
 
+// Both collections are tried in the current language first, so a page's own slug wins over another
+// language's slug of a category; then by another language's slug (the page then redirects to its own).
+async function resolve(slug: string, locale: Locale) {
+  for (const otherLocales of [false, true]) {
+    const category = await getCategoryBySlug(slug, locale, otherLocales)
+    if (category) return { category }
+    const page = await getPageBySlug(slug, locale, otherLocales)
+    if (page) return { page }
+  }
+  return {}
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
   if (!hasLocale(routing.locales, locale)) return {}
-  const category = await getCategoryBySlug(slug, locale)
-  if (!category) return {}
+  const { category, page } = await resolve(slug, locale)
+  if (!category) {
+    if (!page) return {}
+    const title = page.meta.title || page.title
+    const description = page.meta.description ?? undefined
+    const image = page.meta.image
+    return {
+      title,
+      description,
+      alternates: alternates(locale, localePaths(page.slugs)),
+      openGraph: {
+        type: 'article',
+        title,
+        description,
+        siteName,
+        images: image
+          ? [{ url: image.url, width: image.width, height: image.height, alt: image.alt }]
+          : undefined,
+      },
+    }
+  }
 
   const title = category.meta.title || category.heading
   const description = category.meta.description || category.subtitle || undefined
@@ -58,8 +95,18 @@ export default async function CategoryPage({ params }: Props) {
   const { locale, slug } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
-  const category = await getCategoryBySlug(slug, locale)
-  if (!category) notFound()
+  const { category, page } = await resolve(slug, locale)
+  if (!category) {
+    if (!page) notFound()
+    const pagePath = `/${page.slugs[locale] ?? slug}`
+    // One address per page, as for categories below.
+    if (pagePath !== `/${slug}`) permanentRedirect(getPathname({ locale, href: pagePath }))
+    return (
+      <InfoPage page={page} path={pagePath} locale={locale}>
+        <CatalogCta className="mt-12 max-w-3xl" />
+      </InfoPage>
+    )
+  }
   const categoryPath = `/${category.slugs[locale] ?? slug}`
   // Reached by the slug of another language (/ru/<Ukrainian slug>): one address per page, so redirect to
   // this language's own one. Filters in the query string are dropped; they are not part of the page.

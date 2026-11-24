@@ -6,14 +6,17 @@ import { routing, type Locale } from '@/shared/i18n'
 type SluggedCollection = 'categories' | 'products' | 'pages'
 
 // A document by its slug in the given locale, for entity `api` functions. Payload matches slugs only in
-// the stored locale, so a lookup in another language falls back to the Ukrainian slug (the page then
-// redirects to the slug of its own language, when there is one). Also returns the slug of every language
-// version, for hreflang links; a locale without its own slug is left out.
+// the stored locale, so with `otherLocales` a slug of another language is looked up too (/ru/<Ukrainian
+// slug>, or a Ukrainian page reached by its Russian slug); the page then redirects to the slug of its own
+// language. A document without a Ukrainian slug has no Ukrainian page, so it is not found in Ukrainian (it
+// would otherwise be served at the Russian slug). Also returns the slug of every language version, for
+// hreflang links; a locale without its own slug is left out.
 export async function findBySlug<C extends SluggedCollection>({
   collection,
   slug,
   locale,
   where,
+  otherLocales = true,
   // 2, so documents linked from rich text come with their own relations (a product link needs its
   // category's slug).
   depth = 2,
@@ -23,6 +26,8 @@ export async function findBySlug<C extends SluggedCollection>({
   locale: Locale
   // Extra conditions, e.g. the category of a product or the published status.
   where?: Where
+  // Off when the caller first tries several collections in the current locale (the /[slug] route).
+  otherLocales?: boolean
   depth?: number
 }) {
   const payload = await getPayload({ config })
@@ -40,8 +45,10 @@ export async function findBySlug<C extends SluggedCollection>({
     })
 
   let doc = (await find(locale)).docs[0]
-  if (!doc && locale !== routing.defaultLocale) {
-    const fallback = (await find(routing.defaultLocale)).docs[0]
+  for (const other of otherLocales ? routing.locales : []) {
+    if (doc) break
+    if (other === locale) continue
+    const fallback = (await find(other)).docs[0]
     if (fallback)
       doc = await payload.findByID({ collection, id: fallback.id, locale, depth, joins: noJoins })
   }
@@ -59,6 +66,7 @@ export async function findBySlug<C extends SluggedCollection>({
       ((all as { slug?: unknown }).slug ?? {}) as Record<string, string | null>,
     ).filter(([, value]) => Boolean(value)),
   ) as Partial<Record<Locale, string>>
+  if (locale === routing.defaultLocale && !slugs[locale]) return null
 
   return { doc, slugs }
 }

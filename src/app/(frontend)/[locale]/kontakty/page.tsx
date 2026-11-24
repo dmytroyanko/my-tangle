@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { siteName, siteUrl } from '@/shared/config'
-import { alternates, getPathname, Link } from '@/shared/i18n'
+import { alternates, getPathname } from '@/shared/i18n'
 import { breadcrumbJsonLd, contactPageJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
-import { Button } from '@/shared/ui/button'
 import { JsonLd } from '@/shared/ui/json-ld'
+import { CatalogCta } from '@/widgets/catalog-cta'
 import { DeliveryInfo } from '@/widgets/delivery-info'
 import { StoreContacts } from '@/widgets/store-contacts'
 
@@ -75,12 +75,7 @@ export default async function ContactsPage({ params }: Props) {
         <StoreContacts className="mt-8 md:mt-10" />
         <DeliveryInfo className="mt-6" />
 
-        <div className="mt-10 flex flex-col items-start gap-4 rounded-xl bg-warm px-5 py-6 text-warm-foreground sm:flex-row sm:items-center sm:gap-6 md:px-8">
-          <p className="text-base font-semibold sm:flex-1">{t('catalogText')}</p>
-          <Button asChild className="rounded-full px-6">
-            <Link href="/#catalog">{t('catalogLink')}</Link>
-          </Button>
-        </div>
+        <CatalogCta className="mt-10" />
       </div>
     </>
   )

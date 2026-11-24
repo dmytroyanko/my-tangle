@@ -1,17 +1,21 @@
 import { MapPinIcon, PhoneIcon } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import { catalog, foundedYear, phones } from '@/shared/config'
-import { Link } from '@/shared/i18n'
+import { Link, type Locale } from '@/shared/i18n'
 import { Logo } from '@/shared/ui/logo'
 
 import { BritishFlag } from './BritishFlag'
 
-// Information pages. Paths are the current site's URLs; later these come from Payload pages.
+// Information pages, by language: the articles have a Ukrainian slug and the current site's Russian one.
+// Later these come from Payload pages.
 const infoLinks = [
-  { key: 'howToSpotOriginal', href: '/kak-otlichit-original' },
-  { key: 'howToClean', href: '/kak-myt-tangle-teezer' },
-  { key: 'contacts', href: '/kontakty' },
+  {
+    key: 'howToSpotOriginal',
+    href: { uk: '/yak-vidriznyty-oryhinal', ru: '/kak-otlichit-original' },
+  },
+  { key: 'howToClean', href: { uk: '/yak-myty-tangle-teezer', ru: '/kak-myt-tangle-teezer' } },
+  { key: 'contacts', href: { uk: '/kontakty', ru: '/kontakty' } },
 ] as const
 
 const headingClass = 'mb-4 text-xs font-semibold tracking-wider text-dark-foreground uppercase'
@@ -19,6 +23,7 @@ const linkClass = 'text-dark-foreground/70 transition-colors hover:text-dark-for
 
 export async function Footer() {
   const t = await getTranslations('Footer')
+  const locale = (await getLocale()) as Locale
   const tCatalog = await getTranslations('Catalog')
 
   return (
@@ -53,7 +58,7 @@ export async function Footer() {
           <ul className="grid gap-2.5">
             {infoLinks.map(({ key, href }) => (
               <li key={key}>
-                <Link href={href} className={linkClass}>
+                <Link href={href[locale]} className={linkClass}>
                   {t(key)}
                 </Link>
               </li>

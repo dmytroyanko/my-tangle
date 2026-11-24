@@ -104,6 +104,17 @@ SEED_UPDATE=1 CATEGORY=the-complete-carebrush pnpm payload run src/payload/seed/
 
 Photos are not duplicated: the script finds already uploaded ones by file name.
 
+### Information pages
+
+Articles and other information pages are imported the same way, one JSON file per page in `src/payload/seed/pages/`. Texts follow the manufacturer's, adapted for the shop. Each language has its own slug: Ukrainian by transliteration (`/yak-myty-tangle-teezer`, `/yak-vidriznyty-oryhinal`), Russian the old site's (`/ru/kak-myt-tangle-teezer`, `/ru/kak-otlichit-original`). A page opened by the other language's slug redirects to its own. They live at the site root next to categories: `/[slug]` shows a category if one has that slug, otherwise the page.
+
+```bash
+pnpm payload run src/payload/seed/pages.ts                            # every page
+PAGE=kak-myt-tangle-teezer pnpm payload run src/payload/seed/pages.ts  # one page
+```
+
+Animated GIFs are stored as animated WebP, at most 640px wide (about 300 KB).
+
 ### Unused media
 
 After replacing photos or removing products, old files stay in media. The script lists the files that no product, category or page uses (both languages, drafts included), and with `CLEANUP_APPLY=1` deletes them. Deletion cannot be undone, so review the list first:

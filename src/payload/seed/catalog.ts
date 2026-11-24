@@ -9,29 +9,27 @@
 // exists (matched by slug) is left as edited in the admin. SEED_UPDATE=1 overwrites them with the JSON.
 // A photo is matched by a file name that includes a hash of its source URL, so a changed URL in the
 // JSON uploads the new photo.
-import { createHash } from 'crypto'
 import { readdirSync, readFileSync } from 'fs'
 import path from 'path'
 
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
-import sharp from 'sharp'
 
 import { withBrand, type BrandKey } from '@/shared/config'
 import { toSlug } from '@/shared/lib/slugify'
 
-type Locale = 'uk' | 'ru'
-type Localized<T> = Record<Locale, T>
-// A photo URL, or a part of a photo, optionally padded onto a larger canvas: a retailer photo, the brush
-// alone from a packshot with its box (so the card preview matches the close-ups of other colours), or a
-// manufacturer photo without its grey edge (Pet Teezer). `crop` is the area to keep in the downloaded photo
-// (manufacturer photos come at most 1600px wide), `background` the canvas colour, which is lifted to white
-// to match the manufacturer's photos, and `padding` the share of the width added around the photo when it
-// fills the frame edge to edge.
-type Crop = { left: number; top: number; width: number; height: number }
-type ImageSource = string | { url: string; crop: Crop; background?: string; padding?: number }
+import {
+  findBySlug,
+  type ImageSource,
+  type Locale,
+  type Localized,
+  richText,
+  save,
+  UPDATE,
+  upsertMedia,
+} from './lib'
 
-// One category file. Rich text fields use the light markup described at richText() below.
+// One category file. Rich text fields use the light markup described at richText() in ./lib.ts.
 type CatalogFile = {
   category: {
     slug: string
@@ -87,190 +85,6 @@ type CatalogFile = {
 }
 
 const CATALOG_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), 'catalog')
-
-// Photos are stored as WebP, at most this many pixels on the long side. Next.js serves smaller sizes.
-const MAX_IMAGE_SIZE = 1600
-
-const UPDATE = process.env.SEED_UPDATE === '1'
-
-// Lexical rich text from the light markup used in the JSON: blocks separated by a blank line, "### "
-// headings, "- " bullet lists, **bold** and [text](url) inside a line.
-const common = { direction: 'ltr' as const, format: '' as const, indent: 0, version: 1 }
-
-// Bold may wrap a link (**[text](url)**), so bold content is parsed again with the bold format.
-function inline(line: string, format = 0): Record<string, unknown>[] {
-  const text = (value: string) => ({
-    type: 'text',
-    text: value,
-    detail: 0,
-    format,
-    mode: 'normal',
-    style: '',
-    version: 1,
-  })
-
-  return line
-    .split(/(\*\*.+?\*\*|\[[^\]]+\]\([^)]+\))/)
-    .filter(Boolean)
-    .flatMap((part) => {
-      const bold = part.match(/^\*\*(.+)\*\*$/)
-      const link = part.match(/^\[(.+)\]\((.+)\)$/)
-      if (bold) return inline(bold[1], format | 1)
-      if (link)
-        return [
-          {
-            ...common,
-            type: 'link',
-            version: 3,
-            fields: { url: link[2], linkType: 'custom', newTab: false },
-            children: inline(link[1], format),
-          },
-        ]
-      return [text(part)]
-    })
-}
-
-const richText = (markup: string) => ({
-  root: {
-    ...common,
-    type: 'root',
-    children: markup.split('\n\n').map((block) => {
-      if (block.startsWith('### '))
-        return { ...common, type: 'heading', tag: 'h3', children: inline(block.slice(4)) }
-      if (block.startsWith('- '))
-        return {
-          ...common,
-          type: 'list',
-          listType: 'bullet',
-          tag: 'ul',
-          start: 1,
-          children: block.split('\n').map((item, i) => ({
-            ...common,
-            type: 'listitem',
-            value: i + 1,
-            children: inline(item.slice(2)),
-          })),
-        }
-      return { ...common, type: 'paragraph', textFormat: 0, textStyle: '', children: inline(block) }
-    }),
-  },
-})
-
-async function download(image: ImageSource): Promise<Buffer> {
-  const url = typeof image === 'string' ? image : image.url
-  // Shopify resizes on its CDN, so the original 2000–4000px file is not downloaded.
-  const source = new URL(url)
-  if (source.host === 'cdn.shopify.com') source.searchParams.set('width', String(MAX_IMAGE_SIZE))
-  const response = await fetch(source)
-  if (!response.ok) throw new Error(`${response.status} ${source}`)
-
-  let pipeline = sharp(Buffer.from(await response.arrayBuffer()))
-  if (typeof image !== 'string') {
-    pipeline = pipeline.extract(image.crop)
-    if (image.background) {
-      if (image.padding) {
-        const pad = Math.round(image.crop.width * image.padding)
-        pipeline = sharp(
-          await pipeline
-            .extend({ top: pad, bottom: pad, left: pad, right: pad, background: image.background })
-            .toBuffer(),
-        )
-      }
-      const channels = image.background.match(/[0-9a-f]{2}/gi)!.map((hex) => parseInt(hex, 16))
-      pipeline = pipeline.linear(
-        channels.map((value) => 255 / value),
-        [0, 0, 0],
-      )
-    }
-  }
-  return pipeline
-    .resize(MAX_IMAGE_SIZE, MAX_IMAGE_SIZE, { fit: 'inside', withoutEnlargement: true })
-    .webp({ quality: 82 })
-    .toBuffer()
-}
-
-async function upsertMedia(
-  payload: Payload,
-  image: ImageSource,
-  name: string,
-  alt: Localized<string>,
-) {
-  const source = typeof image === 'string' ? image : JSON.stringify(image)
-  const hash = createHash('sha1').update(source).digest('hex').slice(0, 8)
-  const key = `${name}-${hash}`
-  // `contains`, not `equals`: when a file of that name is already on disk (media/ outlived the database),
-  // Payload saves the upload as key-1.webp.
-  const existing = await payload.find({
-    collection: 'media',
-    where: { filename: { contains: key } },
-    limit: 1,
-    depth: 0,
-  })
-
-  const found = existing.docs[0]
-  if (found) {
-    if (UPDATE) {
-      await payload.update({
-        collection: 'media',
-        id: found.id,
-        data: { alt: alt.uk },
-        locale: 'uk',
-      })
-      await payload.update({
-        collection: 'media',
-        id: found.id,
-        data: { alt: alt.ru },
-        locale: 'ru',
-      })
-    }
-    return found.id
-  }
-
-  const file = await download(image)
-  const created = await payload.create({
-    collection: 'media',
-    data: { alt: alt.uk },
-    file: { data: file, mimetype: 'image/webp', name: `${key}.webp`, size: file.length },
-    locale: 'uk',
-  })
-  await payload.update({ collection: 'media', id: created.id, data: { alt: alt.ru }, locale: 'ru' })
-
-  return created.id
-}
-
-async function findBySlug(payload: Payload, collection: 'categories' | 'products', slug: string) {
-  const { docs } = await payload.find({
-    collection,
-    where: { slug: { equals: slug } },
-    locale: 'uk',
-    limit: 1,
-    depth: 0,
-  })
-  return docs[0]?.id
-}
-
-async function save(
-  payload: Payload,
-  collection: 'categories' | 'products',
-  id: number | undefined,
-  slug: string,
-  shared: Record<string, unknown>,
-  localized: Localized<Record<string, unknown>>,
-) {
-  // generateSlug: false keeps the given slug; otherwise Payload makes the Russian one from the title.
-  const ukData = { ...shared, ...localized.uk, slug, generateSlug: false } as never
-  const doc = id
-    ? await payload.update({ collection, id, data: ukData, locale: 'uk' })
-    : await payload.create({ collection, data: ukData, locale: 'uk' })
-  await payload.update({
-    collection,
-    id: doc.id,
-    data: { ...localized.ru, slug, generateSlug: false } as never,
-    locale: 'ru',
-  })
-
-  return doc.id
-}
 
 // Characteristics are one list for both languages with a translated value. The Russian values are written
 // to the rows saved with the Ukrainian ones (matched by row id); rows sent without ids would replace them.

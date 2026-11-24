@@ -54,6 +54,7 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Internal links use `Link` from `@/shared/i18n`, not `next/link`. The admin (`/admin`) is the exception.
 - Every page sets `alternates` (canonical and hreflang) with `alternates()` from `@/shared/i18n`, and `<html lang>` matches the locale.
 - Payload text that users or search engines see (titles, slugs, descriptions, SEO fields, image alt) is `localized: true`. Prices, variants, SKUs and images are shared across languages.
+- Slugs are per language. A Ukrainian slug is the official (KMU) transliteration of the Ukrainian title (`/yak-myty-tangle-teezer`); a Russian slug keeps the old site's URL (`/ru/kak-myt-tangle-teezer`), so the 301s from `.html` land on it. Latin brand and product names stay as they are in both (`/the-ultimate-detangler`). Never give the Ukrainian version a Russian slug. Links in Ukrainian text use the Ukrainian slug, links in Russian text the Russian one.
 - Write admin labels and descriptions in Ukrainian.
 - Code comments, `README.md`, `AGENTS.md` and other docs are in English. Ukrainian and Russian appear only in UI text (`messages/`), admin labels and content.
 

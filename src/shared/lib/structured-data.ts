@@ -84,6 +84,39 @@ export function contactPageJsonLd({
   }
 }
 
+// An article (an information page). The shop is its author and publisher, with the same @id as on the home
+// page. Only the last change date is given: the pages were moved from the old site, so their creation date
+// here is not when they were written. `url` and `image` are absolute.
+export function articleJsonLd({
+  url,
+  headline,
+  description,
+  image,
+  dateModified,
+  locale,
+}: {
+  url: string
+  headline: string
+  description?: string
+  image?: string
+  dateModified: string
+  locale: string
+}) {
+  const shop = { '@type': 'Organization', '@id': organizationId, name: siteName, url: siteUrl }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline,
+    description,
+    image: image ? [image] : undefined,
+    dateModified,
+    inLanguage: locale,
+    mainEntityOfPage: url,
+    author: shop,
+    publisher: shop,
+  }
+}
+
 // Breadcrumb trail for search results. `url` is absolute.
 export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {

@@ -1,5 +1,5 @@
 import config from '@payload-config'
-import { getPayload, type Where } from 'payload'
+import { getPayload, type JoinQuery, type Where } from 'payload'
 
 import { routing, type Locale } from '@/shared/i18n'
 
@@ -14,7 +14,9 @@ export async function findBySlug<C extends SluggedCollection>({
   slug,
   locale,
   where,
-  depth = 1,
+  // 2, so documents linked from rich text come with their own relations (a product link needs its
+  // category's slug).
+  depth = 2,
 }: {
   collection: C
   slug: string
@@ -24,6 +26,8 @@ export async function findBySlug<C extends SluggedCollection>({
   depth?: number
 }) {
   const payload = await getPayload({ config })
+  // `false` turns every join off; the cast is needed because C is generic here.
+  const noJoins = false as JoinQuery<C>
   const find = (slugLocale: Locale) =>
     payload.find({
       collection,
@@ -31,12 +35,15 @@ export async function findBySlug<C extends SluggedCollection>({
       locale: slugLocale,
       limit: 1,
       depth,
+      // Join fields (a category's products) are not read by the site and would load every product.
+      joins: noJoins,
     })
 
   let doc = (await find(locale)).docs[0]
   if (!doc && locale !== routing.defaultLocale) {
     const fallback = (await find(routing.defaultLocale)).docs[0]
-    if (fallback) doc = await payload.findByID({ collection, id: fallback.id, locale, depth })
+    if (fallback)
+      doc = await payload.findByID({ collection, id: fallback.id, locale, depth, joins: noJoins })
   }
   if (!doc) return null
 

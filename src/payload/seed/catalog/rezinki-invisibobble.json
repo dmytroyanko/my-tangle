@@ -1,0 +1,1306 @@
+{
+  "category": {
+    "slug": "rezinki-invisibobble",
+    "mediaKey": "iv-category",
+    "order": 9,
+    "showOnHome": false,
+    "brand": "invisibobble",
+    "title": {
+      "uk": "Резинки Invisibobble",
+      "ru": "Резинки Invisibobble"
+    },
+    "heading": {
+      "uk": "Резинки Invisibobble",
+      "ru": "Резинки Invisibobble"
+    },
+    "subtitle": {
+      "uk": "Міцна фіксація волосся без заломів і пошкоджень.",
+      "ru": "Прочная фиксация волос без заломов и повреждений."
+    },
+    "image": "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/original_black.jpg",
+    "imageAlt": {
+      "uk": "Резинки-пружинки Invisibobble Original True Black в упаковці",
+      "ru": "Резинки-пружинки Invisibobble Original True Black в упаковке"
+    },
+    "meta": {
+      "title": {
+        "uk": "Резинки для волосся Invisibobble у формі пружинки, купити в Києві, Україна",
+        "ru": "Резинки для волос Invisibobble в форме пружинки, купить в Киеве, Украина"
+      },
+      "description": {
+        "uk": "Оригінальні резинки-браслети Invisibobble для будь-якого волосся, виробник Німеччина. Різні моделі: Original, Hair Tie, Sprunchie, Slim, а також заколки Clipstar, Everclaw і м'які бігуді. Багато яскравих кольорів. Доставка по всій Україні.",
+        "ru": "Оригинальные резинки-браслеты Invisibobble для любых волос, производитель Германия. Разные модели: Original, Hair Tie, Sprunchie, Slim, а также заколки Clipstar, Everclaw и мягкие бигуди. Много ярких цветов. Доставка по всей Украине."
+      }
+    },
+    "description": {
+      "uk": "Резинки-браслети Invisibobble тримають форму, не втрачаючи пружності, і дбайливо фіксують волосся без заломів — це можливо завдяки унікальній формі й матеріалам. Вони не сплутують волосся, підходять для сухого й вологого волосся й не вбирають воду. Створюйте нові зачіски щодня легко з нашими резинками.\n\n### Чому Invisibobble\n\nРезинки Invisibobble м'яко прилягають до волосся, захищаючи його від ламкості, і при цьому надійно фіксують його в потрібному положенні. Вони зроблені з гігієнічного поліуретану, який не вбирає бруд і легко миється, а носити їх зручно на зап'ясті як браслет.\n\n### Що обрати\n\n- **Original** — класичні резинки-пружинки; **Premium** — у металізованому покритті, **Slim** — для тонкого волосся.\n- **Sprunchie** — тканинні скранчі з пружинкою всередині.\n- **Hair Tie** і **Loop Plus** — класичні резинки та петлі для густого волосся.\n- **Clipstar**, **Everclaw** і **Myclaw** — заколки-краби на будь-яке волосся, є дитячі **Clipstar Kids**.\n- **М'які бігуді** — локони без нагрівання.\n\nРезинки Invisibobble гарно доповнюють гребінці Tangle Teezer: при замовленні в комплекті діє знижка 7%.",
+      "ru": "Резинки-браслеты Invisibobble держат форму, не теряя упругости, и бережно фиксируют волосы без заломов — это возможно благодаря уникальной форме и материалам. Они не спутывают волосы, подходят для сухих и влажных волос и не впитывают воду. Создавайте новые прически каждый день легко с нашими резинками.\n\n### Почему Invisibobble\n\nРезинки Invisibobble мягко прилегают к волосам, защищая их от ломкости, и при этом надежно фиксируют их в нужном положении. Они сделаны из гигиеничного полиуретана, который не впитывает грязь и легко моется, а носить их удобно на запястье как браслет.\n\n### Что выбрать\n\n- **Original** — классические резинки-пружинки; **Premium** — в металлизированном покрытии, **Slim** — для тонких волос.\n- **Sprunchie** — тканевые скранчи с пружинкой внутри.\n- **Hair Tie** и **Loop Plus** — классические резинки и петли для густых волос.\n- **Clipstar**, **Everclaw** и **Myclaw** — заколки-крабы на любые волосы, есть детские **Clipstar Kids**.\n- **Мягкие бигуди** — локоны без нагрева.\n\nРезинки Invisibobble отлично дополняют расчески Tangle Teezer: при заказе в комплекте действует скидка 7%."
+    },
+    "benefits": {
+      "uk": [
+        {
+          "icon": "sparkles",
+          "title": "Без заломів",
+          "text": "завдяки формі пружинки"
+        },
+        {
+          "icon": "droplets",
+          "title": "Не вбирають воду",
+          "text": "для сухого й вологого волосся"
+        },
+        {
+          "icon": "shield",
+          "title": "Гігієнічний поліуретан",
+          "text": "легко миються"
+        },
+        {
+          "icon": "gift",
+          "title": "Знижка 7%",
+          "text": "у комплекті з Tangle Teezer"
+        }
+      ],
+      "ru": [
+        {
+          "icon": "sparkles",
+          "title": "Без заломов",
+          "text": "благодаря форме пружинки"
+        },
+        {
+          "icon": "droplets",
+          "title": "Не впитывают воду",
+          "text": "для сухих и влажных волос"
+        },
+        {
+          "icon": "shield",
+          "title": "Гигиеничный полиуретан",
+          "text": "легко моются"
+        },
+        {
+          "icon": "gift",
+          "title": "Скидка 7%",
+          "text": "в комплекте с Tangle Teezer"
+        }
+      ]
+    },
+    "faq": {
+      "uk": [
+        {
+          "question": "Чому резинки Invisibobble не залишають заломів?",
+          "answer": "Спіральна форма розподіляє тиск нерівномірно, тому резинка тримає волосся міцно, але не перетискає його в одному місці. Після неї на волоссі не лишається заломів."
+        },
+        {
+          "question": "Чи можна користуватися резинками на вологому волоссі?",
+          "answer": "Так. Резинки Invisibobble зроблені з поліуретану, який не вбирає воду, тож підходять для вологого волосся, басейну й моря."
+        },
+        {
+          "question": "Резинка розтягнулася. Що робити?",
+          "answer": "Пружинка Invisibobble може трохи розтягуватися під час носіння. Покладіть її на кілька секунд у гарячу (не киплячу) воду або подуйте феном — вона повернеться до початкової форми."
+        },
+        {
+          "question": "Яку заколку обрати?",
+          "answer": "**Clipstar** — легкі заколки-краби багатьох дизайнів і розмірів, **Everclaw** — з міцною пружиною для густого волосся, **Myclaw** — з підвісками для власного дизайну. Для дітей є **Clipstar Kids**."
+        }
+      ],
+      "ru": [
+        {
+          "question": "Почему резинки Invisibobble не оставляют заломов?",
+          "answer": "Спиральная форма распределяет давление неравномерно, поэтому резинка держит волосы надежно, но не пережимает их в одном месте. После нее на волосах не остается заломов."
+        },
+        {
+          "question": "Можно ли пользоваться резинками на влажных волосах?",
+          "answer": "Да. Резинки Invisibobble сделаны из полиуретана, который не впитывает воду, поэтому подходят для влажных волос, бассейна и моря."
+        },
+        {
+          "question": "Резинка растянулась. Что делать?",
+          "answer": "Пружинка Invisibobble может немного растягиваться во время носки. Положите ее на несколько секунд в горячую (не кипящую) воду или подуйте феном — она вернется к исходной форме."
+        },
+        {
+          "question": "Какую заколку выбрать?",
+          "answer": "**Clipstar** — легкие заколки-крабы многих дизайнов и размеров, **Everclaw** — с прочной пружиной для густых волос, **Myclaw** — с подвесками для собственного дизайна. Для детей есть **Clipstar Kids**."
+        }
+      ]
+    }
+  },
+  "products": [
+    {
+      "slug": "invisibobble-original",
+      "mediaKey": "invisibobble-original",
+      "title": "Invisibobble Original",
+      "series": "Original",
+      "order": 0,
+      "fullPrice": 285,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Резинка для волосся",
+        "ru": "Резинка для волос"
+      },
+      "tags": {
+        "uk": ["Резинка-пружинка", "Без заломів"],
+        "ru": ["Резинка-пружинка", "Без заломов"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Original — купити в Україні",
+          "ru": "Invisibobble Original — купить в Украине"
+        },
+        "description": {
+          "uk": "Оригінальні резинки-пружинки Invisibobble Original: міцно тримають волосся без заломів, не вбирають воду. Original, Premium і Slim. Доставка по всій Україні.",
+          "ru": "Оригинальные резинки-пружинки Invisibobble Original: надежно держат волосы без заломов, не впитывают воду. Original, Premium и Slim. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Original — легендарна резинка-пружинка, яка міцно тримає волосся й не залишає заломів. Завдяки спіральній формі тиск розподіляється нерівномірно, тому резинка не тисне, не смикає волосся й не викликає головного болю навіть у тугому хвості.\n\nРезинки зроблені з гігієнічного поліуретану: він не вбирає воду й бруд і легко миється. Підходять для сухого й вологого волосся, їх зручно носити на зап'ясті як браслет. Premium — у металізованому покритті, Slim — тонша версія для тонкого волосся й маленьких хвостиків.",
+        "ru": "Invisibobble Original — легендарная резинка-пружинка, которая надежно держит волосы и не оставляет заломов. Благодаря спиральной форме давление распределяется неравномерно, поэтому резинка не давит, не тянет волосы и не вызывает головной боли даже в тугом хвосте.\n\nРезинки сделаны из гигиеничного полиуретана: он не впитывает воду и грязь и легко моется. Подходят для сухих и влажных волос, их удобно носить на запястье как браслет. Premium — в металлизированном покрытии, Slim — более тонкая версия для тонких волос и маленьких хвостиков."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи; Slim — тонке",
+            "ru": "Все типы; Slim — тонкие"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "На вологому й сухому волоссі",
+            "ru": "На влажных и сухих волосах"
+          }
+        },
+        {
+          "key": "size",
+          "value": {
+            "uk": "Original — 3 × 1,6 см",
+            "ru": "Original — 3 × 1,6 см"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Гігієнічний поліуретан, 3 шт. в упаковці",
+            "ru": "Гигиеничный полиуретан, 3 шт. в упаковке"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "True Black",
+          "color": "#1f1f1f",
+          "inStock": true,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/original_black.jpg"]
+        },
+        {
+          "name": "Crystal Clear",
+          "color": "#e6ecef",
+          "inStock": true,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_4.png"]
+        },
+        {
+          "name": "Bronze Me Pretty",
+          "color": "#c79a7c",
+          "inStock": true,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/bronze_me.jpg"]
+        },
+        {
+          "name": "Premium Crystal Clear",
+          "color": "#e6ecef",
+          "inStock": true,
+          "fullPrice": 305,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/original_premium_crystal_clear.jpg"
+          ]
+        },
+        {
+          "name": "Premium True Black",
+          "color": "#1f1f1f",
+          "inStock": true,
+          "fullPrice": 305,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/premium_black_original.jpg"
+          ]
+        },
+        {
+          "name": "Slim Premium Crystal Clear",
+          "color": "#e6ecef",
+          "inStock": true,
+          "fullPrice": 305,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/slim_crystal.jpg"]
+        }
+      ]
+    },
+    {
+      "slug": "hair-tie",
+      "mediaKey": "hair-tie",
+      "title": "Invisibobble Hair Tie",
+      "series": "Hair Tie",
+      "order": 1,
+      "fullPrice": 305,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Резинка для волосся",
+        "ru": "Резинка для волос"
+      },
+      "tags": {
+        "uk": ["Класична резинка", "Без металевих деталей"],
+        "ru": ["Классическая резинка", "Без металлических деталей"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Hair Tie — купити в Україні",
+          "ru": "Invisibobble Hair Tie — купить в Украине"
+        },
+        "description": {
+          "uk": "Резинки для волосся Invisibobble Hair Tie: м'які, без металевих деталей, для щоденних зачісок. Оригінал. Доставка по всій Україні.",
+          "ru": "Резинки для волос Invisibobble Hair Tie: мягкие, без металлических деталей, для ежедневных причесок. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Hair Tie — класичні м'які резинки для щоденних зачісок. Вони надійно тримають хвіст чи пучок і дбайливо ставляться до волосся: без металевих з'єднань, які чіпляються й ламають пасма.\n\nУ наборі кілька резинок одного відтінку, їх зручно мати під рукою вдома, у сумці й у спортзалі.",
+        "ru": "Invisibobble Hair Tie — классические мягкие резинки для ежедневных причесок. Они надежно держат хвост или пучок и бережно относятся к волосам: без металлических соединений, которые цепляются и ломают пряди.\n\nВ наборе несколько резинок одного оттенка, их удобно иметь под рукой дома, в сумке и в спортзале."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи",
+            "ru": "Все типы"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Щоденні зачіски",
+            "ru": "Ежедневные прически"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Без металевих деталей",
+            "ru": "Без металлических деталей"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Black",
+          "color": "#1f1f1f",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-04-02T125423.614.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/DesignohneTitel-2024-04-10T180055.837.png"
+          ]
+        },
+        {
+          "name": "Mocha",
+          "color": "#8a6b55",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-04-02T125258.598.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4CB0D066-731D-4A53-9827-6510C72A3225-420-0000000C853B5ED1.jpg"
+          ]
+        },
+        {
+          "name": "Pastel Dream",
+          "color": "#c6c0e6",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4063528084590_0.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4063528084590_1.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4063528084590_2.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4063528084590_3.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/4063528084590_4.png"
+          ]
+        },
+        {
+          "name": "Neon Glow",
+          "color": "#f2477a",
+          "inStock": false,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b2df19b99e6545ba994_iv-ht-ng-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b2e6de54d10e96d06a6_iv-ht-ng-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b2e2cfe01bafc7390ba_iv-ht-ng-3.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b2e403b283d5d9d03d8_iv-ht-ng-4.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "loop-plus",
+      "mediaKey": "loop-plus",
+      "title": "Invisibobble Loop Plus",
+      "series": "Loop",
+      "order": 2,
+      "fullPrice": 505,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Резинка для волосся",
+        "ru": "Резинка для волос"
+      },
+      "tags": {
+        "uk": ["Резинка-петля", "Для густого волосся"],
+        "ru": ["Резинка-петля", "Для густых волос"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Loop Plus — купити в Україні",
+          "ru": "Invisibobble Loop Plus — купить в Украине"
+        },
+        "description": {
+          "uk": "Резинки для волосся Invisibobble Loop Plus для густого волосся: міцна фіксація без смикання. Оригінал. Доставка по всій Україні.",
+          "ru": "Резинки для волос Invisibobble Loop Plus для густых волос: надежная фиксация без рывков. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Loop Plus — резинки-петлі для густого й довгого волосся. Вони міцно тримають хвіст і пучок протягом дня, не перетягують волосся й легко знімаються без смикання.",
+        "ru": "Invisibobble Loop Plus — резинки-петли для густых и длинных волос. Они надежно держат хвост и пучок в течение дня, не перетягивают волосы и легко снимаются без рывков."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Густе й довге",
+            "ru": "Густые и длинные"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Хвіст, пучок",
+            "ru": "Хвост, пучок"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Beachy Bliss",
+          "color": "#e8662a",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b3242aca3cec4b7d850_iv-lp-bb-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b3250a8555484b10cd9_iv-lp-bb-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b332cfe01bafc739396_iv-lp-bb-3.jpg"
+          ],
+          "discountPercent": 35
+        }
+      ]
+    },
+    {
+      "slug": "sprunchie",
+      "mediaKey": "sprunchie",
+      "title": "Invisibobble Sprunchie",
+      "series": "Sprunchie",
+      "order": 3,
+      "fullPrice": 285,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Резинка для волосся",
+        "ru": "Резинка для волос"
+      },
+      "tags": {
+        "uk": ["Резинка-скранчі", "Пружинка всередині"],
+        "ru": ["Резинка-скранчи", "Пружинка внутри"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Sprunchie — купити в Україні",
+          "ru": "Invisibobble Sprunchie — купить в Украине"
+        },
+        "description": {
+          "uk": "Резинки-скранчі Invisibobble Sprunchie з пружинкою всередині: тримають без заломів, гарно виглядають на зап'ясті. Оригінал. Доставка по всій Україні.",
+          "ru": "Резинки-скранчи Invisibobble Sprunchie с пружинкой внутри: держат без заломов, красиво смотрятся на запястье. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Sprunchie — поєднання м'якої тканинної резинки-скранчі й пружинки Invisibobble всередині. Вона міцно тримає волосся, не залишає заломів і виглядає як прикраса, тож її зручно носити на зап'ясті.\n\nУ лінійці — класичні Sprunchie, тонші Slim для тонкого волосся, розкішна Premium Plus і дитяча Kids з принцесою Disney.",
+        "ru": "Invisibobble Sprunchie — сочетание мягкой тканевой резинки-скранчи и пружинки Invisibobble внутри. Она надежно держит волосы, не оставляет заломов и выглядит как украшение, поэтому ее удобно носить на запястье.\n\nВ линейке — классические Sprunchie, более тонкие Slim для тонких волос, роскошная Premium Plus и детская Kids с принцессой Disney."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи; Slim — тонке",
+            "ru": "Все типы; Slim — тонкие"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Хвіст, пучок, на зап'ясті як прикраса",
+            "ru": "Хвост, пучок, на запястье как украшение"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Пружинка Invisibobble всередині, без заломів",
+            "ru": "Пружинка Invisibobble внутри, без заломов"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Dusk till Dawn",
+          "color": "#1f1f1f",
+          "inStock": true,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Dusk_Till_Dawn.jpg"]
+        },
+        {
+          "name": "Wildflower Sunthreads",
+          "color": "#b9d7ee",
+          "inStock": true,
+          "fullPrice": 545,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-05-29T143040.195.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-05-29T143048.385.png"
+          ]
+        },
+        {
+          "name": "Premium Plus Silk Imperial",
+          "color": "#6e4b32",
+          "inStock": true,
+          "fullPrice": 1155,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-07-08T144949.248.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-07-08T144936.396.png"
+          ]
+        },
+        {
+          "name": "Kids Disney Ariel",
+          "color": "#3fb7a6",
+          "inStock": true,
+          "fullPrice": 325,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b36bcc91d2cad6f99b2_iv-sk-ar-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b367ddd727e7f8b2a23_iv-sk-ar-2.jpg"
+          ],
+          "discountPercent": 30
+        },
+        {
+          "name": "Slim True Golden",
+          "color": "#b88f5c",
+          "inStock": false,
+          "fullPrice": 505,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b3850a8555484b10f0e_iv-ss-tg-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b385912d01a814c0faf_iv-ss-tg-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc9b382f10d0342e2d5e61_iv-ss-tg-3.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "beauties",
+      "mediaKey": "beauties",
+      "title": "Invisibobble Beauties",
+      "series": "Beauties",
+      "order": 4,
+      "fullPrice": 495,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Резинка для волосся",
+        "ru": "Резинка для волос"
+      },
+      "tags": {
+        "uk": ["Набір резинок"],
+        "ru": ["Набор резинок"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Beauties — купити в Україні",
+          "ru": "Invisibobble Beauties — купить в Украине"
+        },
+        "description": {
+          "uk": "Набір резинок Invisibobble Beauties: м'які резинки в стильних відтінках для щоденних зачісок, вдалий подарунок. Оригінал. Доставка по всій Україні.",
+          "ru": "Набор резинок Invisibobble Beauties: мягкие резинки в стильных оттенках для ежедневных причесок, удачный подарок. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Beauties — набір м'яких резинок у стильних відтінках. Вони дбайливо тримають волосся в щоденних зачісках, а гарне пакування робить набір вдалим подарунком.",
+        "ru": "Invisibobble Beauties — набор мягких резинок в стильных оттенках. Они бережно держат волосы в ежедневных прическах, а красивая упаковка делает набор удачным подарком."
+      },
+      "specs": [
+        {
+          "key": "use",
+          "value": {
+            "uk": "Щоденні зачіски, подарунок",
+            "ru": "Ежедневные прически, подарок"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Satin Sorbet",
+          "color": "#e9b6b5",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-03-30T163010.319.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-03-30T163030.938.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "clipstar",
+      "mediaKey": "clipstar",
+      "title": "Invisibobble Clipstar",
+      "series": "Clipstar",
+      "order": 5,
+      "fullPrice": 465,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Заколка для волосся",
+        "ru": "Заколка для волос"
+      },
+      "tags": {
+        "uk": ["Заколка-краб", "Міцна фіксація"],
+        "ru": ["Заколка-краб", "Надежная фиксация"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Clipstar — купити в Україні",
+          "ru": "Invisibobble Clipstar — купить в Украине"
+        },
+        "description": {
+          "uk": "Заколки-краби Invisibobble Clipstar: міцна фіксація без заломів, багато дизайнів і розмірів. Оригінал. Доставка по всій Україні.",
+          "ru": "Заколки-крабы Invisibobble Clipstar: надежная фиксация без заломов, много дизайнов и размеров. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Clipstar — заколки-краби, які міцно тримають волосся й не тиснуть на голову. Зубчики дбайливо фіксують пасма без заломів і смикання, тож заколку можна носити цілий день.\n\nУ лінійці багато дизайнів і розмірів: XS і Mini — для тонкого волосся й окремих пасм, Wildflower — квіткові принти, а також перламутрові, металеві й пухнасті моделі.",
+        "ru": "Invisibobble Clipstar — заколки-крабы, которые надежно держат волосы и не давят на голову. Зубчики бережно фиксируют пряди без заломов и рывков, поэтому заколку можно носить весь день.\n\nВ линейке много дизайнов и размеров: XS и Mini — для тонких волос и отдельных прядей, Wildflower — цветочные принты, а также перламутровые, металлические и пушистые модели."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи; XS і Mini — тонке",
+            "ru": "Все типы; XS и Mini — тонкие"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Пучок, напівзібране волосся",
+            "ru": "Пучок, полусобранные волосы"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Без заломів, не тисне",
+            "ru": "Без заломов, не давит"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Petit Four",
+          "color": "#d9a3a1",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b08820ffd49836c674_iv-cs-p4-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b1b1c4b2cf87a113cb_iv-cs-p4-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b1a01198a6571a6195_iv-cs-p4-3.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b23947d74449380d7e_iv-cs-p4-4.jpg"
+          ]
+        },
+        {
+          "name": "Petit Bijoux",
+          "color": "#ece8e2",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petite_Two_Permanent_Collection_2024_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/DesignohneTitel-2024-04-10T174646.055.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petite_2_Permanent_Collection_2024_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petite_1_Permanent_Collection_2024_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "XS Petit Rainbow",
+          "color": "#f0d9b0",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petite_4_Packaging_Rendering_1.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petit_Rainbow_2_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Invisibibble_29.10.20240489.jpg",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Petit_Rainbow_1_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Pearly Frost",
+          "color": "#d9e3ea",
+          "inStock": true,
+          "fullPrice": 525,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_M_Pearly_Frost_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_M_Pearl_1_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_M_Pearl_2_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Clawdia Tortoise",
+          "color": "#f2e9dc",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d19232ab962c03e616_iv-cs-ct-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d15bbaafe5d7e20be7_iv-cs-ct-2.jpg"
+          ]
+        },
+        {
+          "name": "Flufftastic",
+          "color": "#f2c4c8",
+          "inStock": true,
+          "fullPrice": 605,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d6db45b673fbecea28_iv-cs-ft-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d67239de40464aea2b_iv-cs-ft-2.jpg"
+          ]
+        },
+        {
+          "name": "Spring Rose",
+          "color": "#f1ead8",
+          "inStock": true,
+          "fullPrice": 595,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Spring_Rose_Packaging_Rendering_2.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Spring_Rose_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "All Stars Slam Glam",
+          "color": "#3b6b4a",
+          "inStock": true,
+          "fullPrice": 495,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-02-17T160233.676.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-02-17T160312.922.png"
+          ]
+        },
+        {
+          "name": "Pastel Prism",
+          "color": "#f2c7a5",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_86.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_87.png"
+          ]
+        },
+        {
+          "name": "Wildflower Petals 'n' Punch",
+          "color": "#f4b9c2",
+          "inStock": true,
+          "fullPrice": 525,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d73ff646dde94aa6ea_iv-cs-pnp-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d7cd4c8c03ffe746ab_iv-cs-pnp-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d8b6127017a5ad7ad4_iv-cs-pnp-3.jpg"
+          ]
+        },
+        {
+          "name": "Wildflower Electric Picnic",
+          "color": "#f0a7b5",
+          "inStock": true,
+          "fullPrice": 525,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-05-29T091410.523.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-05-29T091539.184.png"
+          ]
+        },
+        {
+          "name": "Divine Metal",
+          "color": "#c9a447",
+          "inStock": false,
+          "fullPrice": 495,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Divine_Metal_Rendering-removebg-preview.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IMG_1962.jpg"
+          ]
+        },
+        {
+          "name": "Diamond Butterfly",
+          "color": "#f3ece4",
+          "inStock": false,
+          "fullPrice": 495,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d384ce0f78c72a31dc_iv-cs-db-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77d4b6127017a5ad77f5_iv-cs-db-2.jpg"
+          ]
+        },
+        {
+          "name": "Mini Gym Buddy",
+          "color": "#a7c4ef",
+          "inStock": false,
+          "fullPrice": 305,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73af962369f8d6351b31_iv-cs-gb-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b06380543bd65c569e_iv-cs-gb-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b0b9613862536caf4b_iv-cs-gb-3.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd73b0b99c5871facbe579_iv-cs-gb-4.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "clipstar-premium",
+      "mediaKey": "clipstar-premium",
+      "title": "Invisibobble Clipstar Premium",
+      "series": "Clipstar Premium",
+      "order": 6,
+      "fullPrice": 1155,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Заколка для волосся",
+        "ru": "Заколка для волос"
+      },
+      "tags": {
+        "uk": ["Преміальна заколка", "Подарунок"],
+        "ru": ["Премиальная заколка", "Подарок"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Clipstar Premium — купити в Україні",
+          "ru": "Invisibobble Clipstar Premium — купить в Украине"
+        },
+        "description": {
+          "uk": "Преміальні заколки-краби Invisibobble Clipstar Premium і Premium Plus: міцна фіксація й витончене оздоблення. Оригінал. Доставка по всій Україні.",
+          "ru": "Премиальные заколки-крабы Invisibobble Clipstar Premium и Premium Plus: надежная фиксация и изысканная отделка. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Clipstar Premium — преміальні заколки-краби з витонченим оздобленням. Вони міцно й дбайливо тримають волосся та стають прикрасою зачіски. Premium Plus — найрозкішніші моделі колекції, гарний подарунок.",
+        "ru": "Invisibobble Clipstar Premium — премиальные заколки-крабы с изысканной отделкой. Они надежно и бережно держат волосы и становятся украшением прически. Premium Plus — самые роскошные модели коллекции, хороший подарок."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи",
+            "ru": "Все типы"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Пучок, вечірні зачіски",
+            "ru": "Пучок, вечерние прически"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Преміальне оздоблення",
+            "ru": "Премиальная отделка"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Cherry Rush",
+          "color": "#6e1f2e",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_33.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_66.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_31.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_32.png"
+          ]
+        },
+        {
+          "name": "Cocoa Haze",
+          "color": "#5a3a2a",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_34.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_35.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_36.png"
+          ]
+        },
+        {
+          "name": "Matcha Melt",
+          "color": "#cfe3cf",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_28.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_29.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_30.png"
+          ]
+        },
+        {
+          "name": "Creme Berry",
+          "color": "#f0c3c8",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_39.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_67.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_38.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_37.png"
+          ]
+        },
+        {
+          "name": "Leo Locks",
+          "color": "#c99a6b",
+          "inStock": true,
+          "fullPrice": 635,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd778a96eebb33639655c6_iv-cp-ll-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd778a3947d74449396301_iv-cp-ll-2.jpg"
+          ]
+        },
+        {
+          "name": "Plus Espresso Luxe",
+          "color": "#4a2e22",
+          "inStock": true,
+          "fullPrice": 1225,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77cfa25c1543865fa1f3_iv-cpp-el-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77cf7239de40464ae6e4_iv-cpp-el-2.jpg"
+          ]
+        },
+        {
+          "name": "Plus Perle Precieuse",
+          "color": "#ece4d6",
+          "inStock": true,
+          "fullPrice": 1225,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-07-08T152007.158.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-07-08T151959.347.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "clipstar-kids",
+      "mediaKey": "clipstar-kids",
+      "title": "Invisibobble Clipstar Kids",
+      "series": "Clipstar Kids",
+      "order": 7,
+      "fullPrice": 325,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Заколка для волосся",
+        "ru": "Заколка для волос"
+      },
+      "tags": {
+        "uk": ["Для дітей", "Яскраві дизайни"],
+        "ru": ["Для детей", "Яркие дизайны"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Clipstar Kids — купити в Україні",
+          "ru": "Invisibobble Clipstar Kids — купить в Украине"
+        },
+        "description": {
+          "uk": "Дитячі заколки Invisibobble Clipstar Kids з яскравими принтами: дбайливо тримають волосся без заломів. Оригінал. Доставка по всій Україні.",
+          "ru": "Детские заколки Invisibobble Clipstar Kids с яркими принтами: бережно держат волосы без заломов. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Clipstar Kids — маленькі дитячі заколки-краби з яскравими принтами: фрукти, русалки, тварини й веселки. Вони дбайливо тримають дитяче волосся без заломів і смикання. Glow світяться в темряві.",
+        "ru": "Invisibobble Clipstar Kids — маленькие детские заколки-крабы с яркими принтами: фрукты, русалки, животные и радуги. Они бережно держат детские волосы без заломов и рывков. Glow светятся в темноте."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Дитяче волосся",
+            "ru": "Детские волосы"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Щоденні дитячі зачіски",
+            "ru": "Ежедневные детские прически"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Маленький розмір, без заломів",
+            "ru": "Маленький размер, без заломов"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Happy World",
+          "color": "#f5a3c3",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/20240319_rainbowclipstar_4IB-CK-PA-101.png"
+          ]
+        },
+        {
+          "name": "Frutti Fun",
+          "color": "#e8433c",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/20240319_Fruitclipstar_4-IB-CK-PA-105.png"
+          ]
+        },
+        {
+          "name": "Mermaid Dreams",
+          "color": "#f2a6c9",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Mermaid_Dreams_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Mermaid_Dreams_Mermaid_1_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Mermaid_Dreams_Heart_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Mermaid_Dreams_Mermaid_2_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Mermaid_Dreams_Shell_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Octopus Splash",
+          "color": "#c4a6dc",
+          "inStock": true,
+          "fullPrice": 285,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Octopus_Splash_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Clipstar_Kids_Octopus_Splash_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Cherrylicious",
+          "color": "#e9748e",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777f58a4d60a8405b77f_iv-ck-ch-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777f9f8db845bbab0157_iv-ck-ch-2.jpg"
+          ]
+        },
+        {
+          "name": "Bearly Bloomed",
+          "color": "#f6c9cf",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/WebshopImageSizes_10.png"
+          ]
+        },
+        {
+          "name": "Clever Classmates",
+          "color": "#e9a463",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777e9f8db845bbab0058_iv-ck-cc-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777e1db50e9e23145392_iv-ck-cc-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777e97d12dca5c8e26f2_iv-ck-cc-3.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd777eec386e423f8e09e4_iv-ck-cc-4.jpg"
+          ]
+        },
+        {
+          "name": "Glow Frutti Strawberry",
+          "color": "#e84b4b",
+          "inStock": false,
+          "fullPrice": 285,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/DesignohneTitel-2024-09-10T173933.583.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "everclaw",
+      "mediaKey": "everclaw",
+      "title": "Invisibobble Everclaw",
+      "series": "Everclaw",
+      "order": 8,
+      "fullPrice": 395,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Заколка для волосся",
+        "ru": "Заколка для волос"
+      },
+      "tags": {
+        "uk": ["Заколка-краб", "Без металу"],
+        "ru": ["Заколка-краб", "Без металла"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Everclaw — купити в Україні",
+          "ru": "Invisibobble Everclaw — купить в Украине"
+        },
+        "description": {
+          "uk": "Заколки-краби Invisibobble Everclaw і Everclaw Mini: тримають навіть густе волосся без заломів. Оригінал. Доставка по всій Україні.",
+          "ru": "Заколки-крабы Invisibobble Everclaw и Everclaw Mini: держат даже густые волосы без заломов. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Everclaw — заколки-краби з міцною пружиною для щоденних зачісок. Вони надійно тримають навіть густе волосся, не тиснуть і не залишають заломів. Mini — менший розмір для тонкого волосся й маленьких пучків.",
+        "ru": "Invisibobble Everclaw — заколки-крабы с прочной пружиной для ежедневных причесок. Они надежно держат даже густые волосы, не давят и не оставляют заломов. Mini — меньший размер для тонких волос и маленьких пучков."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи; Mini — тонке",
+            "ru": "Все типы; Mini — тонкие"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Пучок, ракушка",
+            "ru": "Пучок, ракушка"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Міцна пружина, не тисне",
+            "ru": "Прочная пружина, не давит"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Leo Love",
+          "color": "#b88a5e",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_6.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Everclaw-mood1.jpg",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Everclaw-mood2.jpg",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/everclaw-2.jpg",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/everclaw-mood3.jpg"
+          ]
+        },
+        {
+          "name": "Evershine",
+          "color": "#f2ead9",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77dbbd2b7ca91f67461d_iv-ec-es-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd77dbd580964caafab630_iv-ec-es-2.jpg"
+          ]
+        },
+        {
+          "name": "Pink Blossom",
+          "color": "#f4c9cf",
+          "inStock": true,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd781d3a8d5b692f50a32f_iv-ec-pb-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd781ebd2b7ca91f675c47_iv-ec-pb-2.jpg"
+          ]
+        },
+        {
+          "name": "Rosy Plateau",
+          "color": "#f2b6c2",
+          "inStock": true,
+          "fullPrice": 415,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T102849.611.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-02-03T104618.807.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T102804.567.png"
+          ]
+        },
+        {
+          "name": "Piny Plateau",
+          "color": "#5f6b4f",
+          "inStock": true,
+          "fullPrice": 415,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T102129.238.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-02-03T103904.993.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T102151.063.png"
+          ]
+        },
+        {
+          "name": "Mini Leo Baby",
+          "color": "#6b4a2e",
+          "inStock": true,
+          "fullPrice": 355,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Everclaw_S_Fashion_Permanent_Collection_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Everclaw_S_Fashion_Permanent_Collection_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Mini Too Faced",
+          "color": "#a68a6a",
+          "inStock": true,
+          "fullPrice": 355,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Everclaw_S_Too_Faced_Packaging_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Everclaw_S_Too_Faced_2_Single_Rendering.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/IB_Everclaw_S_Too_Faced_1_Single_Rendering.png"
+          ]
+        },
+        {
+          "name": "Mini Lavender Haze",
+          "color": "#e9c6e4",
+          "inStock": true,
+          "fullPrice": 375,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T101816.360.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-02-03T101752.906.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "myclaw",
+      "mediaKey": "myclaw",
+      "title": "Invisibobble Myclaw",
+      "series": "Myclaw",
+      "order": 9,
+      "fullPrice": 755,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "Заколка для волосся",
+        "ru": "Заколка для волос"
+      },
+      "tags": {
+        "uk": ["З підвісками", "Свій дизайн"],
+        "ru": ["С подвесками", "Свой дизайн"]
+      },
+      "meta": {
+        "title": {
+          "uk": "Invisibobble Myclaw — купити в Україні",
+          "ru": "Invisibobble Myclaw — купить в Украине"
+        },
+        "description": {
+          "uk": "Заколки Invisibobble Myclaw з підвісками: створіть свій дизайн. Оригінал. Доставка по всій Україні.",
+          "ru": "Заколки Invisibobble Myclaw с подвесками: создайте свой дизайн. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "Invisibobble Myclaw — заколки-краби, які можна прикрасити підвісками й зібрати свій унікальний дизайн. Вони міцно тримають волосся й легко змінюють настрій зачіски. Set — набір заколки з підвісками.",
+        "ru": "Invisibobble Myclaw — заколки-крабы, которые можно украсить подвесками и собрать свой уникальный дизайн. Они надежно держат волосы и легко меняют настроение прически. Set — набор заколки с подвесками."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Усі типи",
+            "ru": "Все типы"
+          }
+        },
+        {
+          "key": "features",
+          "value": {
+            "uk": "Змінні підвіски",
+            "ru": "Сменные подвески"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Hug Me, Baby",
+          "color": "#f6c2c8",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T114715.773.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T115039.754.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T114753.149.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/HugMeBaby.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T114829.255.png"
+          ]
+        },
+        {
+          "name": "Full of Charms",
+          "color": "#f2d0d6",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T120453.761.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitled_design_-_2026-03-26T120654.929.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T120539.976.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T120521.849.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/FullofCharms_4.png"
+          ]
+        },
+        {
+          "name": "Picnic Pop",
+          "color": "#8fd3b4",
+          "inStock": true,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T115702.262.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T115941.773.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T115757.733.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T115820.871.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/PicnicPop.png"
+          ]
+        },
+        {
+          "name": "Set Morning Nostalgia",
+          "color": "#6b4a2e",
+          "inStock": true,
+          "fullPrice": 595,
+          "images": [
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign-2026-03-26T121019.703.png",
+            "https://cdn.shopify.com/s/files/1/0293/2552/5071/files/MorningNostalgia.png"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gift-set",
+      "mediaKey": "gift-set",
+      "title": "Invisibobble Gift Set",
+      "series": "Gift Set",
+      "order": 10,
+      "fullPrice": 695,
+      "discountPercent": 0,
+      "noun": {
+        "uk": "М'які бігуді",
+        "ru": "Мягкие бигуди"
+      },
+      "tags": {
+        "uk": ["Локони без нагрівання"],
+        "ru": ["Локоны без нагрева"]
+      },
+      "meta": {
+        "title": {
+          "uk": "М'які бігуді Invisibobble Gift Set — купити в Україні",
+          "ru": "Мягкие бигуди Invisibobble Gift Set — купить в Украине"
+        },
+        "description": {
+          "uk": "М'які бігуді Invisibobble для локонів без нагрівання: набори Handle with Curl і Beach Curl. Оригінал. Доставка по всій Україні.",
+          "ru": "Мягкие бигуди Invisibobble для локонов без нагрева: наборы Handle with Curl и Beach Curl. Оригинал. Доставка по всей Украине."
+        }
+      },
+      "description": {
+        "uk": "М'які бігуді Invisibobble — набори для локонів без плойки й нагрівання. Накрутіть волосся на ніч або на кілька годин, і отримаєте м'які хвилі без шкоди від високих температур.",
+        "ru": "Мягкие бигуди Invisibobble — наборы для локонов без плойки и нагрева. Накрутите волосы на ночь или на несколько часов, и получите мягкие волны без вреда от высоких температур."
+      },
+      "specs": [
+        {
+          "key": "hairType",
+          "value": {
+            "uk": "Середня й довга довжина",
+            "ru": "Средняя и длинная длина"
+          }
+        },
+        {
+          "key": "use",
+          "value": {
+            "uk": "Локони без нагрівання, на ніч",
+            "ru": "Локоны без нагрева, на ночь"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "name": "Handle with Curl",
+          "color": "#e9d2c4",
+          "inStock": true,
+          "images": ["https://cdn.shopify.com/s/files/1/0293/2552/5071/files/Untitleddesign_5.png"]
+        },
+        {
+          "name": "Beach Curl L",
+          "color": "#d9364c",
+          "inStock": true,
+          "fullPrice": 925,
+          "images": [
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd75b20c7032b86626e25c_iv-bc-bl-1.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd75b21e150f2dcdb85993_iv-bc-bl-2.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd75b38820ffd4983747e8_iv-bc-bl-3.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd75b36bc7f2a93c331ca6_iv-bc-bl-4.jpg",
+            "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afd75b3d580964caafa515b_iv-bc-bl-5.jpg"
+          ]
+        }
+      ]
+    }
+  ]
+}

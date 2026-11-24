@@ -5,6 +5,8 @@ import * as migration_20261120_220654_category_benefits from './20261120_220654_
 import * as migration_20261121_221448_product_specs from './20261121_221448_product_specs';
 import * as migration_20261123_181611_sale_prices_home_categories from './20261123_181611_sale_prices_home_categories';
 import * as migration_20261123_192748_pet_spec_keys from './20261123_192748_pet_spec_keys';
+import * as migration_20261123_220805_category_brand from './20261123_220805_category_brand';
+import * as migration_20261123_222456_variant_discount from './20261123_222456_variant_discount';
 
 export const migrations = [
   {
@@ -40,6 +42,16 @@ export const migrations = [
   {
     up: migration_20261123_192748_pet_spec_keys.up,
     down: migration_20261123_192748_pet_spec_keys.down,
-    name: '20261123_192748_pet_spec_keys'
+    name: '20261123_192748_pet_spec_keys',
+  },
+  {
+    up: migration_20261123_220805_category_brand.up,
+    down: migration_20261123_220805_category_brand.down,
+    name: '20261123_220805_category_brand',
+  },
+  {
+    up: migration_20261123_222456_variant_discount.up,
+    down: migration_20261123_222456_variant_discount.down,
+    name: '20261123_222456_variant_discount'
   },
 ];

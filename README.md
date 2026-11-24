@@ -47,7 +47,7 @@ The site is bilingual: Ukrainian is the main language, Russian the second one.
 
 The admin enters only the **full price** of a product: for brushes and sprays the supplier's full price minus 1 UAH, for Invisibobble the supplier's full price as is. A colour whose full price differs from the product's has its own full price.
 
-The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin (20% by default); saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field), which then takes priority over the shop one.
+The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin (20% by default); saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field, 0 for none), which then takes priority over the shop one, and a colour can have its own on top of that. Invisibobble products have 0, with a colour discount only where the supplier discounts that design.
 
 The site shows the site price with the full price crossed out and the discount next to it. The calculation is in `src/payload/hooks/salePrices.ts`.
 
@@ -89,7 +89,7 @@ No page is served until it gets an answer. Two ways out:
 
 ### Catalog import
 
-Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
+Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`, `rezinki-invisibobble.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
 
 ```bash
 pnpm payload run src/payload/seed/catalog.ts                                  # every category

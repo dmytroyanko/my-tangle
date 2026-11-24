@@ -60,7 +60,7 @@ export const Products: CollectionConfig = {
           validate: (value: number | null | undefined) =>
             typeof value === 'number' || 'Вкажіть повну ціну',
           min: 0,
-          admin: { description: 'Ціна постачальника мінус 1 грн' },
+          admin: { description: 'РРЦ: щітки — ціна постачальника мінус 1 грн, Invisibobble — як у постачальника' },
         },
         {
           name: 'discountPercent',
@@ -68,7 +68,7 @@ export const Products: CollectionConfig = {
           type: 'number',
           min: 0,
           max: 90,
-          admin: { description: 'Порожньо — знижка з «Налаштувань магазину»' },
+          admin: { description: 'Порожньо — знижка з «Налаштувань магазину», 0 — без знижки' },
         },
         {
           name: 'price',
@@ -148,6 +148,14 @@ export const Products: CollectionConfig = {
               type: 'number',
               min: 0,
               admin: { description: 'Якщо відрізняється від повної ціни товару' },
+            },
+            {
+              name: 'discountPercent',
+              label: 'Знижка, %',
+              type: 'number',
+              min: 0,
+              max: 90,
+              admin: { description: 'Якщо відрізняється від знижки товару' },
             },
             {
               name: 'price',

@@ -11,7 +11,7 @@ import {
   ProductSpecs,
   ProductView,
 } from '@/entities/product'
-import { siteName, siteUrl } from '@/shared/config'
+import { brands, siteName, siteUrl, withBrand } from '@/shared/config'
 import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
 import { breadcrumbJsonLd, productJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
@@ -56,11 +56,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: 'ProductPage' })
 
   const prices = product.variants.map((variant) => variant.price)
-  const title = product.meta.title || t('metaTitle', { title: product.title })
+  const title =
+    product.meta.title || t('metaTitle', { name: withBrand(category.brand, product.title) })
   const description =
     product.meta.description ||
     t('metaDescription', {
-      title: product.title,
+      brand: category.brand,
+      name: withBrand(category.brand, product.title),
       count: product.variants.length,
       price: Math.min(...prices),
     })
@@ -126,7 +128,8 @@ export default async function ProductPage({ params, searchParams }: Props) {
       />
       <JsonLd
         data={productJsonLd({
-          name: `Tangle Teezer ${product.title}`,
+          name: withBrand(category.brand, product.title),
+          brand: brands[category.brand],
           // The description shown on the page, not the meta description template.
           description: product.descriptionText ?? undefined,
           url: absolute(productPath),
@@ -168,7 +171,11 @@ export default async function ProductPage({ params, searchParams }: Props) {
           </section>
         )}
 
-        <ProductSpecs specs={product.specs} className="mt-12 max-w-3xl md:mt-16" />
+        <ProductSpecs
+          specs={product.specs}
+          brand={category.brand}
+          className="mt-12 max-w-3xl md:mt-16"
+        />
       </div>
 
       <BundleDiscount />

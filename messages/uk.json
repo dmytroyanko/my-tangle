@@ -110,13 +110,15 @@
     "inStock": "В наявності",
     "description": "Опис",
     "otherSeries": "Інші серії {title}",
-    "metaTitle": "Tangle Teezer {title} — купити в Україні",
-    "metaDescription": "Оригінальний гребінець Tangle Teezer {title}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні."
+    "metaTitle": "{name} — купити в Україні",
+    "metaDescription": "{brand, select, invisibobble {Оригінальний аксесуар для волосся} other {Оригінальний гребінець}} {name}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні."
   },
   "ProductSpecs": {
     "title": "Характеристики",
-    "brand": "Tangle Teezer",
-    "brandCountry": "Велика Британія",
+    "countries": {
+      "tangle-teezer": "Велика Британія",
+      "invisibobble": "Німеччина"
+    },
     "keys": {
       "animal": "Для кого",
       "coat": "Шерсть",

@@ -85,6 +85,21 @@ export const Categories: CollectionConfig = {
       admin: { position: 'sidebar', description: 'Порядок у меню та на головній' },
     },
     {
+      name: 'brand',
+      label: 'Бренд',
+      type: 'select',
+      defaultValue: 'tangle-teezer',
+      // Keys match src/shared/config/brands.ts.
+      options: [
+        { label: 'Tangle Teezer', value: 'tangle-teezer' },
+        { label: 'Invisibobble', value: 'invisibobble' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'Бренд товарів категорії: у характеристиках і розмітці',
+      },
+    },
+    {
       name: 'showOnHome',
       label: 'Показувати на головній',
       type: 'checkbox',

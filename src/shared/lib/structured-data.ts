@@ -100,6 +100,7 @@ export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
 
 type ProductJsonLdInput = {
   name: string
+  brand: string
   description?: string
   url: string
   images: string[]
@@ -112,6 +113,7 @@ type ProductJsonLdInput = {
 // A product with its price (a range when colours cost differently) and availability, for rich results.
 export function productJsonLd({
   name,
+  brand,
   description,
   url,
   images,
@@ -130,7 +132,7 @@ export function productJsonLd({
     description,
     url,
     image: images,
-    brand: { '@type': 'Brand', name: 'Tangle Teezer' },
+    brand: { '@type': 'Brand', name: brand },
     additionalProperty: properties.length
       ? properties.map(({ name, value }) => ({ '@type': 'PropertyValue', name, value }))
       : undefined,

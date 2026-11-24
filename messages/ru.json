@@ -110,13 +110,15 @@
     "inStock": "В наличии",
     "description": "Описание",
     "otherSeries": "Другие серии {title}",
-    "metaTitle": "Tangle Teezer {title} — купить в Украине",
-    "metaDescription": "Оригинальная расческа Tangle Teezer {title}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине."
+    "metaTitle": "{name} — купить в Украине",
+    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине."
   },
   "ProductSpecs": {
     "title": "Характеристики",
-    "brand": "Tangle Teezer",
-    "brandCountry": "Великобритания",
+    "countries": {
+      "tangle-teezer": "Великобритания",
+      "invisibobble": "Германия"
+    },
     "keys": {
       "animal": "Для кого",
       "coat": "Шерсть",

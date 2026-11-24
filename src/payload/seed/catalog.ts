@@ -17,6 +17,7 @@ import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import sharp from 'sharp'
 
+import { withBrand, type BrandKey } from '@/shared/config'
 import { toSlug } from '@/shared/lib/slugify'
 
 type Locale = 'uk' | 'ru'
@@ -39,6 +40,8 @@ type CatalogFile = {
     order: number
     // A block on the home page, as on the current site.
     showOnHome: boolean
+    // Key from src/shared/config/brands.ts; Tangle Teezer when left out.
+    brand?: BrandKey
     title: Localized<string>
     heading: Localized<string>
     subtitle: Localized<string>
@@ -59,6 +62,9 @@ type CatalogFile = {
     order: number
     // Full price: the supplier's price minus 1 UAH. Payload works out the site price (minus the shop discount).
     fullPrice: number
+    // Own discount instead of the shop one (0 for none), e.g. Invisibobble, discounted only where the
+    // supplier does.
+    discountPercent?: number
     tags: Localized<string[]>
     description: Localized<string>
     // What the product is, for photo alt texts; brushes by default ("Щітка"), a spray says so.
@@ -73,6 +79,8 @@ type CatalogFile = {
       inStock: boolean
       // Only when it differs from the product's full price.
       fullPrice?: number
+      // Own discount of this colour, where the supplier discounts it.
+      discountPercent?: number
       images: ImageSource[]
     }[]
   }[]
@@ -289,6 +297,7 @@ async function saveSpecs(
 
 async function importCategory(payload: Payload, { category, products }: CatalogFile) {
   payload.logger.info(`== ${category.slug}`)
+  const brandKey = category.brand ?? 'tangle-teezer'
 
   let categoryId = await findBySlug(payload, 'categories', category.slug)
   if (categoryId && !UPDATE) {
@@ -306,7 +315,12 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
       'categories',
       categoryId,
       category.slug,
-      { order: category.order, showOnHome: category.showOnHome, image: categoryImage },
+      {
+        order: category.order,
+        showOnHome: category.showOnHome,
+        brand: brandKey,
+        image: categoryImage,
+      },
       {
         uk: {
           title: category.title.uk,
@@ -359,8 +373,8 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
       const images = await Promise.all(
         sources.map((url, index) =>
           upsertMedia(payload, url, `${name}-${index + 1}`, {
-            uk: `${product.noun?.uk ?? 'Щітка'} Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
-            ru: `${product.noun?.ru ?? 'Расческа'} Tangle Teezer ${product.title} ${variant.name}, фото ${index + 1}`,
+            uk: `${product.noun?.uk ?? 'Щітка'} ${withBrand(brandKey, product.title)} ${variant.name}, фото ${index + 1}`,
+            ru: `${product.noun?.ru ?? 'Расческа'} ${withBrand(brandKey, product.title)} ${variant.name}, фото ${index + 1}`,
           }),
         ),
       )
@@ -369,6 +383,7 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         color: variant.color,
         inStock: variant.inStock,
         fullPrice: variant.fullPrice,
+        discountPercent: variant.discountPercent,
         images,
       })
     }
@@ -383,6 +398,7 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         series: product.series,
         order: product.order,
         fullPrice: product.fullPrice,
+        discountPercent: product.discountPercent,
         variants,
         _status: 'published',
       },

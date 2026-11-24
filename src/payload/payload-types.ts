@@ -159,11 +159,11 @@ export interface Product {
    */
   tags?: string[] | null;
   /**
-   * Ціна постачальника мінус 1 грн
+   * РРЦ: щітки — ціна постачальника мінус 1 грн, Invisibobble — як у постачальника
    */
   fullPrice?: number | null;
   /**
-   * Порожньо — знижка з «Налаштувань магазину»
+   * Порожньо — знижка з «Налаштувань магазину», 0 — без знижки
    */
   discountPercent?: number | null;
   /**
@@ -210,6 +210,10 @@ export interface Product {
          * Якщо відрізняється від повної ціни товару
          */
         fullPrice?: number | null;
+        /**
+         * Якщо відрізняється від знижки товару
+         */
+        discountPercent?: number | null;
         price?: number | null;
         inStock?: boolean | null;
         images?: (number | Media)[] | null;
@@ -297,6 +301,10 @@ export interface Category {
    * Порядок у меню та на головній
    */
   order?: number | null;
+  /**
+   * Бренд товарів категорії: у характеристиках і розмітці
+   */
+  brand?: ('tangle-teezer' | 'invisibobble') | null;
   /**
    * Блок категорії з серіями на головній, у порядку поля «Порядок»
    */
@@ -545,6 +553,7 @@ export interface ProductsSelect<T extends boolean = true> {
         sku?: T;
         color?: T;
         fullPrice?: T;
+        discountPercent?: T;
         price?: T;
         inStock?: T;
         images?: T;
@@ -589,6 +598,7 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   image?: T;
   order?: T;
+  brand?: T;
   showOnHome?: T;
   products?: T;
   meta?:

@@ -14,7 +14,9 @@ export async function getHomeCategories(locale: Locale) {
     where: { showOnHome: { equals: true } },
     sort: 'order',
     locale,
-    depth: 1,
+    // Rich text links to products need the product's category (see findBySlug); joins are not read.
+    depth: 2,
+    joins: false,
     pagination: false,
   })
   return docs.map((category) => toCategoryData(category, { [locale]: category.slug }))

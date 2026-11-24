@@ -11,6 +11,7 @@ import {
 } from '@/entities/category'
 import { getPageBySlug } from '@/entities/page'
 import { getProductsByCategory, ProductGrid, seriesKey } from '@/entities/product'
+import { AddToCartButton } from '@/features/add-to-cart'
 import { SeriesFilter } from '@/features/series-filter'
 import { siteName, siteUrl } from '@/shared/config'
 import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
@@ -157,6 +158,7 @@ export default async function CategoryPage({ params }: Props) {
               products={products}
               basePath={categoryPath}
               eager={3}
+              buy={<AddToCartButton />}
               className="mt-8 md:mt-10"
             />
           </SeriesFilter>
@@ -165,6 +167,7 @@ export default async function CategoryPage({ params }: Props) {
             products={products}
             basePath={categoryPath}
             eager={3}
+            buy={<AddToCartButton />}
             className="mt-8 md:mt-10"
           />
         )}

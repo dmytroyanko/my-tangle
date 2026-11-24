@@ -32,7 +32,7 @@ Not part of FSD:
 Rules (enforced by `steiger` in `pnpm lint`):
 - A module imports only from layers below it: `app → widgets → features → entities → shared`.
 - Slices on the same layer do not import each other. If two features need the same thing, move it down to an entity or `shared`.
-- Import a slice only through its public API, `index.ts` at the slice root (`@/entities/product`), never from its internals. `shared/ui` and `shared/lib` are imported per module (`@/shared/ui/button`).
+- Import a slice only through its public API, `index.ts` at the slice root (`@/entities/product`), never from its internals. A client component must not import an `index.ts` that also exports server code (Payload queries): that pulls Payload into the browser bundle and breaks the build. Such a slice gets an `index.client.ts` with its client-safe exports (`@/entities/product/index.client`); steiger treats any `index.*` file as public API. Entity-to-entity imports go through `@x` (`@/entities/product/@x/cart`). `shared/ui` and `shared/lib` are imported per module (`@/shared/ui/button`).
 - Slice segments: `ui` (components), `model` (client state, types, logic), `api` (server data access and server actions), `lib` (helpers), `config`.
 - Category pages live at the site root, `/[slug]` (`src/app/(frontend)/[locale]/[slug]/page.tsx`), keeping the current site's flat URLs. Information pages will share this route: resolve a category first, then a page, else 404.
 - Product pages are nested under their category: `/[slug]/[product]` (`src/app/(frontend)/[locale]/[slug]/[product]/page.tsx`), one page per series with its colours. `?color=<key>` only preselects a colour; the canonical URL has no parameter. Product slugs are short (`matte`, `mini`) and unique across the site.

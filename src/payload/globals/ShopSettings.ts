@@ -24,6 +24,30 @@ export const ShopSettings: GlobalConfig = {
           'Ціна на сайті = повна ціна мінус знижка, округлено до гривні. Після збереження ціни всіх товарів перераховуються (крім товарів з власною знижкою).',
       },
     },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'bundleDiscountEnabled',
+          label: 'Знижка за комплект увімкнена',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            description:
+              'Tangle Teezer разом з Invisibobble в одному замовленні: банер на сайті й знижка в кошику',
+          },
+        },
+        {
+          name: 'bundleDiscountPercent',
+          label: 'Знижка за комплект, %',
+          type: 'number',
+          defaultValue: 7,
+          min: 1,
+          max: 50,
+          required: true,
+        },
+      ],
+    },
   ],
   hooks: { afterChange: [repriceProducts] },
 }

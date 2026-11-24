@@ -1,7 +1,8 @@
-import { PhoneIcon, ShoppingBagIcon, UserIcon } from 'lucide-react'
+import { PhoneIcon, UserIcon } from 'lucide-react'
 import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 
+import { CartButton } from '@/entities/cart'
 import { LocaleSwitcher } from '@/features/locale-switcher'
 import { phones } from '@/shared/config'
 import { Link } from '@/shared/i18n'
@@ -119,11 +120,7 @@ export async function Header() {
               <UserIcon className="size-5" />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon-lg" className="-mr-2" asChild>
-            <Link href="/cart" aria-label={t('cart')}>
-              <ShoppingBagIcon className="size-5" />
-            </Link>
-          </Button>
+          <CartButton className="-mr-2" />
         </div>
       </div>
     </header>

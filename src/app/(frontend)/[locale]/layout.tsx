@@ -5,8 +5,10 @@ import { Open_Sans } from 'next/font/google'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
+import { getBundleDiscount } from '@/entities/cart'
 import { siteUrl } from '@/shared/config'
 import { routing } from '@/shared/i18n'
+import { CartSheet } from '@/widgets/cart-sheet'
 import { Footer } from '@/widgets/footer'
 import { Header } from '@/widgets/header'
 import '../globals.css'
@@ -50,6 +52,8 @@ export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  // The bundle discount for the cart panel; the site still renders if the database is unavailable.
+  const bundlePercent = await getBundleDiscount().catch(() => null)
 
   return (
     <html lang={locale} className={openSans.variable} data-scroll-behavior="smooth">
@@ -58,6 +62,7 @@ export default async function RootLayout({ children, params }: Props) {
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
+          <CartSheet bundlePercent={bundlePercent} />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react'
+
 import { cn } from '@/shared/lib/utils'
 
 import { seriesKey } from '../model/seriesKey'
@@ -12,10 +14,12 @@ type Props = {
   // Category path without the locale (/the-ultimate-detangler); a card links to basePath/product-slug.
   basePath: string
   eager?: number
+  // The buy button for every card (see ProductCard).
+  buy?: ReactNode
   className?: string
 }
 
-export function ProductGrid({ products, basePath, eager = 0, className }: Props) {
+export function ProductGrid({ products, basePath, eager = 0, buy, className }: Props) {
   return (
     <ul
       className={cn(
@@ -34,6 +38,7 @@ export function ProductGrid({ products, basePath, eager = 0, className }: Props)
             product={product}
             href={`${basePath}/${product.slug}`}
             priority={index < eager}
+            buy={buy}
           />
         </li>
       ))}

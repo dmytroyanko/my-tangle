@@ -8,6 +8,7 @@ import * as migration_20261123_192748_pet_spec_keys from './20261123_192748_pet_
 import * as migration_20261123_220805_category_brand from './20261123_220805_category_brand';
 import * as migration_20261123_222456_variant_discount from './20261123_222456_variant_discount';
 import * as migration_20261124_114655_page_faq from './20261124_114655_page_faq';
+import * as migration_20261124_143720_bundle_discount_toggle from './20261124_143720_bundle_discount_toggle';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20261124_114655_page_faq.up,
     down: migration_20261124_114655_page_faq.down,
-    name: '20261124_114655_page_faq'
+    name: '20261124_114655_page_faq',
+  },
+  {
+    up: migration_20261124_143720_bundle_discount_toggle.up,
+    down: migration_20261124_143720_bundle_discount_toggle.down,
+    name: '20261124_143720_bundle_discount_toggle'
   },
 ];

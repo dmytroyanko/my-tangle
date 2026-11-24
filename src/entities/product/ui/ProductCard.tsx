@@ -2,14 +2,14 @@
 
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
-import { Button } from '@/shared/ui/button'
 
 import { colorKey } from '../model/colorKey'
 import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
+import { SelectedVariantContext } from '../model/selectedVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 import { ProductPrice } from './ProductPrice'
@@ -19,11 +19,13 @@ type Props = {
   // Product page path without the locale, e.g. /the-ultimate-detangler/matte.
   href: string
   priority?: boolean
+  // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
+  buy?: ReactNode
 }
 
 // One series with its colours: picking a swatch switches the photo, price and availability; the photo and
 // title open the product page with that colour. Sizes follow the card's container (@container on the parent).
-export function ProductCard({ product, href, priority = false }: Props) {
+export function ProductCard({ product, href, priority = false, buy }: Props) {
   const t = useTranslations('ProductCard')
   const defaultIndex = defaultVariantIndex(product.variants)
   const [selected, setSelected] = useState(defaultIndex)
@@ -110,10 +112,9 @@ export function ProductCard({ product, href, priority = false }: Props) {
           className={muted || undefined}
         />
         {variant.inStock ? (
-          // Buying is not wired yet: the button is a placeholder until the cart exists.
-          <Button type="button" className="w-full rounded-full px-6 @2xs:w-auto">
-            {t('buy')}
-          </Button>
+          <SelectedVariantContext.Provider value={{ product, variant, href: link }}>
+            {buy}
+          </SelectedVariantContext.Provider>
         ) : (
           <p className="text-sm font-semibold text-muted-foreground">{t('outOfStock')}</p>
         )}

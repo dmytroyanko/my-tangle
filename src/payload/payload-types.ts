@@ -798,6 +798,11 @@ export interface ShopSetting {
    * Ціна на сайті = повна ціна мінус знижка, округлено до гривні. Після збереження ціни всіх товарів перераховуються (крім товарів з власною знижкою).
    */
   discountPercent: number;
+  /**
+   * Tangle Teezer разом з Invisibobble в одному замовленні: банер на сайті й знижка в кошику
+   */
+  bundleDiscountEnabled?: boolean | null;
+  bundleDiscountPercent: number;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -807,6 +812,8 @@ export interface ShopSetting {
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   discountPercent?: T;
+  bundleDiscountEnabled?: T;
+  bundleDiscountPercent?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

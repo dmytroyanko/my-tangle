@@ -1,7 +1,13 @@
 import { getTranslations } from 'next-intl/server'
 
-// Bundle offer: discount for ordering Tangle Teezer brushes together with Invisibobble hair ties.
+import { getBundleDiscount } from '@/entities/cart'
+
+// Bundle offer: discount for ordering Tangle Teezer brushes together with Invisibobble hair ties. Hidden
+// while the offer is off in Shop settings.
 export async function BundleDiscount({ className }: { className?: string }) {
+  // No banner when the settings cannot be read, as in the layout: the page still renders.
+  const percent = await getBundleDiscount().catch(() => null)
+  if (percent === null) return null
   const t = await getTranslations('BundleDiscount')
 
   return (
@@ -12,11 +18,12 @@ export async function BundleDiscount({ className }: { className?: string }) {
             className="flex size-12 shrink-0 items-center justify-center rounded-full bg-dark text-base font-bold text-dark-foreground md:size-14 md:text-lg"
             aria-hidden="true"
           >
-            {t('badge')}
+            {t('badge', { percent })}
           </span>
           <p className="text-sm sm:text-base">
             {/* The badge is decorative, so the discount is spelled out for screen readers and search engines. */}
             {t.rich('text', {
+              percent,
               b: (chunks) => <strong className="font-semibold">{chunks}</strong>,
               sr: (chunks) => <span className="sr-only">{chunks}</span>,
             })}

@@ -10,6 +10,7 @@ import { Button } from '@/shared/ui/button'
 
 import { colorKey } from '../model/colorKey'
 import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
+import { SelectedVariantContext } from '../model/selectedVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 import { ProductGallery } from './ProductGallery'
@@ -19,6 +20,10 @@ type Props = {
   product: ProductCardData
   // Colour key from ?color=, read by the page on the server.
   initialColor?: string
+  // Product page path without the locale, e.g. /the-ultimate-detangler/matte.
+  href: string
+  // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
+  buy?: ReactNode
   // Shown under the buy button (delivery terms).
   children?: ReactNode
 }
@@ -26,7 +31,7 @@ type Props = {
 // Top of the product page: photos of the selected colour on the left (the large photo opens the full-screen
 // gallery), title, palette, price and buy button on the right. A picked colour is kept in ?color= without
 // a navigation.
-export function ProductView({ product, initialColor, children }: Props) {
+export function ProductView({ product, initialColor, href, buy, children }: Props) {
   const t = useTranslations('ProductCard')
   const tPage = useTranslations('ProductPage')
   const fromUrl = product.variants.findIndex((variant) => colorKey(variant.name) === initialColor)
@@ -174,14 +179,13 @@ export function ProductView({ product, initialColor, children }: Props) {
         )}
 
         {variant.inStock ? (
-          // Buying is not wired yet: the button is a placeholder until the cart exists.
-          <Button
-            type="button"
-            size="lg"
-            className="mt-8 h-12 w-full rounded-full px-10 text-sm font-semibold tracking-[0.1em] uppercase sm:w-auto"
-          >
-            {t('buy')}
-          </Button>
+          <div className="mt-8">
+            <SelectedVariantContext.Provider
+              value={{ product, variant, href: `${href}?color=${colorKey(variant.name)}` }}
+            >
+              {buy}
+            </SelectedVariantContext.Provider>
+          </div>
         ) : (
           <p className="mt-8 text-base font-semibold text-muted-foreground">{t('outOfStock')}</p>
         )}

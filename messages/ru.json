@@ -67,8 +67,8 @@
   },
   "BundleDiscount": {
     "label": "Скидка на комплект",
-    "text": "<sr>Скидка 7%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте",
-    "badge": "−7%"
+    "text": "<sr>Скидка {percent}%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте",
+    "badge": "−{percent}%"
   },
   "ProductCard": {
     "openGallery": "Открыть фото: {name}",
@@ -141,6 +141,29 @@
     "text": "Возможно, ее перенесли или в адресе есть ошибка. Перейдите на главную или выберите раздел каталога.",
     "home": "На главную",
     "catalog": "Каталог"
+  },
+  "Cart": {
+    "title": "Корзина",
+    "open": "Открыть корзину",
+    "openWithCount": "Корзина: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+    "close": "Закрыть корзину",
+    "items": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+    "empty": "В корзине пока пусто.",
+    "toCatalog": "В каталог",
+    "price": "{price, number} грн",
+    "fullTotal": "Без скидки",
+    "saleDiscount": "Скидка",
+    "oldPrice": "Старая цена:",
+    "bundleDiscount": "Скидка за комплект −{percent}%",
+    "bundleHint": "Закажите расческу Tangle Teezer вместе с резинками Invisibobble — и получите скидку {percent}% на весь заказ.",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "continue": "Продолжить покупки",
+    "decrease": "Меньше: {name}",
+    "increase": "Больше: {name}",
+    "quantity": "Количество",
+    "remove": "Удалить {name}",
+    "outOfStock": "Нет в наличии"
   },
   "CatalogCta": {
     "text": "Выберите расческу или резинки в каталоге — доставим Новой Почтой по всей Украине.",

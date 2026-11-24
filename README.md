@@ -51,6 +51,8 @@ The site price is calculated by Payload on every save: the full price minus the 
 
 The site shows the site price with the full price crossed out and the discount next to it. The calculation is in `src/payload/hooks/salePrices.ts`.
 
+The bundle discount (Tangle Teezer with Invisibobble in one order) is switched on in **Shop settings** with its percent. While it is off, the site shows no bundle banner and the cart no bundle discount; texts in Payload that mention it (FAQ, category descriptions) are edited by hand.
+
 ## Home page
 
 The home page shows a block for every category with **"Показувати на головній"** checked in the admin, in the order of the category's "Порядок" field (the same order as the menu).

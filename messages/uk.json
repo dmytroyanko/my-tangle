@@ -67,8 +67,8 @@
   },
   "BundleDiscount": {
     "label": "Знижка на комплект",
-    "text": "<sr>Знижка 7%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті",
-    "badge": "−7%"
+    "text": "<sr>Знижка {percent}%: </sr>При замовленні гребінців <b>Tangle Teezer</b> і резинок <b>Invisibobble</b> у комплекті",
+    "badge": "−{percent}%"
   },
   "ProductCard": {
     "openGallery": "Відкрити фото: {name}",
@@ -141,6 +141,29 @@
     "text": "Можливо, її перенесли або в адресі є помилка. Перейдіть на головну або оберіть розділ каталогу.",
     "home": "На головну",
     "catalog": "Каталог"
+  },
+  "Cart": {
+    "title": "Кошик",
+    "open": "Відкрити кошик",
+    "openWithCount": "Кошик: {count, plural, one {# товар} few {# товари} many {# товарів} other {# товару}}",
+    "close": "Закрити кошик",
+    "items": "{count, plural, one {# товар} few {# товари} many {# товарів} other {# товару}}",
+    "empty": "У кошику поки порожньо.",
+    "toCatalog": "До каталогу",
+    "price": "{price, number} грн",
+    "fullTotal": "Без знижки",
+    "saleDiscount": "Знижка",
+    "oldPrice": "Стара ціна:",
+    "bundleDiscount": "Знижка за комплект −{percent}%",
+    "bundleHint": "Замовте гребінець Tangle Teezer разом із резинками Invisibobble — і отримаєте знижку {percent}% на все замовлення.",
+    "total": "Разом",
+    "checkout": "Оформити замовлення",
+    "continue": "Продовжити покупки",
+    "decrease": "Менше: {name}",
+    "increase": "Більше: {name}",
+    "quantity": "Кількість",
+    "remove": "Видалити {name}",
+    "outOfStock": "Немає в наявності"
   },
   "CatalogCta": {
     "text": "Оберіть гребінець або резинки в каталозі — доставимо Новою Поштою по всій Україні.",

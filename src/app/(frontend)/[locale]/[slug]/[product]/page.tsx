@@ -11,6 +11,7 @@ import {
   ProductSpecs,
   ProductView,
 } from '@/entities/product'
+import { AddToCartButton } from '@/features/add-to-cart'
 import { brands, siteName, siteUrl, withBrand } from '@/shared/config'
 import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
 import { breadcrumbJsonLd, productJsonLd } from '@/shared/lib/structured-data'
@@ -157,7 +158,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
         />
 
         <div className="mt-6 md:mt-8">
-          <ProductView product={product} initialColor={colorParam}>
+          <ProductView
+            product={product}
+            initialColor={colorParam}
+            href={productPath}
+            buy={<AddToCartButton size="page" />}
+          >
             <DeliveryInfo />
           </ProductView>
         </div>
@@ -188,7 +194,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <h2 id="others-title" className="text-xl md:text-2xl">
               {t('otherSeries', { title: category.title })}
             </h2>
-            <ProductGrid products={others} basePath={categoryPath} className="mt-6 md:mt-8" />
+            <ProductGrid
+              products={others}
+              basePath={categoryPath}
+              buy={<AddToCartButton />}
+              className="mt-6 md:mt-8"
+            />
           </section>
         )}
       </div>

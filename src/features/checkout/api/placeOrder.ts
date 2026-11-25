@@ -7,6 +7,7 @@ import { cartTotals, getBundleDiscount, getCartLines, type CartLine } from '@/en
 import { routing, type Locale } from '@/shared/i18n'
 
 import {
+  displayPhone,
   normalizePhone,
   validateCheckout,
   type CheckoutError,
@@ -82,7 +83,7 @@ export async function placeOrder(input: {
         locale,
         lastName: form.lastName,
         firstName: form.firstName,
-        phone: form.phone.trim(),
+        phone: displayPhone(form.phone),
         phoneNormalized: normalizePhone(form.phone),
         email: form.email || undefined,
         items: lines.map((line) => ({

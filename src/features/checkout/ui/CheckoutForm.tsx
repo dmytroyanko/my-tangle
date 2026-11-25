@@ -5,7 +5,13 @@ import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
 import { useCallback, useId, useState, type ReactNode } from 'react'
 
-import { cartActions, cartTotals, useCart, useRefreshCart } from '@/entities/cart/index.client'
+import {
+  cartActions,
+  cartTotals,
+  useCart,
+  useRefreshCart,
+  type CartLine,
+} from '@/entities/cart/index.client'
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
@@ -13,12 +19,14 @@ import { Button } from '@/shared/ui/button'
 import { searchCities, searchWarehouses } from '../api/novaPoshta'
 import { placeOrder } from '../api/placeOrder'
 import {
+  normalizePhone,
   paymentMethods,
   validateCheckout,
   type CheckoutError,
   type CheckoutField,
   type CheckoutForm as Form,
 } from '../model/form'
+import { PhoneField } from './PhoneField'
 import { SearchSelect } from './SearchSelect'
 
 const EMPTY_FORM: Form = {
@@ -47,7 +55,6 @@ type Props = {
 
 export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
   const t = useTranslations('Checkout')
-  const tCart = useTranslations('Cart')
   const locale = useLocale()
   const { lines, ready } = useCart()
   const refresh = useRefreshCart(true, locale)
@@ -55,7 +62,12 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
   const [errors, setErrors] = useState<Errors>({})
   const [notice, setNotice] = useState<'cartChanged' | 'failed' | null>(null)
   const [pending, setPending] = useState(false)
-  const [orderId, setOrderId] = useState<number | null>(null)
+  // The placed order as the visitor saw it, for the thank-you screen (the cart is emptied by then).
+  const [placed, setPlaced] = useState<{
+    id: number
+    lines: CartLine[]
+    form: Pick<Form, 'city' | 'warehouse' | 'payment'>
+  } | null>(null)
   // A field for bots only: hidden from people and screen readers, filled in by naive spam scripts.
   const [website, setWebsite] = useState('')
 
@@ -79,13 +91,35 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
     [form.cityRef, locale],
   )
 
-  if (orderId !== null)
+  if (placed)
     return (
       <div className="mx-auto flex max-w-lg flex-col items-center gap-4 py-12 text-center">
         <CheckCircle2Icon className="size-12 text-foreground" aria-hidden="true" />
         <h1>{t('thanksTitle')}</h1>
-        <p className="text-lg font-semibold">{t('thanksNumber', { number: orderId })}</p>
+        <p className="text-lg font-semibold">{t('thanksNumber', { number: placed.id })}</p>
         <p className="text-base text-muted-foreground">{t('thanksText')}</p>
+        <section className="mt-2 w-full rounded-xl bg-muted p-5 text-left">
+          <h2 className="mb-1 text-lg">{t('summary')}</h2>
+          <OrderLines
+            lines={placed.lines}
+            totals={cartTotals(placed.lines, bundlePercent)}
+            bundlePercent={bundlePercent}
+          />
+          <dl className="mt-4 space-y-3 border-t border-border pt-4 text-sm">
+            <div>
+              <dt className="font-semibold">{t('delivery')}</dt>
+              <dd className="text-muted-foreground">
+                {placed.form.city}, {placed.form.warehouse}
+              </dd>
+            </div>
+            <div>
+              <dt className="font-semibold">
+                {t('payment')}: {t(`payments.${placed.form.payment}.title`)}
+              </dt>
+              <dd className="text-muted-foreground">{t(`payments.${placed.form.payment}.note`)}</dd>
+            </div>
+          </dl>
+        </section>
         <Button asChild className="mt-2 rounded-full px-6">
           <Link href="/">{t('thanksHome')}</Link>
         </Button>
@@ -129,7 +163,11 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
       })
       if (result.ok) {
         cartActions.clear()
-        setOrderId(result.orderId)
+        setPlaced({
+          id: result.orderId,
+          lines: inStock,
+          form: { city: form.city, warehouse: form.warehouse, payment: form.payment },
+        })
         window.scrollTo({ top: 0 })
       } else if (result.reason === 'invalid') {
         setErrors(result.errors)
@@ -169,15 +207,17 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
                 error={error('firstName')}
                 onChange={(firstName) => update({ firstName })}
               />
-              <Field
+              <PhoneField
                 label={t('phone')}
-                type="tel"
-                autoComplete="tel"
-                inputMode="tel"
                 placeholder={t('phonePlaceholder')}
                 value={form.phone}
                 error={error('phone')}
                 onChange={(phone) => update({ phone })}
+                // An unfinished number is pointed out on leaving the field, not only on submit.
+                onBlur={() => {
+                  if (form.phone && !normalizePhone(form.phone))
+                    setErrors((current) => ({ ...current, phone: 'phone' }))
+                }}
               />
               <Field
                 label={`${t('email')} (${t('optional')})`}
@@ -285,64 +325,7 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
               {t('edit')}
             </button>
           </div>
-          <ul className="divide-y divide-border">
-            {inStock.map((line) => (
-              <li key={line.variantId} className="flex gap-3 py-3">
-                <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-white">
-                  {line.view.image && (
-                    <Image
-                      src={line.view.image.url}
-                      alt=""
-                      fill
-                      sizes="64px"
-                      className="object-contain"
-                    />
-                  )}
-                </div>
-                <div className="min-w-0 flex-1 text-sm">
-                  <p className="leading-snug font-semibold">{line.view.title}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {line.view.variantName} · × {line.quantity}
-                  </p>
-                </div>
-                <p className="text-right text-sm leading-tight">
-                  {line.view.fullPrice !== null && line.view.fullPrice > line.view.price && (
-                    <s className="block text-xs text-muted-foreground">
-                      <span className="sr-only">{tCart('oldPrice')} </span>
-                      {tCart('price', { price: line.view.fullPrice * line.quantity })}
-                    </s>
-                  )}
-                  <span className="font-semibold">
-                    {tCart('price', { price: line.view.price * line.quantity })}
-                  </span>
-                </p>
-              </li>
-            ))}
-          </ul>
-          <dl className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
-            {(totals.saleDiscount > 0 || totals.bundleDiscount > 0) && (
-              <div className="flex justify-between text-muted-foreground">
-                <dt>{tCart('fullTotal')}</dt>
-                <dd>{tCart('price', { price: totals.fullTotal })}</dd>
-              </div>
-            )}
-            {totals.saleDiscount > 0 && (
-              <div className="flex justify-between text-muted-foreground">
-                <dt>{tCart('saleDiscount')}</dt>
-                <dd>−{tCart('price', { price: totals.saleDiscount })}</dd>
-              </div>
-            )}
-            {totals.bundleDiscount > 0 && bundlePercent !== null && (
-              <div className="flex justify-between text-muted-foreground">
-                <dt>{tCart('bundleDiscount', { percent: bundlePercent })}</dt>
-                <dd>−{tCart('price', { price: totals.bundleDiscount })}</dd>
-              </div>
-            )}
-            <div className="flex justify-between text-base font-semibold">
-              <dt>{tCart('total')}</dt>
-              <dd>{tCart('price', { price: totals.total })}</dd>
-            </div>
-          </dl>
+          <OrderLines lines={inStock} totals={totals} bundlePercent={bundlePercent} />
 
           {notice && (
             <p
@@ -369,6 +352,81 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
         </aside>
       </div>
     </form>
+  )
+}
+
+// The ordered lines with prices and the totals: the summary next to the form and on the thank-you screen.
+function OrderLines({
+  lines,
+  totals,
+  bundlePercent,
+}: {
+  lines: CartLine[]
+  totals: ReturnType<typeof cartTotals>
+  bundlePercent: number | null
+}) {
+  const tCart = useTranslations('Cart')
+  return (
+    <>
+      <ul className="divide-y divide-border">
+        {lines.map((line) => (
+          <li key={line.variantId} className="flex gap-3 py-3">
+            <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-white">
+              {line.view.image && (
+                <Image
+                  src={line.view.image.url}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  className="object-contain"
+                />
+              )}
+            </div>
+            <div className="min-w-0 flex-1 text-sm">
+              <p className="leading-snug font-semibold">{line.view.title}</p>
+              <p className="text-xs text-muted-foreground">
+                {line.view.variantName} · × {line.quantity}
+              </p>
+            </div>
+            <p className="text-right text-sm leading-tight">
+              {line.view.fullPrice !== null && line.view.fullPrice > line.view.price && (
+                <s className="block text-xs text-muted-foreground">
+                  <span className="sr-only">{tCart('oldPrice')} </span>
+                  {tCart('price', { price: line.view.fullPrice * line.quantity })}
+                </s>
+              )}
+              <span className="font-semibold">
+                {tCart('price', { price: line.view.price * line.quantity })}
+              </span>
+            </p>
+          </li>
+        ))}
+      </ul>
+      <dl className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
+        {(totals.saleDiscount > 0 || totals.bundleDiscount > 0) && (
+          <div className="flex justify-between text-muted-foreground">
+            <dt>{tCart('fullTotal')}</dt>
+            <dd>{tCart('price', { price: totals.fullTotal })}</dd>
+          </div>
+        )}
+        {totals.saleDiscount > 0 && (
+          <div className="flex justify-between text-muted-foreground">
+            <dt>{tCart('saleDiscount')}</dt>
+            <dd>−{tCart('price', { price: totals.saleDiscount })}</dd>
+          </div>
+        )}
+        {totals.bundleDiscount > 0 && bundlePercent !== null && (
+          <div className="flex justify-between text-muted-foreground">
+            <dt>{tCart('bundleDiscount', { percent: bundlePercent })}</dt>
+            <dd>−{tCart('price', { price: totals.bundleDiscount })}</dd>
+          </div>
+        )}
+        <div className="flex justify-between text-base font-semibold">
+          <dt>{tCart('total')}</dt>
+          <dd>{tCart('price', { price: totals.total })}</dd>
+        </div>
+      </dl>
+    </>
   )
 }
 

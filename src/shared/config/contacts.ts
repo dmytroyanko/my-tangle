@@ -4,6 +4,13 @@ export const phones = [
   { display: '(068) 670-85-32', href: 'tel:+380686708532' },
 ] as const
 
+// Chats with the store: Telegram on the first phone number, Viber on its own number. Telegram opens in the
+// browser or the app; Viber only in the app (it has no web version).
+export const messengers = [
+  { name: 'Telegram', href: 'https://t.me/+380930469383' },
+  { name: 'Viber', href: 'viber://chat?number=%2B380938415232' },
+] as const
+
 // The store's founding year, the start of the copyright range.
 export const foundedYear = 2007
 

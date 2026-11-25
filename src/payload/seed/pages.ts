@@ -2,6 +2,7 @@
 //   pnpm payload run src/payload/seed/pages.ts                           (every page)
 //   PAGE=kak-myt-tangle-teezer pnpm payload run src/payload/seed/pages.ts (one page)
 // Texts follow the manufacturer's, adapted for the shop; slugs are the current site's (without .html).
+// Service pages (delivery, offer, privacy, returns) are the shop's own texts.
 //
 // Safe to run again: a page that already exists (matched by slug) is left as edited in the admin unless
 // SEED_UPDATE=1. Photos are matched by file name, as in catalog.ts.
@@ -30,6 +31,8 @@ type PageFile = {
   // Short title for the footer link; when set with footerOrder, the page is listed in the footer.
   navTitle?: Localized<string>
   footerOrder?: number
+  // The offer or the privacy policy, linked from the checkout.
+  serviceRole?: 'offer' | 'privacy'
   meta: { title: Localized<string>; description: Localized<string> }
   images?: { key: string; url: ImageSource; alt: Localized<string> }[]
   // Key of the photo for social previews and structured data.
@@ -92,6 +95,7 @@ async function importPage(payload: Payload, page: PageFile) {
       _status: 'published',
       showInFooter: page.footerOrder !== undefined,
       footerOrder: page.footerOrder ?? 0,
+      serviceRole: page.serviceRole ?? null,
     },
     {
       uk: {

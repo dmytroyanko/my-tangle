@@ -1,9 +1,10 @@
-import { MapPinIcon, PhoneIcon } from 'lucide-react'
+import { MapPinIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 
 import { getFooterPages } from '@/entities/page'
-import { catalog, foundedYear, phones, routes } from '@/shared/config'
+import { catalog, foundedYear, messengers, phones, routes } from '@/shared/config'
 import { Link, type Locale } from '@/shared/i18n'
+import { externalLinkProps, isExternalUrl } from '@/shared/lib/links'
 import { Logo } from '@/shared/ui/logo'
 
 import { BritishFlag } from './BritishFlag'
@@ -73,6 +74,17 @@ export async function Footer() {
               <a key={phone.href} href={phone.href} className="flex items-center gap-2 font-semibold hover:underline">
                 <PhoneIcon className="size-4 text-dark-foreground/50" aria-hidden="true" />
                 {phone.display}
+              </a>
+            ))}
+            {messengers.map((messenger) => (
+              <a
+                key={messenger.name}
+                href={messenger.href}
+                {...(isExternalUrl(messenger.href) ? externalLinkProps : {})}
+                className={`flex items-center gap-2 ${linkClass}`}
+              >
+                <MessageCircleIcon className="size-4 text-dark-foreground/50" aria-hidden="true" />
+                {messenger.name}
               </a>
             ))}
             <p className="flex gap-2 text-dark-foreground/70">

@@ -28,7 +28,7 @@ export const Pages: CollectionConfig = {
       label: 'Коротка назва',
       type: 'text',
       localized: true,
-      admin: { description: 'Для посилань у футері; порожньо — повна назва' },
+      admin: { description: 'Для посилань у футері; порожньо – повна назва' },
     },
     slugField({ useAsSlug: 'title', localized: true, slugify }),
     {
@@ -46,9 +46,25 @@ export const Pages: CollectionConfig = {
           label: 'Порядок у футері',
           type: 'number',
           defaultValue: 0,
-          admin: { description: 'Менше — вище' },
+          admin: { description: 'Менше – вище' },
         },
       ],
+    },
+    {
+      name: 'serviceRole',
+      label: 'Службова роль',
+      type: 'select',
+      // The checkout links the offer and the privacy policy by this, not by a slug. Not unique, so a page
+      // can be duplicated for a new edition; the most recently updated published page with a role wins.
+      index: true,
+      options: [
+        { label: 'Публічна оферта', value: 'offer' },
+        { label: 'Політика конфіденційності', value: 'privacy' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'На цю сторінку посилається рядок згоди під кнопкою «Підтвердити замовлення»',
+      },
     },
     { name: 'content', type: 'richText', localized: true },
     {

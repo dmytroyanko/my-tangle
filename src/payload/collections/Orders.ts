@@ -161,8 +161,9 @@ export const Orders: CollectionConfig = {
       type: 'select',
       defaultValue: 'cod',
       options: [
-        { label: 'Накладений платіж', value: 'cod' },
-        { label: 'Карткою онлайн', value: 'online' },
+        { label: 'Apple Pay / Google Pay', value: 'wallet' },
+        { label: 'Карткою за реквізитами', value: 'card' },
+        { label: 'Післяплата', value: 'cod' },
       ],
     },
     { name: 'comment', label: 'Коментар покупця', type: 'textarea' },

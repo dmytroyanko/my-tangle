@@ -55,7 +55,9 @@ The bundle discount (Tangle Teezer with Invisibobble in one order, 7%) is switch
 
 ## Checkout
 
-The cart (a side panel) leads to the checkout, `/oformlennia-zamovlennia` (`/ru/oformlenie-zakaza`), noindex. The visitor gives their name, phone, a Nova Poshta city and branch or parcel locker picked from the Nova Poshta directory (searched from our server; `NOVA_POSHTA_API_KEY` in `.env` is optional), payment (cash on delivery for now) and a comment. The order is created in Payload (Orders) with prices, names and stock read from the products, never taken from the browser; if anything in the cart changed meanwhile, the visitor sees the updated summary and confirms again. The phone is also stored as `+380XXXXXXXXX` (`phoneNormalized`) so a customer who registers later can see orders placed as a guest. The order number is the order id.
+The cart (a side panel) leads to the checkout, `/oformlennia-zamovlennia` (`/ru/oformlenie-zakaza`), noindex. The visitor gives their name, phone, a Nova Poshta city and branch or parcel locker picked from the Nova Poshta directory (searched from our server; `NOVA_POSHTA_API_KEY` in `.env` is optional), payment (Apple Pay / Google Pay, the default, card by bank details, or cash on delivery with Nova Poshta's 2% + 20 UAH fee; for the first two the manager sends a payment link or the details after confirming) and a comment. The order is created in Payload (Orders) with prices, names and stock read from the products, never taken from the browser; if anything in the cart changed meanwhile, the visitor sees the updated summary and confirms again. The phone is also stored as `+380XXXXXXXXX` (`phoneNormalized`) so a customer who registers later can see orders placed as a guest. The order number is the order id.
+
+Next to the button the visitor accepts the public offer and the privacy policy: links to the published pages whose "service role" (sidebar of a page in the admin) is the offer or the privacy policy.
 
 Pages in code whose path differs by language are served from one folder named after their key (`checkout/`): `src/proxy.ts` rewrites each language's path to it and redirects the other language's path; the paths themselves are in `src/shared/config/routes.ts`.
 
@@ -63,7 +65,7 @@ Pages in code whose path differs by language are served from one folder named af
 
 Admin accounts (`users`) have a role: **admin** (everything, including users and Shop settings) or **content editor** (products, categories, pages, photos), plus two rights for orders: **view orders** and **receive orders** (view, change the status and get an email about every new order). Rights are set by an admin; the first account created becomes an admin, and the last admin cannot lose the role or be deleted. Drafts and version history of products and pages are visible only to admins and content editors.
 
-A new order sends a Telegram message to the orders chat (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ORDERS_CHAT_ID`) and an email to every user with "receive orders" (SMTP settings in `.env`; without them Payload prints emails to the console). Notifications go out after the response, so the customer never waits for them; a channel that is not set up is skipped, and the order is saved either way. To find the chat id, write to the bot and open `https://api.telegram.org/bot<token>/getUpdates`.
+A new order sends a Telegram message to the orders chats (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ORDERS_CHAT_ID`: one or more chat ids, comma-separated) and an email to every user with "receive orders" (SMTP settings in `.env`; without them Payload prints emails to the console). Notifications go out after the response, so the customer never waits for them; a channel that is not set up is skipped, and the order is saved either way. To find the chat id, write to the bot and open `https://api.telegram.org/bot<token>/getUpdates`.
 
 ## Home page
 

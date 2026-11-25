@@ -101,9 +101,9 @@ export function RichText({ data, headingTag = 'h3', className }: Props) {
 
 // Typography for rich text blocks (description, FAQ answers).
 export const richTextClassName =
-  'space-y-3 text-base text-foreground/80 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-foreground [&_h3,&_h4]:pt-3 [&_h3,&_h4]:text-lg [&_h3,&_h4]:leading-snug [&_h3,&_h4]:font-semibold [&_h3,&_h4]:text-foreground [&_li]:mt-1.5 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5'
+  'space-y-3 text-base text-foreground/80 [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-foreground [&_h3,&_h4]:pt-3 [&_h3,&_h4]:text-lg [&_h3,&_h4]:leading-snug [&_h3,&_h4]:font-semibold [&_h3,&_h4]:text-foreground [&_li]:mt-1.5 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5'
 
 // Typography for an article: the page title is the h1, so the text has h2 and h3 sections, numbered steps
 // and photos.
 export const articleClassName =
-  'space-y-4 text-base leading-relaxed text-foreground/80 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-foreground [&_h2]:pt-6 [&_h2]:text-xl [&_h2]:leading-snug [&_h2]:font-semibold [&_h2]:text-foreground md:[&_h2]:text-2xl [&_h3]:pt-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground [&_img]:my-6 [&_li]:mt-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5'
+  'space-y-4 text-base leading-relaxed text-foreground/80 [&_a]:underline [&_a]:underline-offset-2 [&_a:hover]:text-foreground [&_h2]:pt-6 [&_h2]:text-xl [&_h2]:leading-snug [&_h2]:font-semibold [&_h2]:text-foreground md:[&_h2]:text-2xl [&_h3]:pt-3 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-foreground [&_img]:my-6 [&_li]:mt-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-semibold [&_strong]:text-foreground [&_ul]:list-disc [&_ul]:pl-5'

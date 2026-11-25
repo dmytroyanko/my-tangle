@@ -54,7 +54,7 @@ export const Users: CollectionConfig = {
         { label: 'Редактор контенту (товари, категорії, сторінки, фото)', value: 'editor' },
       ],
       access: { create: adminOnlyField, update: adminOnlyField },
-      admin: { description: 'Порожньо — без доступу до контенту (наприклад, лише замовлення)' },
+      admin: { description: 'Порожньо – без доступу до контенту (наприклад, лише замовлення)' },
     },
     {
       type: 'row',

@@ -9,13 +9,19 @@ export type CheckoutForm = {
   cityRef: string
   warehouse: string
   warehouseRef: string
-  payment: 'cod'
+  payment: PaymentMethod
   comment: string
 }
 
+// Apple Pay / Google Pay (the default), a card payment by the shop's bank details, cash on delivery, in the
+// order the checkout lists them.
+export const paymentMethods = ['wallet', 'card', 'cod'] as const
+export type PaymentMethod = (typeof paymentMethods)[number]
+
 export type CheckoutField = keyof CheckoutForm
 // Message keys under Checkout.errors.
-export type CheckoutError = 'required' | 'phone' | 'email' | 'name' | 'city' | 'warehouse'
+export type CheckoutError =
+  'required' | 'phone' | 'email' | 'name' | 'city' | 'warehouse' | 'payment'
 
 // A Ukrainian phone as +380XXXXXXXXX, from the ways people type it (0671234567, 380671234567,
 // +38 (067) 123-45-67), or null when it is not one.
@@ -47,5 +53,6 @@ export function validateCheckout(
     errors.email = 'email'
   if (!form.cityRef) errors.city = 'city'
   if (!form.warehouseRef) errors.warehouse = 'warehouse'
+  if (!paymentMethods.includes(form.payment)) errors.payment = 'payment'
   return errors
 }

@@ -5,8 +5,8 @@ import { siteUrl } from '@/shared/config'
 
 import type { Order } from '../payload-types'
 
-// Tells the shop about a new order: a Telegram message to the orders chat (TELEGRAM_BOT_TOKEN and
-// TELEGRAM_ORDERS_CHAT_ID) and an email to every user with "receive orders". A channel that is not set
+// Tells the shop about a new order: a Telegram message to the orders chats (TELEGRAM_BOT_TOKEN and
+// TELEGRAM_ORDERS_CHAT_ID, comma-separated) and an email to every user with "receive orders". A channel that is not set
 // up is skipped, and a failed one is logged: the order is saved either way.
 //
 // The hook runs inside the create transaction, so the messages go out only after the response (Next.js
@@ -57,16 +57,22 @@ function describe(order: Order) {
     delivery: `Нова Пошта: ${order.delivery?.city ?? ''}, ${order.delivery?.warehouse ?? ''}`,
     items: (order.items ?? []).map(
       (item) =>
-        `${item.title ?? ''} ${item.variant ?? ''} × ${item.quantity} — ${money(item.price * item.quantity)}`,
+        `${item.title ?? ''} ${item.variant ?? ''} × ${item.quantity} – ${money(item.price * item.quantity)}`,
     ),
     total:
       order.discount && order.discount > 0
         ? `Разом: ${money(order.total)} (знижка ${money(order.discount)})`
         : `Разом: ${money(order.total)}`,
-    payment: order.payment === 'online' ? 'Оплата: карткою онлайн' : 'Оплата: накладений платіж',
+    payment: `Оплата: ${paymentLabels[order.payment ?? 'cod']}`,
     comment: order.comment ? `Коментар: ${order.comment}` : null,
     link: adminUrl(order.id),
   }
+}
+
+const paymentLabels: Record<NonNullable<Order['payment']>, string> = {
+  cod: 'післяплата',
+  card: 'карткою за реквізитами',
+  wallet: 'Apple Pay / Google Pay',
 }
 
 const escapeHtml = (text: string) =>
@@ -76,8 +82,12 @@ const TELEGRAM_LIMIT = 4096
 
 async function sendTelegram(order: ReturnType<typeof describe>) {
   const token = process.env.TELEGRAM_BOT_TOKEN
-  const chatId = process.env.TELEGRAM_ORDERS_CHAT_ID
-  if (!token || !chatId) return
+  // One or more chats, comma-separated: every manager who wrote to the bot, or a group.
+  const chatIds = (process.env.TELEGRAM_ORDERS_CHAT_ID ?? '')
+    .split(',')
+    .map((id) => id.trim())
+    .filter(Boolean)
+  if (!token || !chatIds.length) return
   const head = [
     `<b>${escapeHtml(order.title)}</b>`,
     escapeHtml(order.customer),
@@ -105,17 +115,31 @@ async function sendTelegram(order: ReturnType<typeof describe>) {
     size += line.length + 1
   }
   const text = [...head, ...items, ...tail].join('\n')
-  const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      parse_mode: 'HTML',
-      link_preview_options: { is_disabled: true },
+  // Each chat on its own, so one blocked or wrong chat id does not stop the others.
+  const results = await Promise.allSettled(
+    chatIds.map(async (chatId) => {
+      const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text,
+          parse_mode: 'HTML',
+          link_preview_options: { is_disabled: true },
+        }),
+      })
+      if (!response.ok)
+        throw new Error(`Telegram ${chatId}: ${response.status} ${await response.text()}`)
     }),
-  })
-  if (!response.ok) throw new Error(`Telegram: ${response.status} ${await response.text()}`)
+  )
+  const failed = results.filter(
+    (result): result is PromiseRejectedResult => result.status === 'rejected',
+  )
+  if (failed.length)
+    throw new AggregateError(
+      failed.map((result) => result.reason),
+      'Telegram',
+    )
 }
 
 async function sendEmails(doc: Order, order: ReturnType<typeof describe>, payload: Payload) {
@@ -138,7 +162,7 @@ async function sendEmails(doc: Order, order: ReturnType<typeof describe>, payloa
   // One email per recipient: nobody sees the others' addresses, and one bad address fails only its own.
   const results = await Promise.allSettled(
     docs.map((user) =>
-      payload.sendEmail({ to: user.email, subject: `${order.title} — ${money(doc.total)}`, html }),
+      payload.sendEmail({ to: user.email, subject: `${order.title} – ${money(doc.total)}`, html }),
     ),
   )
   const failed = results.filter(

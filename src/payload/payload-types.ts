@@ -151,7 +151,7 @@ export interface Product {
    */
   series?: string | null;
   /**
-   * Порядок у категорії, менше — вище
+   * Порядок у категорії, менше – вище
    */
   order?: number | null;
   /**
@@ -159,11 +159,11 @@ export interface Product {
    */
   tags?: string[] | null;
   /**
-   * РРЦ: щітки — ціна постачальника мінус 1 грн, Invisibobble — як у постачальника
+   * РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника
    */
   fullPrice?: number | null;
   /**
-   * Порожньо — знижка з «Налаштувань магазину», 0 — без знижки
+   * Порожньо – знижка з «Налаштувань магазину», 0 – без знижки
    */
   discountPercent?: number | null;
   /**
@@ -379,7 +379,7 @@ export interface Order {
     warehouse?: string | null;
     warehouseRef?: string | null;
   };
-  payment?: ('cod' | 'online') | null;
+  payment?: ('wallet' | 'card' | 'cod') | null;
   comment?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -392,7 +392,7 @@ export interface Page {
   id: number;
   title: string;
   /**
-   * Для посилань у футері; порожньо — повна назва
+   * Для посилань у футері; порожньо – повна назва
    */
   navTitle?: string | null;
   /**
@@ -402,9 +402,13 @@ export interface Page {
   slug: string;
   showInFooter?: boolean | null;
   /**
-   * Менше — вище
+   * Менше – вище
    */
   footerOrder?: number | null;
+  /**
+   * На цю сторінку посилається рядок згоди під кнопкою «Підтвердити замовлення»
+   */
+  serviceRole?: ('offer' | 'privacy') | null;
   content?: {
     root: {
       type: string;
@@ -467,7 +471,7 @@ export interface User {
   id: number;
   name?: string | null;
   /**
-   * Порожньо — без доступу до контенту (наприклад, лише замовлення)
+   * Порожньо – без доступу до контенту (наприклад, лише замовлення)
    */
   role?: ('admin' | 'editor') | null;
   viewOrders?: boolean | null;
@@ -725,6 +729,7 @@ export interface PagesSelect<T extends boolean = true> {
   slug?: T;
   showInFooter?: T;
   footerOrder?: T;
+  serviceRole?: T;
   content?: T;
   faq?:
     | T

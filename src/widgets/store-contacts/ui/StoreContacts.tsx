@@ -1,9 +1,16 @@
-import { ClockIcon, ExternalLinkIcon, MapPinIcon, PhoneIcon, type LucideIcon } from 'lucide-react'
+import {
+  ClockIcon,
+  ExternalLinkIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  PhoneIcon,
+  type LucideIcon,
+} from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
 
-import { mapUrl, phones } from '@/shared/config'
-import { externalLinkProps } from '@/shared/lib/links'
+import { mapUrl, messengers, phones } from '@/shared/config'
+import { externalLinkProps, isExternalUrl } from '@/shared/lib/links'
 import { cn } from '@/shared/lib/utils'
 
 function Card({
@@ -28,7 +35,7 @@ function Card({
   )
 }
 
-// Phones, address and working hours of the store as three cards. The phones and address are in <address>,
+// Phones (with chats in messengers), address and working hours of the store as three cards. The phones and address are in <address>,
 // the contact information of the page.
 export async function StoreContacts({ className }: { className?: string }) {
   const t = await getTranslations('ContactsPage')
@@ -46,6 +53,21 @@ export async function StoreContacts({ className }: { className?: string }) {
           ))}
         </ul>
         <p className="mt-3 text-sm text-muted-foreground">{t('phonesHint')}</p>
+        <p className="mt-4 text-sm">{t('writeUs')}</p>
+        <ul className="mt-2 flex flex-wrap gap-2">
+          {messengers.map((messenger) => (
+            <li key={messenger.name}>
+              <a
+                href={messenger.href}
+                {...(isExternalUrl(messenger.href) ? externalLinkProps : {})}
+                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border px-4 text-sm font-semibold transition-colors hover:border-foreground"
+              >
+                <MessageCircleIcon className="size-4" aria-hidden="true" />
+                {messenger.name}
+              </a>
+            </li>
+          ))}
+        </ul>
       </Card>
 
       <Card icon={MapPinIcon} title={t('addressTitle')}>

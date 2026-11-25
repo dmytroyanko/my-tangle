@@ -13,6 +13,7 @@ import { Button } from '@/shared/ui/button'
 import { searchCities, searchWarehouses } from '../api/novaPoshta'
 import { placeOrder } from '../api/placeOrder'
 import {
+  paymentMethods,
   validateCheckout,
   type CheckoutError,
   type CheckoutField,
@@ -29,7 +30,7 @@ const EMPTY_FORM: Form = {
   cityRef: '',
   warehouse: '',
   warehouseRef: '',
-  payment: 'cod',
+  payment: 'wallet',
   comment: '',
 }
 
@@ -38,7 +39,13 @@ type Errors = Partial<Record<CheckoutField, CheckoutError>>
 // The checkout: contacts, a Nova Poshta branch picked from its directory, payment and a comment, next to the
 // order summary. The cart is checked on the server when the page opens and again when the order is placed;
 // if anything changed meanwhile, the visitor sees the updated summary and confirms again.
-export function CheckoutForm({ bundlePercent }: { bundlePercent: number | null }) {
+type Props = {
+  bundlePercent: number | null
+  // Paths of the offer and the privacy policy for the consent line; a missing one is shown as text.
+  legalLinks: { offer?: string; privacy?: string }
+}
+
+export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
   const t = useTranslations('Checkout')
   const tCart = useTranslations('Cart')
   const locale = useLocale()
@@ -223,13 +230,24 @@ export function CheckoutForm({ bundlePercent }: { bundlePercent: number | null }
           </Section>
 
           <Section title={t('payment')}>
-            <label className="flex cursor-pointer items-start gap-3 rounded-lg border border-foreground p-4">
-              <input type="radio" name="payment" value="cod" checked readOnly className="mt-1" />
-              <span>
-                <span className="block text-base font-semibold">{t('cod')}</span>
-                <span className="text-sm text-muted-foreground">{t('codNote')}</span>
-              </span>
-            </label>
+            <div className="grid gap-3">
+              {paymentMethods.map((method) => (
+                <Choice
+                  key={method}
+                  name="payment"
+                  value={method}
+                  checked={form.payment === method}
+                  title={t(`payments.${method}.title`)}
+                  note={t(`payments.${method}.note`)}
+                  onChange={() => update({ payment: method })}
+                />
+              ))}
+            </div>
+            {errors.payment && (
+              <p role="alert" className="mt-2 text-sm text-destructive">
+                {error('payment')}
+              </p>
+            )}
           </Section>
 
           <Section title={t('comment')}>
@@ -342,7 +360,12 @@ export function CheckoutForm({ bundlePercent }: { bundlePercent: number | null }
           >
             {pending ? t('submitting') : t('submit')}
           </Button>
-          <p className="mt-3 text-xs text-muted-foreground">{t('consent')}</p>
+          <p className="mt-3 text-xs text-muted-foreground">
+            {t.rich('consent', {
+              offer: (chunks) => legalLink(legalLinks.offer, chunks),
+              privacy: (chunks) => legalLink(legalLinks.privacy, chunks),
+            })}
+          </p>
         </aside>
       </div>
     </form>
@@ -355,6 +378,44 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
       <h2 className="mb-4 text-lg">{title}</h2>
       {children}
     </section>
+  )
+}
+
+function Choice({
+  name,
+  value,
+  checked,
+  title,
+  note,
+  onChange,
+}: {
+  name: string
+  value: string
+  checked: boolean
+  title: string
+  note?: string
+  onChange: () => void
+}) {
+  return (
+    <label
+      className={cn(
+        'flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition-colors',
+        checked ? 'border-foreground' : 'border-border hover:border-foreground/40',
+      )}
+    >
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        className="mt-1"
+      />
+      <span>
+        <span className="block text-base font-semibold">{title}</span>
+        {note && <span className="text-sm text-muted-foreground">{note}</span>}
+      </span>
+    </label>
   )
 }
 
@@ -394,5 +455,14 @@ function Field({
         </p>
       )}
     </div>
+  )
+}
+
+function legalLink(href: string | undefined, chunks: ReactNode) {
+  if (!href) return chunks
+  return (
+    <Link href={href} target="_blank" className="underline hover:text-foreground">
+      {chunks}
+    </Link>
   )
 }

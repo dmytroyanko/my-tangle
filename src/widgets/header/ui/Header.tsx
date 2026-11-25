@@ -24,7 +24,7 @@ export async function Header() {
         <div className="container flex h-8 items-center gap-4">
           <p className="mr-auto">
             <span className="font-semibold">My-Tangle</span>
-            <span className="hidden sm:inline"> — {t('tagline')}</span>
+            <span className="hidden sm:inline"> – {t('tagline')}</span>
           </p>
           <div className="hidden items-center gap-1.5 font-semibold md:flex">
             <PhoneIcon className="size-3.5 text-muted-foreground" aria-hidden="true" />

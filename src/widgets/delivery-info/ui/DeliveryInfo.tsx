@@ -36,6 +36,7 @@ export async function DeliveryInfo({ className }: { className?: string }) {
           </h3>
           <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
             <li>{t.rich('novaPoshta', { b: strong })}</li>
+            <li>{t('shipping')}</li>
           </ul>
         </section>
         <section>
@@ -44,8 +45,9 @@ export async function DeliveryInfo({ className }: { className?: string }) {
             {t('paymentTitle')}
           </h3>
           <ul className="mt-2 space-y-1.5 text-sm text-foreground/80">
+            <li>{t.rich('wallet', { b: strong })}</li>
+            <li>{t.rich('card', { b: strong })}</li>
             <li>{t.rich('cashOnDelivery', { b: strong })}</li>
-            <li>{t.rich('cardOnline', { b: strong })}</li>
           </ul>
         </section>
       </div>

@@ -44,7 +44,7 @@ export const Products: CollectionConfig = {
       name: 'order',
       type: 'number',
       defaultValue: 0,
-      admin: { position: 'sidebar', description: 'Порядок у категорії, менше — вище' },
+      admin: { position: 'sidebar', description: 'Порядок у категорії, менше – вище' },
     },
     {
       name: 'tags',
@@ -65,7 +65,7 @@ export const Products: CollectionConfig = {
           validate: (value: number | null | undefined) =>
             typeof value === 'number' || 'Вкажіть повну ціну',
           min: 0,
-          admin: { description: 'РРЦ: щітки — ціна постачальника мінус 1 грн, Invisibobble — як у постачальника' },
+          admin: { description: 'РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника' },
         },
         {
           name: 'discountPercent',
@@ -73,7 +73,7 @@ export const Products: CollectionConfig = {
           type: 'number',
           min: 0,
           max: 90,
-          admin: { description: 'Порожньо — знижка з «Налаштувань магазину», 0 — без знижки' },
+          admin: { description: 'Порожньо – знижка з «Налаштувань магазину», 0 – без знижки' },
         },
         {
           name: 'price',

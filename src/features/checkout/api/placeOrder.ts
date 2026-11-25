@@ -46,7 +46,8 @@ export async function placeOrder(input: {
     cityRef: String(input.form?.cityRef ?? ''),
     warehouse: String(input.form?.warehouse ?? '').slice(0, 300),
     warehouseRef: String(input.form?.warehouseRef ?? ''),
-    payment: 'cod',
+    // Checked by validateCheckout: an unknown method is an error, not a guess.
+    payment: String(input.form?.payment ?? '') as CheckoutForm['payment'],
     comment: String(input.form?.comment ?? '').slice(0, 1000),
   }
   const errors = validateCheckout(form)

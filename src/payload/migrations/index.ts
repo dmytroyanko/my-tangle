@@ -12,6 +12,7 @@ import * as migration_20261124_143720_bundle_discount_toggle from './20261124_14
 import * as migration_20261124_184911_page_footer from './20261124_184911_page_footer';
 import * as migration_20261124_190452_checkout_orders from './20261124_190452_checkout_orders';
 import * as migration_20261125_132103_no_sale_bundle_on from './20261125_132103_no_sale_bundle_on';
+import * as migration_20261125_140734_user_roles from './20261125_140734_user_roles';
 
 export const migrations = [
   {
@@ -82,6 +83,11 @@ export const migrations = [
   {
     up: migration_20261125_132103_no_sale_bundle_on.up,
     down: migration_20261125_132103_no_sale_bundle_on.down,
-    name: '20261125_132103_no_sale_bundle_on'
+    name: '20261125_132103_no_sale_bundle_on',
+  },
+  {
+    up: migration_20261125_140734_user_roles.up,
+    down: migration_20261125_140734_user_roles.down,
+    name: '20261125_140734_user_roles'
   },
 ];

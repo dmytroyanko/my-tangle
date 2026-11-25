@@ -1,10 +1,15 @@
 import path from 'path'
 import type { CollectionConfig } from 'payload'
 
+import { contentEditors } from '../access'
+
 export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   fields: [
     {

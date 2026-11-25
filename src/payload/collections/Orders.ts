@@ -1,5 +1,8 @@
 import type { CollectionConfig } from 'payload'
 
+import { adminOnly, orderHandlers, orderViewers } from '../access'
+import { notifyNewOrder } from '../hooks/notifyNewOrder'
+
 // Orders from the checkout. They are created on the server (placeOrder), with prices taken from the
 // products, never from the browser; public access stays closed. The order number is the document id.
 export const Orders: CollectionConfig = {
@@ -10,11 +13,12 @@ export const Orders: CollectionConfig = {
     defaultColumns: ['id', 'lastName', 'phone', 'total', 'status', 'createdAt'],
   },
   access: {
-    create: ({ req: { user } }) => Boolean(user),
-    read: ({ req: { user } }) => Boolean(user),
-    update: ({ req: { user } }) => Boolean(user),
-    delete: ({ req: { user } }) => Boolean(user),
+    create: adminOnly,
+    read: orderViewers,
+    update: orderHandlers,
+    delete: adminOnly,
   },
+  hooks: { afterChange: [notifyNewOrder] },
   fields: [
     {
       name: 'status',

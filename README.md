@@ -59,6 +59,12 @@ The cart (a side panel) leads to the checkout, `/oformlennia-zamovlennia` (`/ru/
 
 Pages in code whose path differs by language are served from one folder named after their key (`checkout/`): `src/proxy.ts` rewrites each language's path to it and redirects the other language's path; the paths themselves are in `src/shared/config/routes.ts`.
 
+## Admin users and order notifications
+
+Admin accounts (`users`) have a role: **admin** (everything, including users and Shop settings) or **content editor** (products, categories, pages, photos), plus two rights for orders: **view orders** and **receive orders** (view, change the status and get an email about every new order). Rights are set by an admin; the first account created becomes an admin, and the last admin cannot lose the role or be deleted. Drafts and version history of products and pages are visible only to admins and content editors.
+
+A new order sends a Telegram message to the orders chat (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ORDERS_CHAT_ID`) and an email to every user with "receive orders" (SMTP settings in `.env`; without them Payload prints emails to the console). Notifications go out after the response, so the customer never waits for them; a channel that is not set up is skipped, and the order is saved either way. To find the chat id, write to the bot and open `https://api.telegram.org/bot<token>/getUpdates`.
+
 ## Home page
 
 The home page shows a block for every category with **"Показувати на головній"** checked in the admin, in the order of the category's "Порядок" field (the same order as the menu).

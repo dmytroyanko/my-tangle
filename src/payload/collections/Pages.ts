@@ -3,6 +3,8 @@ import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { contentEditors, publishedOrEditors } from '../access'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -10,7 +12,11 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', '_status'],
   },
   access: {
-    read: ({ req: { user } }) => (user ? true : { _status: { equals: 'published' } }),
+    read: publishedOrEditors,
+    readVersions: contentEditors,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   versions: {
     drafts: true,

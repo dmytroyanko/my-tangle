@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { adminOnly } from '../access'
 import { repriceProducts } from '../hooks/salePrices'
 
 // Shop-wide settings edited in the admin.
@@ -8,7 +9,7 @@ export const ShopSettings: GlobalConfig = {
   label: 'Налаштування магазину',
   access: {
     read: () => true,
-    update: ({ req: { user } }) => Boolean(user),
+    update: adminOnly,
   },
   fields: [
     {

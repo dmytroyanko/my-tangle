@@ -3,6 +3,7 @@ import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { contentEditors, publishedOrEditors } from '../access'
 import { computeSalePrices } from '../hooks/salePrices'
 
 export const Products: CollectionConfig = {
@@ -12,7 +13,11 @@ export const Products: CollectionConfig = {
     defaultColumns: ['title', 'category', 'price', '_status'],
   },
   access: {
-    read: ({ req: { user } }) => (user ? true : { _status: { equals: 'published' } }),
+    read: publishedOrEditors,
+    readVersions: contentEditors,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   versions: {
     drafts: true,

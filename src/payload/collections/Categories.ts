@@ -3,6 +3,8 @@ import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { contentEditors } from '../access'
+
 export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: {
@@ -11,6 +13,9 @@ export const Categories: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },

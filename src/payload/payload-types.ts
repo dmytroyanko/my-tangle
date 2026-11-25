@@ -465,6 +465,16 @@ export interface Page {
  */
 export interface User {
   id: number;
+  name?: string | null;
+  /**
+   * Порожньо — без доступу до контенту (наприклад, лише замовлення)
+   */
+  role?: ('admin' | 'editor') | null;
+  viewOrders?: boolean | null;
+  /**
+   * Отримує лист про кожне нове замовлення і може змінювати його статус
+   */
+  receiveOrders?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -765,6 +775,10 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  viewOrders?: T;
+  receiveOrders?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

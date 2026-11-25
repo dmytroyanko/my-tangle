@@ -40,6 +40,10 @@ type CatalogFile = {
     showOnHome: boolean
     // Key from src/shared/config/brands.ts; Tangle Teezer when left out.
     brand?: BrandKey
+    // How the products are listed on the category page and on the home page (see ProductGrid); series
+    // cards when left out.
+    productView?: 'series' | 'colors'
+    homeProductView?: 'series' | 'colors'
     title: Localized<string>
     heading: Localized<string>
     subtitle: Localized<string>
@@ -133,6 +137,9 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         order: category.order,
         showOnHome: category.showOnHome,
         brand: brandKey,
+        // Only when the JSON sets them, so an update keeps the admin's choice (new rows get the default).
+        ...(category.productView && { productView: category.productView }),
+        ...(category.homeProductView && { homeProductView: category.homeProductView }),
         image: categoryImage,
       },
       {

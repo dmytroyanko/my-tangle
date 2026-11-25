@@ -10,8 +10,9 @@ import {
   getCategoryBySlug,
 } from '@/entities/category'
 import { getPageBySlug } from '@/entities/page'
-import { getProductsByCategory, ProductGrid, seriesKey } from '@/entities/product'
+import { getProductsByCategory, seriesKey } from '@/entities/product'
 import { AddToCartButton } from '@/features/add-to-cart'
+import { ProductViewSwitch } from '@/features/product-view-switch'
 import { SeriesFilter } from '@/features/series-filter'
 import { siteName, siteUrl } from '@/shared/config'
 import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
@@ -154,20 +155,22 @@ export default async function CategoryPage({ params }: Props) {
             }))}
             className="mt-6"
           >
-            <ProductGrid
+            <ProductViewSwitch
               products={products}
               basePath={categoryPath}
               eager={3}
               buy={<AddToCartButton />}
+              defaultView={category.productView}
               className="mt-8 md:mt-10"
             />
           </SeriesFilter>
         ) : (
-          <ProductGrid
+          <ProductViewSwitch
             products={products}
             basePath={categoryPath}
             eager={3}
             buy={<AddToCartButton />}
+            defaultView={category.productView}
             className="mt-8 md:mt-10"
           />
         )}

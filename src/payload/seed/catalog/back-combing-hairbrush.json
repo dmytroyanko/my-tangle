@@ -4,6 +4,8 @@
     "mediaKey": "bc-category",
     "order": 6,
     "showOnHome": true,
+    "productView": "colors",
+    "homeProductView": "colors",
     "title": {
       "uk": "Back-Combing Hairbrush",
       "ru": "Back-Combing Hairbrush"

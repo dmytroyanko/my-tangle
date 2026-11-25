@@ -4,6 +4,7 @@
     "mediaKey": "ocm-category",
     "order": 2,
     "showOnHome": true,
+    "productView": "colors",
     "title": {
       "uk": "The Original Children Mini",
       "ru": "The Original Children Mini"

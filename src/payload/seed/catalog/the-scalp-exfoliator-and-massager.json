@@ -4,6 +4,8 @@
     "mediaKey": "sc-category",
     "order": 7,
     "showOnHome": true,
+    "productView": "colors",
+    "homeProductView": "colors",
     "title": {
       "uk": "The Scalp Exfoliator and Massager",
       "ru": "The Scalp Exfoliator and Massager"

@@ -8,6 +8,7 @@ import React from 'react'
 import { getBundleDiscount } from '@/entities/cart'
 import { siteUrl } from '@/shared/config'
 import { routing } from '@/shared/i18n'
+import { ScrollToTop } from '@/shared/ui/scroll-to-top'
 import { CartSheet } from '@/widgets/cart-sheet'
 import { Footer } from '@/widgets/footer'
 import { Header } from '@/widgets/header'
@@ -54,6 +55,7 @@ export default async function RootLayout({ children, params }: Props) {
   setRequestLocale(locale)
   // The bundle discount for the cart panel; the site still renders if the database is unavailable.
   const bundlePercent = await getBundleDiscount().catch(() => null)
+  const tFooter = await getTranslations('Footer')
 
   return (
     <html lang={locale} className={openSans.variable} data-scroll-behavior="smooth">
@@ -63,6 +65,7 @@ export default async function RootLayout({ children, params }: Props) {
           <main className="flex-1">{children}</main>
           <Footer />
           <CartSheet bundlePercent={bundlePercent} />
+          <ScrollToTop label={tFooter('toTop')} />
         </NextIntlClientProvider>
       </body>
     </html>

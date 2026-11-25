@@ -4,6 +4,7 @@
     "mediaKey": "cs-category",
     "order": 3,
     "showOnHome": true,
+    "productView": "colors",
     "title": {
       "uk": "Compact Styler",
       "ru": "Compact Styler"
@@ -185,6 +186,17 @@
           "color": "#2a2324",
           "inStock": true,
           "images": [
+            {
+              "url": "https://cdn.27.ua/sc--media--prod/default/1c/f1/a6/1cf1a6bb-0233-44db-b8c9-0649d177e811.png",
+              "crop": {
+                "left": 43,
+                "top": 31,
+                "width": 446,
+                "height": 619
+              },
+              "background": "#ffffff",
+              "padding": 0.082
+            },
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/5c5c3210e821df1275fd5ff9_cs_rgb61.jpg",
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/5c5c31f47ebe99ab859f65c4_cs_rgb63.jpg",
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/5c5c31ffd70742197190970c_cs_rgb62.jpg"
@@ -228,6 +240,17 @@
           "color": "#ebc5cf",
           "inStock": true,
           "images": [
+            {
+              "url": "https://d2j6dbq0eux0bg.cloudfront.net/images/17942116/products/147657493/6290693262.png",
+              "crop": {
+                "left": 98,
+                "top": 101,
+                "width": 407,
+                "height": 546
+              },
+              "background": "#ffffff",
+              "padding": 0.08
+            },
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc91fd2cfe01bafc70c9b5_ud-cs-pm-1.jpg",
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc91fd5dd63cdefd192239_ud-cs-pm-3.jpg",
             "https://cdn.prod.website-files.com/55b0ba4df6344c8e71423878/6afc91fdd24721c112730618_ud-cs-pm-2.jpg"

@@ -50,7 +50,8 @@
     "contacts": "Контакты",
     "address": "г. Киев, ул. Верховинная, 41",
     "rights": "Все права защищены.",
-    "madeIn": "Designed, manufactured and made in Great Britain"
+    "madeIn": "Designed, manufactured and made in Great Britain",
+    "toTop": "Наверх"
   },
   "Organization": {
     "streetAddress": "ул. Верховинная, 41",
@@ -91,6 +92,11 @@
     "label": "Фильтр по серии",
     "all": "Все",
     "shown": "Показано {count} из {total}"
+  },
+  "ProductViewSwitch": {
+    "label": "Вид списка",
+    "series": "Сериями",
+    "colors": "Каждый цвет"
   },
   "DeliveryInfo": {
     "title": "Доставка и оплата",

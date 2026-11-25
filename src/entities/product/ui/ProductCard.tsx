@@ -21,14 +21,19 @@ type Props = {
   priority?: boolean
   // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
   buy?: ReactNode
+  // One colour only (the colours-as-cards list): no palette, and the colour name is part of the title.
+  variantIndex?: number
 }
 
 // One series with its colours: picking a swatch switches the photo, price and availability; the photo and
-// title open the product page with that colour. Sizes follow the card's container (@container on the parent).
-export function ProductCard({ product, href, priority = false, buy }: Props) {
+// title open the product page with that colour. With `variantIndex` the card is that one colour. Sizes
+// follow the card's container (@container on the parent).
+export function ProductCard({ product, href, priority = false, buy, variantIndex }: Props) {
   const t = useTranslations('ProductCard')
   const defaultIndex = defaultVariantIndex(product.variants)
-  const [selected, setSelected] = useState(defaultIndex)
+  const [picked, setPicked] = useState(defaultIndex)
+  const selected = variantIndex ?? picked
+  const single = variantIndex !== undefined
 
   const variant = product.variants[selected]
   if (!variant) return null
@@ -74,6 +79,10 @@ export function ProductCard({ product, href, priority = false, buy }: Props) {
       <h3 className={cn('mt-3 text-sm leading-snug font-semibold @2xs:text-base', muted)}>
         <Link href={link} className="hover:underline">
           {product.title}
+          {/* In the link, so each colour card's link names its colour (or size). */}
+          {single && product.variants.length > 1 && (
+            <span className="block font-normal text-muted-foreground">{variant.name}</span>
+          )}
         </Link>
       </h3>
 
@@ -90,12 +99,12 @@ export function ProductCard({ product, href, priority = false, buy }: Props) {
         </ul>
       )}
 
-      {hasPalette(product.variants) && (
+      {!single && hasPalette(product.variants) && (
         <>
           <ColorSwatches
             variants={product.variants}
             selected={selected}
-            onSelect={setSelected}
+            onSelect={setPicked}
             className="mt-3"
           />
 

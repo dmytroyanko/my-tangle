@@ -5,6 +5,12 @@ import { slugify } from '@/shared/lib/slugify'
 
 import { contentEditors } from '../access'
 
+// How a category lists its products; values match ProductGrid's `view` (ProductListView).
+const productViewOptions = [
+  { label: 'Серії з вибором кольору', value: 'series' },
+  { label: 'Кожен колір окремою карткою', value: 'colors' },
+]
+
 export const Categories: CollectionConfig = {
   slug: 'categories',
   admin: {
@@ -102,6 +108,29 @@ export const Categories: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Бренд товарів категорії: у характеристиках і розмітці',
+      },
+    },
+    {
+      name: 'productView',
+      label: 'Вигляд списку товарів',
+      type: 'select',
+      defaultValue: 'series',
+      options: productViewOptions,
+      admin: {
+        position: 'sidebar',
+        description:
+          'На сторінці категорії; покупець може перемкнути. Окремі картки зручніші, коли серій 1–2',
+      },
+    },
+    {
+      name: 'homeProductView',
+      label: 'Вигляд на головній',
+      type: 'select',
+      defaultValue: 'series',
+      options: productViewOptions,
+      admin: {
+        position: 'sidebar',
+        description: 'Блок категорії на головній (якщо його показано)',
       },
     },
     {

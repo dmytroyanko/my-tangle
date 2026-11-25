@@ -50,7 +50,8 @@
     "contacts": "Контакти",
     "address": "м. Київ, вул. Верховинна, 41",
     "rights": "Усі права захищені.",
-    "madeIn": "Designed, manufactured and made in Great Britain"
+    "madeIn": "Designed, manufactured and made in Great Britain",
+    "toTop": "Нагору"
   },
   "Organization": {
     "streetAddress": "вул. Верховинна, 41",
@@ -91,6 +92,11 @@
     "label": "Фільтр за серією",
     "all": "Усі",
     "shown": "Показано {count} з {total}"
+  },
+  "ProductViewSwitch": {
+    "label": "Вигляд списку",
+    "series": "Серіями",
+    "colors": "Кожен колір"
   },
   "DeliveryInfo": {
     "title": "Доставка і оплата",

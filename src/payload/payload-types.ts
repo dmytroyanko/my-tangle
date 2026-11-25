@@ -306,6 +306,14 @@ export interface Category {
    */
   brand?: ('tangle-teezer' | 'invisibobble') | null;
   /**
+   * На сторінці категорії; покупець може перемкнути. Окремі картки зручніші, коли серій 1–2
+   */
+  productView?: ('series' | 'colors') | null;
+  /**
+   * Блок категорії на головній (якщо його показано)
+   */
+  homeProductView?: ('series' | 'colors') | null;
+  /**
    * Блок категорії з серіями на головній, у порядку поля «Порядок»
    */
   showOnHome?: boolean | null;
@@ -665,6 +673,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   image?: T;
   order?: T;
   brand?: T;
+  productView?: T;
+  homeProductView?: T;
   showOnHome?: T;
   products?: T;
   meta?:

@@ -14,6 +14,7 @@ import * as migration_20261124_190452_checkout_orders from './20261124_190452_ch
 import * as migration_20261125_132103_no_sale_bundle_on from './20261125_132103_no_sale_bundle_on';
 import * as migration_20261125_140734_user_roles from './20261125_140734_user_roles';
 import * as migration_20261125_211957_service_pages_payments from './20261125_211957_service_pages_payments';
+import * as migration_20261125_223903_category_product_views from './20261125_223903_category_product_views';
 
 export const migrations = [
   {
@@ -94,6 +95,11 @@ export const migrations = [
   {
     up: migration_20261125_211957_service_pages_payments.up,
     down: migration_20261125_211957_service_pages_payments.down,
-    name: '20261125_211957_service_pages_payments'
+    name: '20261125_211957_service_pages_payments',
+  },
+  {
+    up: migration_20261125_223903_category_product_views.up,
+    down: migration_20261125_223903_category_product_views.down,
+    name: '20261125_223903_category_product_views'
   },
 ];

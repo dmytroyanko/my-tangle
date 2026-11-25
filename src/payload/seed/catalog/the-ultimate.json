@@ -4,6 +4,8 @@
     "mediaKey": "us-category",
     "order": 5,
     "showOnHome": true,
+    "productView": "colors",
+    "homeProductView": "colors",
     "title": {
       "uk": "The Ultimate Styler",
       "ru": "The Ultimate Styler"

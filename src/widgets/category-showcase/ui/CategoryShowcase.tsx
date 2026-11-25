@@ -34,6 +34,7 @@ export async function CategoryShowcase({ category, products, className }: Props)
           products={products}
           basePath={`/${slug}`}
           buy={<AddToCartButton />}
+          view={category.homeProductView}
           className="mt-8 md:mt-10"
         />
         <CategoryAbout category={category} headingLevel="h3" className="mt-12 md:mt-16" />

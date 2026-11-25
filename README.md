@@ -47,11 +47,17 @@ The site is bilingual: Ukrainian is the main language, Russian the second one.
 
 The admin enters only the **full price** of a product: for brushes and sprays the supplier's full price minus 1 UAH, for Invisibobble the supplier's full price as is. A colour whose full price differs from the product's has its own full price.
 
-The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin (20% by default); saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field, 0 for none), which then takes priority over the shop one, and a colour can have its own on top of that. Invisibobble products have 0, with a colour discount only where the supplier discounts that design.
+The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin: 0 normally (the site price is the full price), 20% for Black Friday; saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field, 0 for none), which then takes priority over the shop one, and a colour can have its own on top of that. Invisibobble products have 0; during a sale a colour gets a discount only where the supplier discounts that design.
 
-The site shows the site price with the full price crossed out and the discount next to it. The calculation is in `src/payload/hooks/salePrices.ts`.
+With a discount, the site shows the site price with the full price crossed out and the discount next to it; without one, just the price. The calculation is in `src/payload/hooks/salePrices.ts`.
 
-The bundle discount (Tangle Teezer with Invisibobble in one order) is switched on in **Shop settings** with its percent. While it is off, the site shows no bundle banner and the cart no bundle discount; texts in Payload that mention it (FAQ, category descriptions) are edited by hand.
+The bundle discount (Tangle Teezer with Invisibobble in one order, 7%) is switched on in **Shop settings** with its percent: on normally, off during a sale. While it is off, the site shows no bundle banner and the cart no bundle discount; texts in Payload that mention it (FAQ, category descriptions) are edited by hand.
+
+## Checkout
+
+The cart (a side panel) leads to the checkout, `/oformlennia-zamovlennia` (`/ru/oformlenie-zakaza`), noindex. The visitor gives their name, phone, a Nova Poshta city and branch or parcel locker picked from the Nova Poshta directory (searched from our server; `NOVA_POSHTA_API_KEY` in `.env` is optional), payment (cash on delivery for now) and a comment. The order is created in Payload (Orders) with prices, names and stock read from the products, never taken from the browser; if anything in the cart changed meanwhile, the visitor sees the updated summary and confirms again. The phone is also stored as `+380XXXXXXXXX` (`phoneNormalized`) so a customer who registers later can see orders placed as a guest. The order number is the order id.
+
+Pages in code whose path differs by language are served from one folder named after their key (`checkout/`): `src/proxy.ts` rewrites each language's path to it and redirects the other language's path; the paths themselves are in `src/shared/config/routes.ts`.
 
 ## Home page
 

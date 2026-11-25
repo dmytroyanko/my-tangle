@@ -350,21 +350,34 @@ export interface Media {
 export interface Order {
   id: number;
   status?: ('new' | 'confirmed' | 'shipped' | 'completed' | 'cancelled') | null;
-  customerName: string;
+  locale?: ('uk' | 'ru') | null;
+  lastName?: string | null;
+  firstName?: string | null;
   phone: string;
   email?: string | null;
+  /**
+   * +380XXXXXXXXX: за ним клієнт після реєстрації побачить свої замовлення
+   */
+  phoneNormalized?: string | null;
   items: {
     product: number | Product;
+    title?: string | null;
     variant?: string | null;
+    variantId?: string | null;
     quantity: number;
     price: number;
+    fullPrice?: number | null;
     id?: string | null;
   }[];
+  fullTotal?: number | null;
+  discount?: number | null;
   total: number;
   delivery?: {
-    method?: ('nova-poshta' | 'pickup') | null;
+    method?: 'nova-poshta' | null;
     city?: string | null;
+    cityRef?: string | null;
     warehouse?: string | null;
+    warehouseRef?: string | null;
   };
   payment?: ('cod' | 'online') | null;
   comment?: string | null;
@@ -656,25 +669,35 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface OrdersSelect<T extends boolean = true> {
   status?: T;
-  customerName?: T;
+  locale?: T;
+  lastName?: T;
+  firstName?: T;
   phone?: T;
   email?: T;
+  phoneNormalized?: T;
   items?:
     | T
     | {
         product?: T;
+        title?: T;
         variant?: T;
+        variantId?: T;
         quantity?: T;
         price?: T;
+        fullPrice?: T;
         id?: T;
       };
+  fullTotal?: T;
+  discount?: T;
   total?: T;
   delivery?:
     | T
     | {
         method?: T;
         city?: T;
+        cityRef?: T;
         warehouse?: T;
+        warehouseRef?: T;
       };
   payment?: T;
   comment?: T;

@@ -11,5 +11,10 @@ export const routes = {
 
 export type RouteKey = keyof typeof routes
 
+// The folder in src/app/(frontend)/[locale]/ that serves a route: its path when both languages share it
+// (kontakty), else the key (checkout), and src/proxy.ts rewrites each language's path to it.
+export const routeFolder = (key: RouteKey) =>
+  routes[key].uk === routes[key].ru ? routes[key].uk : `/${key}`
+
 // The ones search engines index and the sitemap lists; the rest (checkout, cart, account) are noindex.
 export const indexableRoutes: RouteKey[] = ['contacts']

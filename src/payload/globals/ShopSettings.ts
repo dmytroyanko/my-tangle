@@ -16,7 +16,9 @@ export const ShopSettings: GlobalConfig = {
       label: 'Знижка на сайті, %',
       type: 'number',
       required: true,
-      defaultValue: 20,
+      // Brushes and sprays sell at the full price (supplier's price minus 1 UAH); a sale (Black Friday: 20%)
+      // is set here for its duration.
+      defaultValue: 0,
       min: 0,
       max: 90,
       admin: {
@@ -31,7 +33,7 @@ export const ShopSettings: GlobalConfig = {
           name: 'bundleDiscountEnabled',
           label: 'Знижка за комплект увімкнена',
           type: 'checkbox',
-          defaultValue: false,
+          defaultValue: true,
           admin: {
             description:
               'Tangle Teezer разом з Invisibobble в одному замовленні: банер на сайті й знижка в кошику',

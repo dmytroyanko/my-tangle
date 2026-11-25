@@ -3,15 +3,14 @@
 import { MinusIcon, PlusIcon, Trash2Icon } from 'lucide-react'
 import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
-import { useEffect } from 'react'
 
 import {
   cartActions,
   cartItemCount,
   cartTotals,
-  getCartLines,
   MAX_QUANTITY,
   useCart,
+  useRefreshCart,
   type CartLine,
 } from '@/entities/cart/index.client'
 import { routes } from '@/shared/config'
@@ -30,29 +29,7 @@ export function CartSheet({ bundlePercent }: { bundlePercent: number | null }) {
   const totals = cartTotals(lines, bundlePercent)
   const itemCount = cartItemCount(lines)
   const close = () => cartActions.setOpen(false)
-  // Which lines to check: changes when a colour is added or removed, not when a quantity changes.
-  const key = lines.map((line) => line.variantId).join(',')
-
-  useEffect(() => {
-    if (!open || !key) return
-    let cancelled = false
-    const items = lines.map(({ productId, variantId }) => ({ productId, variantId }))
-    getCartLines(items, locale)
-      .then((data) => {
-        if (cancelled) return
-        cartActions.refresh(
-          new Map(data.map(({ productId: _, variantId, ...view }) => [variantId, view])),
-        )
-      })
-      .catch(() => {
-        // Offline or a server error: the saved copy stays on screen; the order checks prices again.
-      })
-    return () => {
-      cancelled = true
-    }
-    // `lines` is read for the ids only; `key` stands for them.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, key, locale])
+  useRefreshCart(open, locale)
 
   return (
     <Sheet open={open} onOpenChange={cartActions.setOpen}>

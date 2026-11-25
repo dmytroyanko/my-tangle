@@ -9,9 +9,10 @@ import type { CartLine } from './types'
 const STORAGE_KEY = 'my-tangle-cart'
 export const MAX_QUANTITY = 20
 
-type CartState = { lines: CartLine[]; open: boolean }
+// `ready`: the saved cart has been read (false on the server and before hydration).
+type CartState = { lines: CartLine[]; open: boolean; ready: boolean }
 
-const EMPTY: CartState = { lines: [], open: false }
+const EMPTY: CartState = { lines: [], open: false, ready: false }
 const clamp = (quantity: number) => Math.min(Math.max(Math.round(quantity), 1), MAX_QUANTITY)
 let state: CartState = EMPTY
 let loaded = false
@@ -101,7 +102,7 @@ function onStorage(event: StorageEvent) {
 function subscribe(listener: () => void) {
   if (!loaded) {
     loaded = true
-    state = { ...state, lines: read() }
+    state = { ...state, lines: read(), ready: true }
   }
   if (!listeners.size) window.addEventListener('storage', onStorage)
   listeners.add(listener)

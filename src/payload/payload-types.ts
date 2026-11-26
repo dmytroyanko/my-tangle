@@ -101,9 +101,11 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('uk' | 'ru') | ('uk' | 'ru')[];
   globals: {
     'shop-settings': ShopSetting;
+    'home-page': HomePage;
   };
   globalsSelect: {
     'shop-settings': ShopSettingsSelect<false> | ShopSettingsSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
   };
   locale: 'uk' | 'ru';
   widgets: {
@@ -872,12 +874,61 @@ export interface ShopSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  /**
+   * Блок під категоріями на головній; порожньо — блок не показується
+   */
+  faq?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "shop-settings_select".
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   discountPercent?: T;
   bundleDiscountEnabled?: T;
   bundleDiscountPercent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

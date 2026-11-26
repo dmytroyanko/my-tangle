@@ -112,6 +112,9 @@
   "CategoryFaq": {
     "title": "Часті питання"
   },
+  "HomeFaq": {
+    "title": "Часті питання"
+  },
   "ProductPage": {
     "inStock": "В наявності",
     "description": "Опис",

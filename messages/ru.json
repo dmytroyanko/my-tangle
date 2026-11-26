@@ -112,6 +112,9 @@
   "CategoryFaq": {
     "title": "Частые вопросы"
   },
+  "HomeFaq": {
+    "title": "Частые вопросы"
+  },
   "ProductPage": {
     "inStock": "В наличии",
     "description": "Описание",

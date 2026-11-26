@@ -131,6 +131,12 @@ PAGE=kak-myt-tangle-teezer pnpm payload run src/payload/seed/pages.ts  # one pag
 
 Animated GIFs are stored as animated WebP, at most 640px wide (about 300 KB).
 
+The questions under the catalog on the home page (care tips shared by every brush) are the "Головна сторінка" global in the admin. Category descriptions have no care section: care is a question in each category's FAQ. Seed them from `src/payload/seed/home.json`:
+
+```bash
+pnpm payload run src/payload/seed/home.ts
+```
+
 ### Unused media
 
 After replacing photos or removing products, old files stay in media. The script lists the files that no product, category or page uses (both languages, drafts included), and with `CLEANUP_APPLY=1` deletes them. Deletion cannot be undone, so review the list first:

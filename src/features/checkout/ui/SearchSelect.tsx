@@ -5,6 +5,7 @@ import { useEffect, useId, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 
 import type { NpOption } from '../api/novaPoshta'
+import { FormField, inputA11y, inputClassName } from './FormField'
 
 type Props = {
   label: string
@@ -79,12 +80,9 @@ export function SearchSelect({
   const showList = searchable
 
   return (
-    <div className="relative">
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
-        {label}
-      </label>
+    <FormField id={id} label={label} error={error} className="relative">
       <input
-        id={id}
+        {...inputA11y(id, error)}
         type="text"
         role="combobox"
         autoComplete="off"
@@ -92,8 +90,6 @@ export function SearchSelect({
         aria-controls={listId}
         aria-autocomplete="list"
         aria-activedescendant={showList && active >= 0 ? `${id}-${active}` : undefined}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
         value={query}
         placeholder={placeholder}
         disabled={disabled}
@@ -119,10 +115,7 @@ export function SearchSelect({
             setOpen(false)
           }
         }}
-        className={cn(
-          'h-11 w-full rounded-lg border border-border bg-background px-3 text-base outline-none focus-visible:border-foreground disabled:cursor-not-allowed disabled:bg-muted',
-          error && 'border-destructive',
-        )}
+        className={inputClassName(error)}
       />
       {showList && (
         <ul
@@ -154,11 +147,6 @@ export function SearchSelect({
           )}
         </ul>
       )}
-      {error && (
-        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
-          {error}
-        </p>
-      )}
-    </div>
+    </FormField>
   )
 }

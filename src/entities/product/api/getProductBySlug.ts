@@ -1,8 +1,8 @@
-import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 import { cache } from 'react'
 
 import { findBySlug } from '@/payload/lib/findBySlug'
 import type { Locale } from '@/shared/i18n'
+import { toPlainText } from '@/shared/lib/plain-text'
 
 import { specKeys, type ProductSpec } from '../model/specKeys'
 import { toCardData } from './toCardData'
@@ -26,9 +26,7 @@ export const getProductBySlug = cache(async (slug: string, categoryId: number, l
     ...card,
     description: product.description ?? null,
     // The same text as plain text, for structured data.
-    descriptionText: product.description
-      ? convertLexicalToPlaintext({ data: product.description }).replace(/\s+/g, ' ').trim()
-      : null,
+    descriptionText: product.description ? toPlainText(product.description) : null,
     // In the fixed order of specKeys, whatever order they were added in, so every product reads the same.
     specs: (product.specs ?? [])
       .map((spec): ProductSpec => ({ key: spec.key, value: spec.value }))

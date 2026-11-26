@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server'
 import { catalog } from '@/shared/config'
 import { Link } from '@/shared/i18n'
 import { Button } from '@/shared/ui/button'
+import { pageTitleClassName } from '@/shared/ui/page-header'
 
 // 404 inside the site layout (header and footer): a short explanation, the catalog and the home page.
 // Next.js sends the 404 status and adds noindex.
@@ -21,7 +22,7 @@ export default async function NotFound() {
   return (
     <div className="container py-12 md:py-20">
       <p className="text-sm font-semibold tracking-[0.15em] text-muted-foreground uppercase">404</p>
-      <h1 className="mt-2 text-[1.75rem] leading-tight md:text-4xl">{t('title')}</h1>
+      <h1 className={`mt-2 ${pageTitleClassName}`}>{t('title')}</h1>
       <p className="mt-3 max-w-2xl text-base text-muted-foreground">{t('text')}</p>
       <Button asChild className="mt-6 rounded-full px-6">
         <Link href="/">{t('home')}</Link>

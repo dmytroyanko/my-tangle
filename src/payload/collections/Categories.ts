@@ -4,11 +4,12 @@ import { slugField } from 'payload'
 import { slugify } from '@/shared/lib/slugify'
 
 import { contentEditors } from '../access'
+import { faqItemFields, metaField } from '../fields'
 
 // How a category lists its products; values match ProductGrid's `view` (ProductListView).
 const productViewOptions = [
-  { label: 'Серії з вибором кольору', value: 'series' },
-  { label: 'Кожен колір окремою карткою', value: 'colors' },
+  { label: 'Серії з вибором кольору', value: 'groups' },
+  { label: 'Кожен колір окремою карткою', value: 'grid' },
 ]
 
 export const Categories: CollectionConfig = {
@@ -83,10 +84,7 @@ export const Categories: CollectionConfig = {
       localized: true,
       labels: { singular: 'Питання', plural: 'Питання' },
       admin: { initCollapsed: true },
-      fields: [
-        { name: 'question', label: 'Питання', type: 'text', required: true },
-        { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
-      ],
+      fields: faqItemFields,
     },
     { name: 'image', type: 'upload', relationTo: 'media' },
     {
@@ -114,7 +112,7 @@ export const Categories: CollectionConfig = {
       name: 'productView',
       label: 'Вигляд списку товарів',
       type: 'select',
-      defaultValue: 'series',
+      defaultValue: 'groups',
       options: productViewOptions,
       admin: {
         position: 'sidebar',
@@ -126,7 +124,7 @@ export const Categories: CollectionConfig = {
       name: 'homeProductView',
       label: 'Вигляд на головній',
       type: 'select',
-      defaultValue: 'series',
+      defaultValue: 'groups',
       options: productViewOptions,
       admin: {
         position: 'sidebar',
@@ -149,14 +147,6 @@ export const Categories: CollectionConfig = {
       collection: 'products',
       on: 'category',
     },
-    {
-      name: 'meta',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    metaField,
   ],
 }

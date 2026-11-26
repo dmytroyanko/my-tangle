@@ -22,8 +22,8 @@ export function ProductViewSwitch({ defaultView, products, ...grid }: Props) {
   const switchable = products.some((product) => product.variants.length > 1)
 
   const options = [
-    { value: 'series', label: t('series'), icon: LayoutGridIcon },
-    { value: 'colors', label: t('colors'), icon: GripIcon },
+    { value: 'groups', label: t('groups'), icon: LayoutGridIcon },
+    { value: 'grid', label: t('grid'), icon: GripIcon },
   ] as const
 
   return (

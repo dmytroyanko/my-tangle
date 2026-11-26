@@ -4,6 +4,7 @@ import { slugField } from 'payload'
 import { slugify } from '@/shared/lib/slugify'
 
 import { contentEditors, publishedOrEditors } from '../access'
+import { faqItemFields, metaField } from '../fields'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -85,21 +86,10 @@ export const Pages: CollectionConfig = {
           label: 'Питання',
           type: 'array',
           labels: { singular: 'Питання', plural: 'Питання' },
-          fields: [
-            { name: 'question', label: 'Питання', type: 'text', required: true },
-            { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
-          ],
+          fields: faqItemFields,
         },
       ],
     },
-    {
-      name: 'meta',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    metaField,
   ],
 }

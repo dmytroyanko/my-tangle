@@ -12,9 +12,10 @@ import {
   ProductView,
 } from '@/entities/product'
 import { AddToCartButton } from '@/features/add-to-cart'
-import { brands, siteName, siteUrl, withBrand } from '@/shared/config'
-import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
-import { breadcrumbJsonLd, productJsonLd } from '@/shared/lib/structured-data'
+import { brands, siteUrl, withBrand } from '@/shared/config'
+import { absoluteUrl, getPathname, routing, type Locale } from '@/shared/i18n'
+import { pageMetadata } from '@/shared/lib/metadata'
+import { productJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { RichText, richTextClassName } from '@/shared/ui/rich-text'
@@ -54,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await load(locale, slug, productSlug)
   if (!data) return {}
   const { category, product } = data
-  const t = await getTranslations({ locale, namespace: 'ProductPage' })
+  const t = await getTranslations({ locale: data.locale, namespace: 'ProductPage' })
 
   const prices = product.variants.map((variant) => variant.price)
   const title =
@@ -67,21 +68,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       count: product.variants.length,
       price: Math.min(...prices),
     })
-  const image = product.variants[0]?.images[0]
 
-  return {
+  return pageMetadata({
+    locale: data.locale,
+    paths: localePaths(category.slugs, product.slugs),
     title,
     description,
-    alternates: alternates(locale, localePaths(category.slugs, product.slugs)),
-    openGraph: {
-      title,
-      description,
-      siteName,
-      images: image
-        ? [{ url: image.url, width: image.width, height: image.height, alt: image.alt }]
-        : undefined,
-    },
-  }
+    image: product.variants[0]?.images[0],
+  })
 }
 
 export default async function ProductPage({ params, searchParams }: Props) {
@@ -112,28 +106,20 @@ export default async function ProductPage({ params, searchParams }: Props) {
     permanentRedirect(colorParam ? `${href}?color=${encodeURIComponent(colorParam)}` : href)
   }
 
-  const absolute = (href: string) => new URL(getPathname({ locale, href }), siteUrl).href
   const others = siblings.filter((sibling) => sibling.id !== product.id)
   const prices = product.variants.map((variant) => variant.price)
-  // The last breadcrumb, the same in the page and in structured data.
+  // The last breadcrumb.
   const crumbName = product.series ?? product.title
 
   return (
     <>
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: tCrumbs('home'), url: absolute('/') },
-          { name: category.title, url: absolute(categoryPath) },
-          { name: crumbName, url: absolute(productPath) },
-        ])}
-      />
       <JsonLd
         data={productJsonLd({
           name: withBrand(category.brand, product.title),
           brand: brands[category.brand],
           // The description shown on the page, not the meta description template.
           description: product.descriptionText ?? undefined,
-          url: absolute(productPath),
+          url: absoluteUrl(locale, productPath),
           images: product.variants
             .flatMap((variant) => variant.images.slice(0, 1))
             .map((image) => new URL(image.url, siteUrl).href),
@@ -149,11 +135,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
 
       <div className="container pt-5 pb-12 md:pb-16">
         <Breadcrumbs
+          home={tCrumbs('home')}
           label={tCrumbs('label')}
+          locale={locale}
           items={[
-            { name: tCrumbs('home'), href: '/' },
             { name: category.title, href: categoryPath },
-            { name: crumbName },
+            { name: crumbName, href: productPath },
           ]}
         />
 

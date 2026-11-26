@@ -4,8 +4,8 @@
     "mediaKey": "edg-category",
     "order": 4,
     "showOnHome": true,
-    "productView": "colors",
-    "homeProductView": "colors",
+    "productView": "grid",
+    "homeProductView": "grid",
     "title": {
       "uk": "Easy Dry & Go",
       "ru": "Easy Dry & Go"

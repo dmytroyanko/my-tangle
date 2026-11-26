@@ -8,6 +8,8 @@ import {
   cartActions,
   cartItemCount,
   cartTotals,
+  CartTotals,
+  LinePrice,
   MAX_QUANTITY,
   useCart,
   useRefreshCart,
@@ -66,30 +68,7 @@ export function CartSheet({ bundlePercent }: { bundlePercent: number | null }) {
                   {t('bundleHint', { percent: bundlePercent })}
                 </p>
               )}
-              <dl className="space-y-1 text-sm">
-                {(totals.saleDiscount > 0 || totals.bundleDiscount > 0) && (
-                  <div className="flex justify-between text-muted-foreground">
-                    <dt>{t('fullTotal')}</dt>
-                    <dd>{t('price', { price: totals.fullTotal })}</dd>
-                  </div>
-                )}
-                {totals.saleDiscount > 0 && (
-                  <div className="flex justify-between text-muted-foreground">
-                    <dt>{t('saleDiscount')}</dt>
-                    <dd>−{t('price', { price: totals.saleDiscount })}</dd>
-                  </div>
-                )}
-                {totals.bundleDiscount > 0 && bundlePercent !== null && (
-                  <div className="flex justify-between text-muted-foreground">
-                    <dt>{t('bundleDiscount', { percent: bundlePercent })}</dt>
-                    <dd>−{t('price', { price: totals.bundleDiscount })}</dd>
-                  </div>
-                )}
-                <div className="flex justify-between text-base font-semibold">
-                  <dt>{t('total')}</dt>
-                  <dd>{t('price', { price: totals.total })}</dd>
-                </div>
-              </dl>
+              <CartTotals totals={totals} bundlePercent={bundlePercent} />
               <Button
                 asChild={totals.count > 0}
                 disabled={totals.count === 0}
@@ -176,17 +155,7 @@ function CartLineItem({ line, onNavigate }: { line: CartLine; onNavigate: () => 
                 <PlusIcon className="size-3.5" />
               </Button>
             </div>
-            <p className="text-right text-sm leading-tight">
-              {view.fullPrice !== null && view.fullPrice > view.price && (
-                <s className="block text-xs text-muted-foreground">
-                  <span className="sr-only">{t('oldPrice')} </span>
-                  {t('price', { price: view.fullPrice * line.quantity })}
-                </s>
-              )}
-              <span className="font-semibold">
-                {t('price', { price: view.price * line.quantity })}
-              </span>
-            </p>
+            <LinePrice line={line} />
           </div>
         ) : (
           <p className="mt-auto text-sm font-semibold text-muted-foreground">{t('outOfStock')}</p>

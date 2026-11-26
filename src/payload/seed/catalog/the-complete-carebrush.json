@@ -4,7 +4,7 @@
     "mediaKey": "tcc-category",
     "order": 1,
     "showOnHome": true,
-    "productView": "colors",
+    "productView": "grid",
     "title": {
       "uk": "The Complete Carebrush",
       "ru": "The Complete Carebrush"

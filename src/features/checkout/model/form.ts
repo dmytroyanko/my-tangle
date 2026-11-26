@@ -1,4 +1,5 @@
 // The checkout form, shared by the browser (instant hints) and the server (the check that counts).
+import { paymentMethods, type PaymentMethod } from '@/shared/config'
 
 export type CheckoutForm = {
   lastName: string
@@ -12,11 +13,6 @@ export type CheckoutForm = {
   payment: PaymentMethod
   comment: string
 }
-
-// Apple Pay / Google Pay (the default), a card payment by the shop's bank details, cash on delivery, in the
-// order the checkout lists them.
-export const paymentMethods = ['wallet', 'card', 'cod'] as const
-export type PaymentMethod = (typeof paymentMethods)[number]
 
 export type CheckoutField = keyof CheckoutForm
 // Message keys under Checkout.errors.

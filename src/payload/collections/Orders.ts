@@ -1,7 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
+import { paymentMethods } from '@/shared/config'
+
 import { adminOnly, orderHandlers, orderViewers } from '../access'
 import { notifyNewOrder } from '../hooks/notifyNewOrder'
+import { paymentLabels } from '../lib/paymentLabels'
 
 // Orders from the checkout. They are created on the server (placeOrder), with prices taken from the
 // products, never from the browser; public access stays closed. The order number is the document id.
@@ -160,11 +163,7 @@ export const Orders: CollectionConfig = {
       label: 'Оплата',
       type: 'select',
       defaultValue: 'cod',
-      options: [
-        { label: 'Apple Pay / Google Pay', value: 'wallet' },
-        { label: 'Карткою за реквізитами', value: 'card' },
-        { label: 'Післяплата', value: 'cod' },
-      ],
+      options: paymentMethods.map((value) => ({ label: paymentLabels[value], value })),
     },
     { name: 'comment', label: 'Коментар покупця', type: 'textarea' },
   ],

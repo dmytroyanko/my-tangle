@@ -95,8 +95,8 @@
   },
   "ProductViewSwitch": {
     "label": "Вигляд списку",
-    "series": "Серіями",
-    "colors": "Кожен колір"
+    "groups": "Серіями",
+    "grid": "Кожен колір"
   },
   "DeliveryInfo": {
     "title": "Доставка і оплата",

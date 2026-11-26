@@ -310,11 +310,11 @@ export interface Category {
   /**
    * На сторінці категорії; покупець може перемкнути. Окремі картки зручніші, коли серій 1–2
    */
-  productView?: ('series' | 'colors') | null;
+  productView?: ('groups' | 'grid') | null;
   /**
    * Блок категорії на головній (якщо його показано)
    */
-  homeProductView?: ('series' | 'colors') | null;
+  homeProductView?: ('groups' | 'grid') | null;
   /**
    * Блок категорії з серіями на головній, у порядку поля «Порядок»
    */
@@ -879,7 +879,7 @@ export interface ShopSetting {
 export interface HomePage {
   id: number;
   /**
-   * Блок під категоріями на головній; порожньо — блок не показується
+   * Блок під категоріями на головній; порожньо – блок не показується
    */
   faq?:
     | {

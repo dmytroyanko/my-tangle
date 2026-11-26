@@ -4,7 +4,7 @@
     "mediaKey": "cs-category",
     "order": 3,
     "showOnHome": true,
-    "productView": "colors",
+    "productView": "grid",
     "title": {
       "uk": "Compact Styler",
       "ru": "Compact Styler"

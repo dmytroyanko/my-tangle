@@ -3,11 +3,12 @@ import type { ReactNode } from 'react'
 
 import type { PageData } from '@/entities/page'
 import { siteUrl } from '@/shared/config'
-import { getPathname, type Locale } from '@/shared/i18n'
-import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@/shared/lib/structured-data'
+import { absoluteUrl, type Locale } from '@/shared/i18n'
+import { articleJsonLd, faqJsonLd } from '@/shared/lib/structured-data'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
 import { FaqList } from '@/shared/ui/faq-list'
 import { JsonLd } from '@/shared/ui/json-ld'
+import { pageTitleClassName } from '@/shared/ui/page-header'
 import { articleClassName, RichText } from '@/shared/ui/rich-text'
 
 type Props = {
@@ -23,13 +24,12 @@ type Props = {
 // text with photos, questions by topic, and what the route adds under it.
 export async function InfoPage({ page, path, locale, children }: Props) {
   const tCrumbs = await getTranslations('Breadcrumbs')
-  const absolute = (href: string) => new URL(getPathname({ locale, href }), siteUrl).href
 
   return (
     <>
       <JsonLd
         data={articleJsonLd({
-          url: absolute(path),
+          url: absoluteUrl(locale, path),
           headline: page.title,
           description: page.meta.description ?? undefined,
           image: page.meta.image ? new URL(page.meta.image.url, siteUrl).href : undefined,
@@ -46,21 +46,17 @@ export async function InfoPage({ page, path, locale, children }: Props) {
           )}
         />
       )}
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: tCrumbs('home'), url: absolute('/') },
-          { name: page.title, url: absolute(path) },
-        ])}
-      />
 
       <div className="container pt-5 pb-12 md:pb-16">
         <Breadcrumbs
+          home={tCrumbs('home')}
           label={tCrumbs('label')}
-          items={[{ name: tCrumbs('home'), href: '/' }, { name: page.title }]}
+          locale={locale}
+          items={[{ name: page.title, href: path }]}
         />
 
         <article className="mt-6 max-w-3xl md:mt-8">
-          <h1 className="text-[1.75rem] leading-tight md:text-4xl">{page.title}</h1>
+          <h1 className={pageTitleClassName}>{page.title}</h1>
           {page.content && (
             <RichText
               data={page.content}

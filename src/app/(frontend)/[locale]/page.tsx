@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { siteUrl } from '@/shared/config'
-import { alternates, getPathname } from '@/shared/i18n'
+import { absoluteUrl, alternates, type Locale } from '@/shared/i18n'
 import { storeJsonLd } from '@/shared/lib/structured-data'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { BundleDiscount } from '@/widgets/bundle-discount'
@@ -30,7 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <JsonLd
         data={storeJsonLd({
-          homeUrl: new URL(getPathname({ locale, href: '/' }), siteUrl).href,
+          homeUrl: absoluteUrl(locale as Locale, '/'),
           locale,
           description: tMeta('description'),
           streetAddress: tOrg('streetAddress'),

@@ -14,11 +14,10 @@ import { getProductsByCategory, seriesKey } from '@/entities/product'
 import { AddToCartButton } from '@/features/add-to-cart'
 import { ProductViewSwitch } from '@/features/product-view-switch'
 import { SeriesFilter } from '@/features/series-filter'
-import { siteName, siteUrl } from '@/shared/config'
-import { alternates, getPathname, routing, type Locale } from '@/shared/i18n'
-import { breadcrumbJsonLd } from '@/shared/lib/structured-data'
+import { getPathname, routing, type Locale } from '@/shared/i18n'
+import { pageMetadata } from '@/shared/lib/metadata'
 import { Breadcrumbs } from '@/shared/ui/breadcrumbs'
-import { JsonLd } from '@/shared/ui/json-ld'
+import { PageHeader } from '@/shared/ui/page-header'
 import { BundleDiscount } from '@/widgets/bundle-discount'
 import { CatalogCta } from '@/widgets/catalog-cta'
 import { DeliveryInfo } from '@/widgets/delivery-info'
@@ -54,44 +53,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params
   if (!hasLocale(routing.locales, locale)) return {}
   const { category, page } = await resolve(slug, locale)
-  if (!category) {
-    if (!page) return {}
-    const title = page.meta.title || page.title
-    const description = page.meta.description ?? undefined
-    const image = page.meta.image
-    return {
-      title,
-      description,
-      alternates: alternates(locale, localePaths(page.slugs)),
-      openGraph: {
-        type: 'article',
-        title,
-        description,
-        siteName,
-        images: image
-          ? [{ url: image.url, width: image.width, height: image.height, alt: image.alt }]
-          : undefined,
-      },
-    }
-  }
-
-  const title = category.meta.title || category.heading
-  const description = category.meta.description || category.subtitle || undefined
-  const image = category.meta.image
-
-  return {
-    title,
-    description,
-    alternates: alternates(locale, localePaths(category.slugs)),
-    openGraph: {
-      title,
-      description,
-      siteName,
-      images: image
-        ? [{ url: image.url, width: image.width, height: image.height, alt: image.alt }]
-        : undefined,
-    },
-  }
+  if (category)
+    return pageMetadata({
+      locale,
+      paths: localePaths(category.slugs),
+      title: category.meta.title || category.heading,
+      description: category.meta.description || category.subtitle || undefined,
+      image: category.meta.image,
+    })
+  if (!page) return {}
+  return pageMetadata({
+    locale,
+    paths: localePaths(page.slugs),
+    title: page.meta.title || page.title,
+    description: page.meta.description ?? undefined,
+    image: page.meta.image,
+    type: 'article',
+  })
 }
 
 export default async function CategoryPage({ params }: Props) {
@@ -120,29 +98,28 @@ export default async function CategoryPage({ params }: Props) {
     getTranslations('CategoryPage'),
     getTranslations('Breadcrumbs'),
   ])
-  const absolute = (href: string) => new URL(getPathname({ locale, href }), siteUrl).href
+  const productList = (
+    <ProductViewSwitch
+      products={products}
+      basePath={categoryPath}
+      eager={3}
+      buy={<AddToCartButton />}
+      defaultView={category.productView}
+      className="mt-8 md:mt-10"
+    />
+  )
 
   return (
     <>
-      <JsonLd
-        data={breadcrumbJsonLd([
-          { name: tCrumbs('home'), url: absolute('/') },
-          { name: category.title, url: absolute(categoryPath) },
-        ])}
-      />
-
       <div className="container pt-5 pb-12 md:pb-16">
         <Breadcrumbs
+          home={tCrumbs('home')}
           label={tCrumbs('label')}
-          items={[{ name: tCrumbs('home'), href: '/' }, { name: category.title }]}
+          locale={locale}
+          items={[{ name: category.title, href: categoryPath }]}
         />
 
-        <header className="mt-6 md:mt-8">
-          <h1 className="text-[1.75rem] leading-tight md:text-4xl">{category.heading}</h1>
-          {category.subtitle && (
-            <p className="mt-3 max-w-2xl text-base text-muted-foreground">{category.subtitle}</p>
-          )}
-        </header>
+        <PageHeader title={category.heading} lead={category.subtitle} />
 
         {/* Outline heading for the cards (h3), visible to screen readers and search engines. */}
         <h2 className="sr-only">{t('products', { title: category.title })}</h2>
@@ -155,24 +132,10 @@ export default async function CategoryPage({ params }: Props) {
             }))}
             className="mt-6"
           >
-            <ProductViewSwitch
-              products={products}
-              basePath={categoryPath}
-              eager={3}
-              buy={<AddToCartButton />}
-              defaultView={category.productView}
-              className="mt-8 md:mt-10"
-            />
+            {productList}
           </SeriesFilter>
         ) : (
-          <ProductViewSwitch
-            products={products}
-            basePath={categoryPath}
-            eager={3}
-            buy={<AddToCartButton />}
-            defaultView={category.productView}
-            className="mt-8 md:mt-10"
-          />
+          productList
         )}
 
         <CategoryBenefits

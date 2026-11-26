@@ -8,10 +8,13 @@ import { useCallback, useId, useState, type ReactNode } from 'react'
 import {
   cartActions,
   cartTotals,
+  CartTotals,
+  LinePrice,
   useCart,
   useRefreshCart,
   type CartLine,
 } from '@/entities/cart/index.client'
+import { paymentMethods } from '@/shared/config'
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
@@ -20,12 +23,12 @@ import { searchCities, searchWarehouses } from '../api/novaPoshta'
 import { placeOrder } from '../api/placeOrder'
 import {
   normalizePhone,
-  paymentMethods,
   validateCheckout,
   type CheckoutError,
   type CheckoutField,
   type CheckoutForm as Form,
 } from '../model/form'
+import { FormField, inputA11y, inputClassName } from './FormField'
 import { PhoneField } from './PhoneField'
 import { SearchSelect } from './SearchSelect'
 
@@ -365,7 +368,6 @@ function OrderLines({
   totals: ReturnType<typeof cartTotals>
   bundlePercent: number | null
 }) {
-  const tCart = useTranslations('Cart')
   return (
     <>
       <ul className="divide-y divide-border">
@@ -388,44 +390,15 @@ function OrderLines({
                 {line.view.variantName} · × {line.quantity}
               </p>
             </div>
-            <p className="text-right text-sm leading-tight">
-              {line.view.fullPrice !== null && line.view.fullPrice > line.view.price && (
-                <s className="block text-xs text-muted-foreground">
-                  <span className="sr-only">{tCart('oldPrice')} </span>
-                  {tCart('price', { price: line.view.fullPrice * line.quantity })}
-                </s>
-              )}
-              <span className="font-semibold">
-                {tCart('price', { price: line.view.price * line.quantity })}
-              </span>
-            </p>
+            <LinePrice line={line} />
           </li>
         ))}
       </ul>
-      <dl className="mt-3 space-y-1 border-t border-border pt-3 text-sm">
-        {(totals.saleDiscount > 0 || totals.bundleDiscount > 0) && (
-          <div className="flex justify-between text-muted-foreground">
-            <dt>{tCart('fullTotal')}</dt>
-            <dd>{tCart('price', { price: totals.fullTotal })}</dd>
-          </div>
-        )}
-        {totals.saleDiscount > 0 && (
-          <div className="flex justify-between text-muted-foreground">
-            <dt>{tCart('saleDiscount')}</dt>
-            <dd>−{tCart('price', { price: totals.saleDiscount })}</dd>
-          </div>
-        )}
-        {totals.bundleDiscount > 0 && bundlePercent !== null && (
-          <div className="flex justify-between text-muted-foreground">
-            <dt>{tCart('bundleDiscount', { percent: bundlePercent })}</dt>
-            <dd>−{tCart('price', { price: totals.bundleDiscount })}</dd>
-          </div>
-        )}
-        <div className="flex justify-between text-base font-semibold">
-          <dt>{tCart('total')}</dt>
-          <dd>{tCart('price', { price: totals.total })}</dd>
-        </div>
-      </dl>
+      <CartTotals
+        totals={totals}
+        bundlePercent={bundlePercent}
+        className="mt-3 border-t border-border pt-3"
+      />
     </>
   )
 }
@@ -491,28 +464,15 @@ function Field({
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   const id = useId()
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
-        {label}
-      </label>
+    <FormField id={id} label={label} error={error}>
       <input
-        id={id}
+        {...inputA11y(id, error)}
         value={value}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
         onChange={(event) => onChange(event.target.value)}
-        className={cn(
-          'h-11 w-full rounded-lg border border-border bg-background px-3 text-base outline-none focus-visible:border-foreground',
-          error && 'border-destructive',
-        )}
+        className={inputClassName(error)}
         {...input}
       />
-      {error && (
-        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
-          {error}
-        </p>
-      )}
-    </div>
+    </FormField>
   )
 }
 

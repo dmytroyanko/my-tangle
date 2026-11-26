@@ -2,19 +2,16 @@
 //   pnpm payload run src/payload/seed/home.ts
 // Safe to run again: questions already there (edited in the admin) are kept unless SEED_UPDATE=1.
 import { readFileSync } from 'fs'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
 import config from '@payload-config'
 import { getPayload } from 'payload'
 
-import { richText, UPDATE } from './lib'
+import { type Localized, richText, seedPath, UPDATE } from './lib'
 
 type FaqItem = { question: string; answer: string }
-type HomeFile = { faq: Record<'uk' | 'ru', FaqItem[]> }
+type HomeFile = { faq: Localized<FaqItem[]> }
 
-const file = path.join(path.dirname(fileURLToPath(import.meta.url)), 'home.json')
-const data = JSON.parse(readFileSync(file, 'utf8')) as HomeFile
+const data = JSON.parse(readFileSync(seedPath(import.meta.url, 'home.json'), 'utf8')) as HomeFile
 
 const payload = await getPayload({ config })
 // Kept if either language already has questions, so an editor's translation is never overwritten.

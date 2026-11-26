@@ -2132,7 +2132,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
-          "default": "'series'"
+          "default": "'groups'"
         },
         "home_product_view": {
           "name": "home_product_view",
@@ -2140,7 +2140,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": false,
-          "default": "'series'"
+          "default": "'groups'"
         },
         "show_on_home": {
           "name": "show_on_home",
@@ -5440,16 +5440,16 @@
       "name": "enum_categories_product_view",
       "schema": "public",
       "values": [
-        "series",
-        "colors"
+        "groups",
+        "grid"
       ]
     },
     "public.enum_categories_home_product_view": {
       "name": "enum_categories_home_product_view",
       "schema": "public",
       "values": [
-        "series",
-        "colors"
+        "groups",
+        "grid"
       ]
     },
     "public.enum_orders_status": {

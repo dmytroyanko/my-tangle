@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { contentEditors } from '../access'
+import { faqItemFields } from '../fields'
 
 // Content of the home page that is not a category: the questions under the catalog.
 export const HomePage: GlobalConfig = {
@@ -20,12 +21,9 @@ export const HomePage: GlobalConfig = {
       labels: { singular: 'Питання', plural: 'Питання' },
       admin: {
         initCollapsed: true,
-        description: 'Блок під категоріями на головній; порожньо — блок не показується',
+        description: 'Блок під категоріями на головній; порожньо – блок не показується',
       },
-      fields: [
-        { name: 'question', label: 'Питання', type: 'text', required: true },
-        { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
-      ],
+      fields: faqItemFields,
     },
   ],
 }

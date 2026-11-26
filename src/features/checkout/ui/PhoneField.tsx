@@ -2,9 +2,8 @@
 
 import { useId, useLayoutEffect, useRef } from 'react'
 
-import { cn } from '@/shared/lib/utils'
-
 import { formatPhoneInput } from '../model/form'
+import { FormField, inputA11y, inputBoxClassName } from './FormField'
 
 type Props = {
   label: string
@@ -46,29 +45,19 @@ export function PhoneField({ label, placeholder, value, error, onChange, onBlur 
   }
 
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium">
-        {label}
-      </label>
-      <div
-        className={cn(
-          'flex h-11 items-center rounded-lg border border-border bg-background focus-within:border-foreground',
-          error && 'border-destructive',
-        )}
-      >
+    <FormField id={id} label={label} error={error}>
+      <div className={inputBoxClassName(error)}>
         <span className="pl-3 text-base text-muted-foreground select-none" aria-hidden="true">
           +38
         </span>
         <input
           ref={input}
-          id={id}
+          {...inputA11y(id, error)}
           type="tel"
           inputMode="tel"
           autoComplete="tel"
           value={value}
           placeholder={placeholder}
-          aria-invalid={Boolean(error)}
-          aria-describedby={error ? `${id}-error` : undefined}
           onChange={(event) =>
             change(event.target.value, event.target.selectionStart ?? event.target.value.length)
           }
@@ -85,11 +74,6 @@ export function PhoneField({ label, placeholder, value, error, onChange, onBlur 
           className="h-full min-w-0 flex-1 rounded-r-lg bg-transparent pr-3 pl-1.5 text-base outline-none"
         />
       </div>
-      {error && (
-        <p id={`${id}-error`} className="mt-1 text-sm text-destructive">
-          {error}
-        </p>
-      )}
-    </div>
+    </FormField>
   )
 }

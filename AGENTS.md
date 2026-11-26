@@ -61,6 +61,16 @@ Rules (enforced by `steiger` in `pnpm lint`):
 - Dashes in Ukrainian and Russian text (UI strings, Payload content, seed data, page titles, admin labels, notifications): the en dash with spaces (`Комісія – 2%`, `Оплата і доставка – My-Tangle`), never the em dash `—` (owner's choice, 2026-11-25). Ranges use the en dash without spaces (`1–2 дні`, `10:00–19:00`); words use the hyphen (`будь-який`).
 - Code comments, `README.md`, `AGENTS.md` and other docs are in English. Ukrainian and Russian appear only in UI text (`messages/`), admin labels and content.
 
+## Shared helpers (do not repeat them)
+
+- Page metadata: `pageMetadata()` from `@/shared/lib/metadata` (title, description, `alternates()`, Open Graph). Absolute URLs: `absoluteUrl(locale, href)` from `@/shared/i18n`.
+- Breadcrumbs: `Breadcrumbs` from `@/shared/ui/breadcrumbs` renders the visible path and its `BreadcrumbList` JSON-LD from one list. Page title with lead: `PageHeader` (`pageTitleClassName` for an h1 elsewhere).
+- Rich text as plain text: `toPlainText()` from `@/shared/lib/plain-text`.
+- Cart sums and line prices: `CartTotals` and `LinePrice` from the cart entity. Checkout inputs: `FormField`, `inputClassName`, `inputA11y` in `features/checkout/ui/FormField.tsx`.
+- Payment methods: `paymentMethods` in `src/shared/config/payments.ts`; admin and notification labels in `src/payload/lib/paymentLabels.ts`; customer texts in messages.
+- Payload fields used by several collections (FAQ question and answer, the SEO `meta` group) live in `src/payload/fields/`.
+- Seed scripts use `byLocale()`, `readSeedFiles()` and `seedPath()` from `src/payload/seed/lib.ts` instead of writing each language and the file loop by hand.
+
 ## Design tokens
 
 Colors are CSS variables in `src/app/(frontend)/globals.css` (`:root`), used through Tailwind classes. Use the tokens, never raw hex values in components.
@@ -149,7 +159,7 @@ The main goal of the move: move the site from Webflow to Next.js + Payload with 
 - Out of stock (`variants[].inStock` off): the colour stays visible with a struck-through swatch; on cards the photo (greyed), title and price are muted, and "Немає в наявності" text replaces the buy button on cards and the product page; a product opens on its first colour in stock; a product with no colour in stock keeps its page (200, `OutOfStock` in JSON-LD) and goes to the end of category and home lists. A product gone for good gets a 301 to its category or a similar product, never a 404. No "notify me" button for now; stock sync from the supplier's feed comes in a later stage.
 - Each category has a `brand` (`src/shared/config/brands.ts`: Tangle Teezer or Invisibobble). It sets the brand and brand country in the characteristics, the brand in Product JSON-LD and the product meta title (`withBrand`: product titles that already start with the brand, like "Invisibobble Clipstar", are not prefixed again). Never hardcode "Tangle Teezer" for products.
 - The home page shows the categories with `showOnHome`, in `order`. Do not hardcode category slugs in pages. Care tips are not part of category descriptions: they are a question in each category's FAQ, and once in the home page FAQ (global `home-page`, `HomeFaq`).
-- A category's `productView` (its page) and `homeProductView` (its block on the home page) set how its products are listed: `series` (a card per series with the colour palette, the default) or `colors` (a card per colour, for categories with one or two series). `ProductGrid` takes it as `view`. On the category page visitors can switch between the two (`ProductViewSwitch`, shown when some series has several colours); the switch is not remembered, and the server always renders the admin's view.
+- A category's `productView` (its page) and `homeProductView` (its block on the home page) set how its products are listed: `groups` (a card per series with the colour palette, the default) or `grid` (a card per colour, for categories with one or two series). `ProductGrid` takes it as `view`. On the category page visitors can switch between the two (`ProductViewSwitch`, shown when some series has several colours); the switch is not remembered, and the server always renders the admin's view.
 - Product slugs are unique across all categories (`mini` is taken by The Ultimate Detangler Mini). The seed sets `generateSlug: false`, otherwise Payload makes the Russian slug from the title.
 - Media that nothing uses is deleted, not kept: after replacing photos or removing products, run `src/payload/seed/cleanup-media.ts` (lists unused files; `CLEANUP_APPLY=1` deletes them). Show the list to the user before deleting; on production, delete only with their explicit confirmation. Arguments like `--dry-run` do not reach `payload run`, so options are passed as env vars.
 

@@ -3,16 +3,13 @@ import type { MetadataRoute } from 'next'
 import { getCategoryPaths } from '@/entities/category'
 import { getPagePaths } from '@/entities/page'
 import { getProductPaths } from '@/entities/product'
-import { indexableRoutes, routes, siteUrl } from '@/shared/config'
-import { getPathname, routing, type Locale } from '@/shared/i18n'
+import { indexableRoutes, routes } from '@/shared/config'
+import { absoluteUrl, routing, type Locale } from '@/shared/i18n'
 
 // Read from Payload on every request: the build has no database, and new products appear at once.
 export const dynamic = 'force-dynamic'
 
 type Slugs = Partial<Record<Locale, string | null>>
-
-const absolute = (locale: Locale, href: string) =>
-  new URL(getPathname({ locale, href }), siteUrl).href
 
 // One entry per language version, each listing all versions (hreflang) and x-default (Ukrainian). A
 // language without its own path (no slug in that language) is left out.
@@ -21,7 +18,7 @@ function entries(
   lastModified?: string,
 ): MetadataRoute.Sitemap {
   const languages = Object.fromEntries(
-    Object.entries(paths).map(([locale, href]) => [locale, absolute(locale as Locale, href)]),
+    Object.entries(paths).map(([locale, href]) => [locale, absoluteUrl(locale as Locale, href)]),
   )
   const xDefault = languages[routing.defaultLocale]
   return Object.values(languages).map((url) => ({

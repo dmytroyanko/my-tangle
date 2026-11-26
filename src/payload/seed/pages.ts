@@ -6,18 +6,18 @@
 //
 // Safe to run again: a page that already exists (matched by slug) is left as edited in the admin unless
 // SEED_UPDATE=1. Photos are matched by file name, as in catalog.ts.
-import { readdirSync, readFileSync } from 'fs'
-import path from 'path'
-
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 
 import {
+  byLocale,
   findBySlug,
   type ImageSource,
   type Localized,
+  readSeedFiles,
   richText,
   save,
+  seedPath,
   UPDATE,
   upsertMedia,
 } from './lib'
@@ -42,7 +42,7 @@ type PageFile = {
   faq?: Localized<{ title: string; items: { question: string; answer: string }[] }[]>
 }
 
-const PAGES_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), 'pages')
+const PAGES_DIR = seedPath(import.meta.url, 'pages')
 
 async function importPage(payload: Payload, page: PageFile) {
   // Also matched by the Russian slug, for a page saved before it had a Ukrainian one.
@@ -76,15 +76,6 @@ async function importPage(payload: Payload, page: PageFile) {
   if (page.metaImage && !media[page.metaImage])
     throw new Error(`${page.slug.uk}: no image "${page.metaImage}" for metaImage`)
   const image = page.metaImage ? media[page.metaImage] : undefined
-  const faq = (locale: 'uk' | 'ru') =>
-    (page.faq?.[locale] ?? []).map((group) => ({
-      title: group.title,
-      items: group.items.map((item) => ({ question: item.question, answer: content(item.answer) })),
-    }))
-  const meta = (locale: 'uk' | 'ru') => ({
-    title: page.meta.title[locale],
-    description: page.meta.description[locale],
-  })
 
   await save(
     payload,
@@ -97,36 +88,25 @@ async function importPage(payload: Payload, page: PageFile) {
       footerOrder: page.footerOrder ?? 0,
       serviceRole: page.serviceRole ?? null,
     },
-    {
-      uk: {
-        title: page.title.uk,
-        navTitle: page.navTitle?.uk,
-        content: content(page.content.uk),
-        faq: faq('uk'),
-        meta: { ...meta('uk'), image },
-      },
-      ru: {
-        title: page.title.ru,
-        navTitle: page.navTitle?.ru,
-        content: content(page.content.ru),
-        faq: faq('ru'),
-        meta: { ...meta('ru'), image },
-      },
-    },
+    byLocale((locale) => ({
+      title: page.title[locale],
+      navTitle: page.navTitle?.[locale],
+      content: content(page.content[locale]),
+      faq: (page.faq?.[locale] ?? []).map((group) => ({
+        title: group.title,
+        items: group.items.map((item) => ({
+          question: item.question,
+          answer: content(item.answer),
+        })),
+      })),
+      meta: { title: page.meta.title[locale], description: page.meta.description[locale], image },
+    })),
   )
   payload.logger.info(`${page.slug.uk}: saved`)
 }
 
-const only = process.env.PAGE
-const files = readdirSync(PAGES_DIR)
-  .filter((file) => file.endsWith('.json') && (!only || file === `${only}.json`))
-  .sort()
-if (!files.length) throw new Error(`No page file for PAGE=${only}`)
-
+const files = readSeedFiles<PageFile>(PAGES_DIR, process.env.PAGE)
 const payload = await getPayload({ config })
-for (const file of files) {
-  const data = JSON.parse(readFileSync(path.join(PAGES_DIR, file), 'utf8')) as PageFile
-  await importPage(payload, data)
-}
+for (const data of files) await importPage(payload, data)
 payload.logger.info('Done')
 process.exit(0)

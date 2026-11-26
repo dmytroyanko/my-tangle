@@ -9,22 +9,23 @@
 // exists (matched by slug) is left as edited in the admin. SEED_UPDATE=1 overwrites them with the JSON.
 // A photo is matched by a file name that includes a hash of its source URL, so a changed URL in the
 // JSON uploads the new photo.
-import { readdirSync, readFileSync } from 'fs'
-import path from 'path'
-
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 
+import type { Category } from '@/payload/payload-types'
 import { withBrand, type BrandKey } from '@/shared/config'
 import { toSlug } from '@/shared/lib/slugify'
 
 import {
+  byLocale,
   findBySlug,
   type ImageSource,
   type Locale,
   type Localized,
+  readSeedFiles,
   richText,
   save,
+  seedPath,
   UPDATE,
   upsertMedia,
 } from './lib'
@@ -42,8 +43,8 @@ type CatalogFile = {
     brand?: BrandKey
     // How the products are listed on the category page and on the home page (see ProductGrid); series
     // cards when left out.
-    productView?: 'series' | 'colors'
-    homeProductView?: 'series' | 'colors'
+    productView?: Category['productView']
+    homeProductView?: Category['homeProductView']
     title: Localized<string>
     heading: Localized<string>
     subtitle: Localized<string>
@@ -88,7 +89,10 @@ type CatalogFile = {
   }[]
 }
 
-const CATALOG_DIR = path.join(path.dirname(new URL(import.meta.url).pathname), 'catalog')
+const CATALOG_DIR = seedPath(import.meta.url, 'catalog')
+
+// What a product is in photo alt texts when its file does not say (`noun`).
+const DEFAULT_NOUN: Localized<string> = { uk: 'Щітка', ru: 'Расческа' }
 
 // Characteristics are one list for both languages with a translated value. The Russian values are written
 // to the rows saved with the Ukrainian ones (matched by row id); rows sent without ids would replace them.
@@ -142,32 +146,21 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         ...(category.homeProductView && { homeProductView: category.homeProductView }),
         image: categoryImage,
       },
-      {
-        uk: {
-          title: category.title.uk,
-          heading: category.heading.uk,
-          subtitle: category.subtitle.uk,
-          description: richText(category.description.uk),
-          meta: { title: category.meta.title.uk, description: category.meta.description.uk },
-          benefits: category.benefits.uk,
-          faq: category.faq.uk.map((item) => ({
-            question: item.question,
-            answer: richText(item.answer),
-          })),
+      byLocale((locale) => ({
+        title: category.title[locale],
+        heading: category.heading[locale],
+        subtitle: category.subtitle[locale],
+        description: richText(category.description[locale]),
+        meta: {
+          title: category.meta.title[locale],
+          description: category.meta.description[locale],
         },
-        ru: {
-          title: category.title.ru,
-          heading: category.heading.ru,
-          subtitle: category.subtitle.ru,
-          description: richText(category.description.ru),
-          meta: { title: category.meta.title.ru, description: category.meta.description.ru },
-          benefits: category.benefits.ru,
-          faq: category.faq.ru.map((item) => ({
-            question: item.question,
-            answer: richText(item.answer),
-          })),
-        },
-      },
+        benefits: category.benefits[locale],
+        faq: category.faq[locale].map((item) => ({
+          question: item.question,
+          answer: richText(item.answer),
+        })),
+      })),
     )
   }
 
@@ -193,10 +186,15 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
       )
       const images = await Promise.all(
         sources.map((url, index) =>
-          upsertMedia(payload, url, `${name}-${index + 1}`, {
-            uk: `${product.noun?.uk ?? 'Щітка'} ${withBrand(brandKey, product.title)} ${variant.name}, фото ${index + 1}`,
-            ru: `${product.noun?.ru ?? 'Расческа'} ${withBrand(brandKey, product.title)} ${variant.name}, фото ${index + 1}`,
-          }),
+          upsertMedia(
+            payload,
+            url,
+            `${name}-${index + 1}`,
+            byLocale(
+              (locale) =>
+                `${product.noun?.[locale] ?? DEFAULT_NOUN[locale]} ${withBrand(brandKey, product.title)} ${variant.name}, фото ${index + 1}`,
+            ),
+          ),
         ),
       )
       variants.push({
@@ -223,39 +221,24 @@ async function importCategory(payload: Payload, { category, products }: CatalogF
         variants,
         _status: 'published',
       },
-      {
-        uk: {
-          title: product.title,
-          tags: product.tags.uk,
-          description: richText(product.description.uk),
-          ...(product.meta && {
-            meta: { title: product.meta.title.uk, description: product.meta.description.uk },
-          }),
-        },
-        ru: {
-          title: product.title,
-          tags: product.tags.ru,
-          description: richText(product.description.ru),
-          ...(product.meta && {
-            meta: { title: product.meta.title.ru, description: product.meta.description.ru },
-          }),
-        },
-      },
+      byLocale((locale) => ({
+        title: product.title,
+        tags: product.tags[locale],
+        description: richText(product.description[locale]),
+        ...(product.meta && {
+          meta: {
+            title: product.meta.title[locale],
+            description: product.meta.description[locale],
+          },
+        }),
+      })),
     )
     await saveSpecs(payload, savedId, product.specs)
   }
 }
 
-const only = process.env.CATEGORY
-const files = readdirSync(CATALOG_DIR)
-  .filter((file) => file.endsWith('.json') && (!only || file === `${only}.json`))
-  .sort()
-if (!files.length) throw new Error(`No catalog file for CATEGORY=${only}`)
-
+const files = readSeedFiles<CatalogFile>(CATALOG_DIR, process.env.CATEGORY)
 const payload = await getPayload({ config })
-for (const file of files) {
-  const data = JSON.parse(readFileSync(path.join(CATALOG_DIR, file), 'utf8')) as CatalogFile
-  await importCategory(payload, data)
-}
+for (const data of files) await importCategory(payload, data)
 payload.logger.info('Done')
 process.exit(0)

@@ -6,8 +6,8 @@ import { seriesKey } from '../model/seriesKey'
 import type { ProductCardData } from '../model/types'
 import { ProductCard } from './ProductCard'
 
-// Product cards: large (photo, palette, button), so 2 columns, 3 from md. `view` "series" shows a card per
-// series with its palette; "colors" a card per colour (for categories with one or two series), colours in
+// Product cards: large (photo, palette, button), so 2 columns, 3 from md. `view` "groups" shows a card per
+// series with its palette; "grid" a card per colour (for categories with one or two series), colours in
 // stock first. Each item is a size container for the card, carries its series key for the series filter,
 // and the first card of each product is its anchor target (#product-slug). `eager` loads the photos of the first cards at high
 // priority, for a grid at the top of the page (its first row is the LCP).
@@ -22,18 +22,18 @@ type Props = {
   className?: string
 }
 
-export type ProductListView = 'series' | 'colors'
+export type ProductListView = 'groups' | 'grid'
 
 export function ProductGrid({
   products,
   basePath,
   eager = 0,
   buy,
-  view = 'series',
+  view = 'groups',
   className,
 }: Props) {
   const cards =
-    view === 'colors'
+    view === 'grid'
       ? products
           .flatMap((product) =>
             product.variants.map((variant, variantIndex) => ({ product, variant, variantIndex })),

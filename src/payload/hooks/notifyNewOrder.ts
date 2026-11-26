@@ -3,6 +3,7 @@ import type { CollectionAfterChangeHook, Payload } from 'payload'
 
 import { siteUrl } from '@/shared/config'
 
+import { paymentLabels } from '../lib/paymentLabels'
 import type { Order } from '../payload-types'
 
 // Tells the shop about a new order: a Telegram message to the orders chats (TELEGRAM_BOT_TOKEN and
@@ -67,12 +68,6 @@ function describe(order: Order) {
     comment: order.comment ? `Коментар: ${order.comment}` : null,
     link: adminUrl(order.id),
   }
-}
-
-const paymentLabels: Record<NonNullable<Order['payment']>, string> = {
-  cod: 'післяплата',
-  card: 'карткою за реквізитами',
-  wallet: 'Apple Pay / Google Pay',
 }
 
 const escapeHtml = (text: string) =>

@@ -1,4 +1,4 @@
-import { PhoneIcon, UserIcon } from 'lucide-react'
+import { PhoneIcon } from 'lucide-react'
 import Image from 'next/image'
 import { getLocale, getTranslations } from 'next-intl/server'
 
@@ -52,7 +52,7 @@ export async function Header() {
         </div>
       </div>
 
-      {/* Logo, catalog (from xl), account and cart */}
+      {/* Logo, catalog (from xl) and cart */}
       <div className="border-b border-border">
         <div className="container flex h-16 items-center gap-1 lg:h-20 lg:gap-4 xl:h-auto">
           <MobileMenu title={t('menu')} openLabel={t('openMenu')} closeLabel={t('closeMenu')}>
@@ -121,11 +121,6 @@ export async function Header() {
             <a href={phones[0].href} aria-label={t('call')}>
               <PhoneIcon className="size-5" />
             </a>
-          </Button>
-          <Button variant="ghost" size="icon-lg" asChild>
-            <Link href="/account" aria-label={t('account')}>
-              <UserIcon className="size-5" />
-            </Link>
           </Button>
           <CartButton className="-mr-2" />
         </div>

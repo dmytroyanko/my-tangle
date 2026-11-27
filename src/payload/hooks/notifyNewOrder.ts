@@ -3,7 +3,6 @@ import type { CollectionAfterChangeHook, Payload } from 'payload'
 
 import { siteUrl } from '@/shared/config'
 
-import { paymentLabels } from '../lib/paymentLabels'
 import type { Order } from '../payload-types'
 
 // Tells the shop about a new order: a Telegram message to the orders chats (TELEGRAM_BOT_TOKEN and
@@ -64,7 +63,7 @@ function describe(order: Order) {
       order.discount && order.discount > 0
         ? `Разом: ${money(order.total)} (знижка ${money(order.discount)})`
         : `Разом: ${money(order.total)}`,
-    payment: `Оплата: ${paymentLabels[order.payment ?? 'cod']}`,
+    payment: `Оплата: ${order.payment || 'не вказано'}`,
     comment: order.comment ? `Коментар: ${order.comment}` : null,
     link: adminUrl(order.id),
   }

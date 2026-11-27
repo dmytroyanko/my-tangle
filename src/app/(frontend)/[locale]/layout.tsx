@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import React from 'react'
 
 import { getBundleDiscount } from '@/entities/cart'
+import { getTrackingTags, TrackingNoscript, TrackingTags } from '@/entities/tracking-tag'
 import { siteUrl } from '@/shared/config'
 import { routing } from '@/shared/i18n'
 import { ScrollToTop } from '@/shared/ui/scroll-to-top'
@@ -24,6 +25,11 @@ type Props = {
   children: React.ReactNode
   params: Promise<{ locale: string }>
 }
+
+// The layout reads Payload (catalog menu, analytics tags, bundle discount), so every page renders per
+// request, also the ones without data of their own (contacts, checkout, 404): the build has no database,
+// and a page built without it would keep an empty menu and no tags.
+export const dynamic = 'force-dynamic'
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -56,10 +62,14 @@ export default async function RootLayout({ children, params }: Props) {
   // The bundle discount for the cart panel; the site still renders if the database is unavailable.
   const bundlePercent = await getBundleDiscount().catch(() => null)
   const tFooter = await getTranslations('Footer')
+  // Analytics only on the production build, so development visits stay out of the statistics.
+  const trackingTags =
+    process.env.NODE_ENV === 'production' ? await getTrackingTags().catch(() => []) : []
 
   return (
     <html lang={locale} className={openSans.variable} data-scroll-behavior="smooth">
       <body className="flex min-h-svh flex-col">
+        <TrackingNoscript tags={trackingTags} />
         <NextIntlClientProvider>
           <Header />
           <main className="flex-1">{children}</main>
@@ -67,6 +77,7 @@ export default async function RootLayout({ children, params }: Props) {
           <CartSheet bundlePercent={bundlePercent} />
           <ScrollToTop label={tFooter('toTop')} />
         </NextIntlClientProvider>
+        <TrackingTags tags={trackingTags} />
       </body>
     </html>
   )

@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { getPayload } from 'payload'
 
 import { cartTotals, getBundleDiscount, getCartLines, type CartLine } from '@/entities/cart'
+import { getPaymentMethods } from '@/entities/payment-method'
 import { routing, type Locale } from '@/shared/i18n'
 
 import {
@@ -47,12 +48,21 @@ export async function placeOrder(input: {
     cityRef: String(input.form?.cityRef ?? ''),
     warehouse: String(input.form?.warehouse ?? '').slice(0, 300),
     warehouseRef: String(input.form?.warehouseRef ?? ''),
-    // Checked by validateCheckout: an unknown method is an error, not a guess.
-    payment: String(input.form?.payment ?? '') as CheckoutForm['payment'],
+    // Checked below against the methods switched on: an unknown one is an error, not a guess.
+    payment: Number(input.form?.payment) || null,
     comment: String(input.form?.comment ?? '').slice(0, 1000),
   }
   const errors = validateCheckout(form)
   if (Object.keys(errors).length) return { ok: false, reason: 'invalid', errors }
+  // A method switched on in the admin. The order keeps its Ukrainian name, as the managers read it, in case
+  // it is renamed later.
+  const methods = await getPaymentMethods('uk').catch((error) => {
+    console.error('placeOrder:', error)
+    return null
+  })
+  if (!methods) return { ok: false, reason: 'failed' }
+  const payment = methods.find((method) => method.id === form.payment)
+  if (!payment) return { ok: false, reason: 'invalid', errors: { payment: 'payment' } }
 
   const items = (Array.isArray(input.items) ? input.items : []).slice(0, 100)
   if (!items.length) return { ok: false, reason: 'cartEmpty' }
@@ -104,7 +114,8 @@ export async function placeOrder(input: {
           warehouse: form.warehouse,
           warehouseRef: form.warehouseRef,
         },
-        payment: form.payment,
+        paymentMethod: payment.id,
+        payment: payment.title,
         comment: form.comment || undefined,
       },
     })

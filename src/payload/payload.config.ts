@@ -16,6 +16,8 @@ import { Categories } from './collections/Categories'
 import { Products } from './collections/Products'
 import { Pages } from './collections/Pages'
 import { Orders } from './collections/Orders'
+import { PaymentMethods } from './collections/PaymentMethods'
+import { TrackingTags } from './collections/TrackingTags'
 import { HomePage } from './globals/HomePage'
 import { ShopSettings } from './globals/ShopSettings'
 import { requireEnv } from '@/shared/lib/env'
@@ -39,7 +41,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname, '..'),
     },
   },
-  collections: [Products, Categories, Orders, Pages, Media, Users],
+  collections: [Products, Categories, Orders, PaymentMethods, Pages, Media, Users, TrackingTags],
   globals: [ShopSettings, HomePage],
   editor: lexicalEditor(),
   // Content languages. Keep in sync with src/shared/i18n/routing.ts.

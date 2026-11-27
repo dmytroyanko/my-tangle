@@ -70,9 +70,11 @@ export interface Config {
     products: Product;
     categories: Category;
     orders: Order;
+    'payment-methods': PaymentMethod;
     pages: Page;
     media: Media;
     users: User;
+    'tracking-tags': TrackingTag;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -87,9 +89,11 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    'payment-methods': PaymentMethodsSelect<false> | PaymentMethodsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'tracking-tags': TrackingTagsSelect<false> | TrackingTagsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -449,8 +453,36 @@ export interface Order {
     warehouse?: string | null;
     warehouseRef?: string | null;
   };
-  payment?: ('wallet' | 'card' | 'cod') | null;
+  paymentMethod?: (number | null) | PaymentMethod;
+  payment?: string | null;
   comment?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Способи оплати на сторінці оформлення замовлення і в блоці «Доставка і оплата». Перший увімкнений обрано за замовчуванням.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-methods".
+ */
+export interface PaymentMethod {
+  id: number;
+  /**
+   * Як бачить покупець: «Післяплата»
+   */
+  title: string;
+  /**
+   * Під назвою: як і коли платити, комісія. Наприклад: «Оплата при отриманні. Комісія «Нової Пошти» – 2% від вартості замовлення + 20 грн.»
+   */
+  note?: string | null;
+  /**
+   * Вимкнений спосіб не показується на сайті
+   */
+  enabled?: boolean | null;
+  /**
+   * Менше – вище
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -570,6 +602,27 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Google Analytics, Google Ads, Tag Manager, Meta Pixel. Працюють на всіх сторінках сайту, лише на робочому сервері.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tracking-tags".
+ */
+export interface TrackingTag {
+  id: number;
+  /**
+   * Для себе: «Google Analytics 4»
+   */
+  name: string;
+  type: 'gtm' | 'gtag' | 'meta';
+  /**
+   * GTM-XXXXXXX, G-XXXXXXXXXX, AW-123456789 або номер пікселя
+   */
+  tagId: string;
+  enabled?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -606,6 +659,10 @@ export interface PayloadLockedDocument {
         value: number | Order;
       } | null)
     | ({
+        relationTo: 'payment-methods';
+        value: number | PaymentMethod;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -616,6 +673,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'tracking-tags';
+        value: number | TrackingTag;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -793,8 +854,21 @@ export interface OrdersSelect<T extends boolean = true> {
         warehouse?: T;
         warehouseRef?: T;
       };
+  paymentMethod?: T;
   payment?: T;
   comment?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-methods_select".
+ */
+export interface PaymentMethodsSelect<T extends boolean = true> {
+  title?: T;
+  note?: T;
+  enabled?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -881,6 +955,18 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tracking-tags_select".
+ */
+export interface TrackingTagsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  tagId?: T;
+  enabled?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

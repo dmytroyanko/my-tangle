@@ -1,10 +1,31 @@
-import type { CollectionConfig } from 'payload'
-
-import { paymentMethods } from '@/shared/config'
+import type { CollectionBeforeChangeHook, CollectionConfig } from 'payload'
 
 import { adminOnly, orderHandlers, orderViewers } from '../access'
 import { notifyNewOrder } from '../hooks/notifyNewOrder'
-import { paymentLabels } from '../lib/paymentLabels'
+
+// A manager who changes the payment method also changes the name the order shows and notifications use.
+const syncPaymentName: CollectionBeforeChangeHook = async ({
+  data,
+  originalDoc,
+  operation,
+  req,
+}) => {
+  if (operation !== 'update' || !('paymentMethod' in data)) return data
+  const id = typeof data.paymentMethod === 'object' ? data.paymentMethod?.id : data.paymentMethod
+  const before =
+    typeof originalDoc?.paymentMethod === 'object'
+      ? originalDoc.paymentMethod?.id
+      : originalDoc?.paymentMethod
+  if (!id || id === before) return data
+  const method = await req.payload.findByID({
+    collection: 'payment-methods',
+    id,
+    locale: 'uk',
+    depth: 0,
+    req,
+  })
+  return { ...data, payment: method.title }
+}
 
 // Orders from the checkout. They are created on the server (placeOrder), with prices taken from the
 // products, never from the browser; public access stays closed. The order number is the document id.
@@ -21,7 +42,7 @@ export const Orders: CollectionConfig = {
     update: orderHandlers,
     delete: adminOnly,
   },
-  hooks: { afterChange: [notifyNewOrder] },
+  hooks: { beforeChange: [syncPaymentName], afterChange: [notifyNewOrder] },
   fields: [
     {
       name: 'status',
@@ -153,11 +174,22 @@ export const Orders: CollectionConfig = {
       ],
     },
     {
-      name: 'payment',
-      label: 'Оплата',
-      type: 'select',
-      defaultValue: 'cod',
-      options: paymentMethods.map((value) => ({ label: paymentLabels[value], value })),
+      type: 'row',
+      fields: [
+        {
+          name: 'paymentMethod',
+          label: 'Спосіб оплати',
+          type: 'relationship',
+          relationTo: 'payment-methods',
+        },
+        {
+          // The method's name when the order was placed: kept if the method is renamed or deleted later.
+          name: 'payment',
+          label: 'Оплата (як обрав покупець)',
+          type: 'text',
+          admin: { readOnly: true },
+        },
+      ],
     },
     { name: 'comment', label: 'Коментар покупця', type: 'textarea' },
   ],

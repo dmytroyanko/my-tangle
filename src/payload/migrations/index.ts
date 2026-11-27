@@ -17,6 +17,7 @@ import * as migration_20261125_211957_service_pages_payments from './20261125_21
 import * as migration_20261125_223903_category_product_views from './20261125_223903_category_product_views';
 import * as migration_20261125_232342_home_page_faq from './20261125_232342_home_page_faq';
 import * as migration_20261126_151135_catalog_hierarchy from './20261126_151135_catalog_hierarchy';
+import * as migration_20261127_144535_payments_tracking_tags from './20261127_144535_payments_tracking_tags';
 
 export const migrations = [
   {
@@ -112,6 +113,11 @@ export const migrations = [
   {
     up: migration_20261126_151135_catalog_hierarchy.up,
     down: migration_20261126_151135_catalog_hierarchy.down,
-    name: '20261126_151135_catalog_hierarchy'
+    name: '20261126_151135_catalog_hierarchy',
+  },
+  {
+    up: migration_20261127_144535_payments_tracking_tags.up,
+    down: migration_20261127_144535_payments_tracking_tags.down,
+    name: '20261127_144535_payments_tracking_tags'
   },
 ];

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 import { getBundleDiscount } from '@/entities/cart'
 import { getServicePages } from '@/entities/page'
+import { getPaymentMethods } from '@/entities/payment-method'
 import { CheckoutForm } from '@/features/checkout'
 import { routes } from '@/shared/config'
 import { alternates, type Locale } from '@/shared/i18n'
@@ -23,14 +24,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CheckoutPage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const [bundlePercent, legalLinks] = await Promise.all([
+  const [bundlePercent, legalLinks, payments] = await Promise.all([
     getBundleDiscount().catch(() => null),
     getServicePages(locale as Locale).catch(() => ({})),
+    getPaymentMethods(locale as Locale).catch(() => []),
   ])
 
   return (
     <div className="container">
-      <CheckoutForm bundlePercent={bundlePercent} legalLinks={legalLinks} />
+      <CheckoutForm bundlePercent={bundlePercent} legalLinks={legalLinks} payments={payments} />
     </div>
   )
 }

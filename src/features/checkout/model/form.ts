@@ -1,6 +1,4 @@
 // The checkout form, shared by the browser (instant hints) and the server (the check that counts).
-import { paymentMethods, type PaymentMethod } from '@/shared/config'
-
 export type CheckoutForm = {
   lastName: string
   firstName: string
@@ -10,7 +8,8 @@ export type CheckoutForm = {
   cityRef: string
   warehouse: string
   warehouseRef: string
-  payment: PaymentMethod
+  // Id of a payment method (Payload payment-methods); the server checks it is one switched on.
+  payment: number | null
   comment: string
 }
 
@@ -69,6 +68,6 @@ export function validateCheckout(
     errors.email = 'email'
   if (!form.cityRef) errors.city = 'city'
   if (!form.warehouseRef) errors.warehouse = 'warehouse'
-  if (!paymentMethods.includes(form.payment)) errors.payment = 'payment'
+  if (!form.payment) errors.payment = 'payment'
   return errors
 }

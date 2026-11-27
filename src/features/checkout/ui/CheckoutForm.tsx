@@ -14,7 +14,7 @@ import {
   useRefreshCart,
   type CartLine,
 } from '@/entities/cart/index.client'
-import { paymentMethods } from '@/shared/config'
+import type { PaymentMethodData } from '@/entities/payment-method'
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
@@ -41,7 +41,7 @@ const EMPTY_FORM: Form = {
   cityRef: '',
   warehouse: '',
   warehouseRef: '',
-  payment: 'wallet',
+  payment: null,
   comment: '',
 }
 
@@ -54,14 +54,19 @@ type Props = {
   bundlePercent: number | null
   // Paths of the offer and the privacy policy for the consent line; a missing one is shown as text.
   legalLinks: { offer?: string; privacy?: string }
+  // The payment methods switched on in the admin; the first one is picked by default.
+  payments: PaymentMethodData[]
 }
 
-export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
+export function CheckoutForm({ bundlePercent, legalLinks, payments }: Props) {
   const t = useTranslations('Checkout')
   const locale = useLocale()
   const { lines, ready } = useCart()
   const refresh = useRefreshCart(true, locale)
-  const [form, setForm] = useState<Form>(EMPTY_FORM)
+  const [form, setForm] = useState<Form>(() => ({
+    ...EMPTY_FORM,
+    payment: payments[0]?.id ?? null,
+  }))
   const [errors, setErrors] = useState<Errors>({})
   const [notice, setNotice] = useState<'cartChanged' | 'failed' | null>(null)
   const [pending, setPending] = useState(false)
@@ -69,7 +74,8 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
   const [placed, setPlaced] = useState<{
     id: number
     lines: CartLine[]
-    form: Pick<Form, 'city' | 'warehouse' | 'payment'>
+    form: Pick<Form, 'city' | 'warehouse'>
+    payment?: PaymentMethodData
   } | null>(null)
   // A field for bots only: hidden from people and screen readers, filled in by naive spam scripts.
   const [website, setWebsite] = useState('')
@@ -115,12 +121,16 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
                 {placed.form.city}, {placed.form.warehouse}
               </dd>
             </div>
-            <div>
-              <dt className="font-semibold">
-                {t('payment')}: {t(`payments.${placed.form.payment}.title`)}
-              </dt>
-              <dd className="text-muted-foreground">{t(`payments.${placed.form.payment}.note`)}</dd>
-            </div>
+            {placed.payment && (
+              <div>
+                <dt className="font-semibold">
+                  {t('payment')}: {placed.payment.title}
+                </dt>
+                {placed.payment.note && (
+                  <dd className="text-muted-foreground">{placed.payment.note}</dd>
+                )}
+              </div>
+            )}
           </dl>
         </section>
         <Button asChild className="mt-2 rounded-full px-6">
@@ -168,7 +178,8 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
         setPlaced({
           id: result.orderId,
           lines: inStock,
-          form: { city: form.city, warehouse: form.warehouse, payment: form.payment },
+          form: { city: form.city, warehouse: form.warehouse },
+          payment: payments.find((method) => method.id === form.payment),
         })
         window.scrollTo({ top: 0 })
       } else if (result.reason === 'invalid') {
@@ -272,16 +283,22 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
           </Section>
 
           <Section title={t('payment')}>
+            {/* Every method switched off in the admin: orders cannot be placed, the phones still work. */}
+            {payments.length === 0 && (
+              <p role="alert" className="text-sm text-destructive">
+                {t('noPayments')}
+              </p>
+            )}
             <div className="grid gap-3">
-              {paymentMethods.map((method) => (
+              {payments.map((method) => (
                 <Choice
-                  key={method}
+                  key={method.id}
                   name="payment"
-                  value={method}
-                  checked={form.payment === method}
-                  title={t(`payments.${method}.title`)}
-                  note={t(`payments.${method}.note`)}
-                  onChange={() => update({ payment: method })}
+                  value={String(method.id)}
+                  checked={form.payment === method.id}
+                  title={method.title}
+                  note={method.note ?? undefined}
+                  onChange={() => update({ payment: method.id })}
                 />
               ))}
             </div>
@@ -340,7 +357,7 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
           <Button
             type="submit"
             size="lg"
-            disabled={pending}
+            disabled={pending || payments.length === 0}
             className="mt-4 h-12 w-full rounded-full text-sm font-semibold tracking-[0.1em] uppercase"
           >
             {pending ? t('submitting') : t('submit')}

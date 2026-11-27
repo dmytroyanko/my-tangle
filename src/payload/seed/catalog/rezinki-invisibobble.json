@@ -1,6 +1,8 @@
 {
   "category": {
-    "slug": "rezinki-invisibobble",
+    "slug": { "uk": "rezynky-invisibobble", "ru": "rezinki-invisibobble" },
+    "navTitle": { "uk": "Резинки\nInvisibobble", "ru": "Резинки\nInvisibobble" },
+    "navIcon": "invisibobble",
     "mediaKey": "iv-category",
     "order": 9,
     "showOnHome": false,
@@ -121,9 +123,8 @@
       ]
     }
   },
-  "products": [
+  "series": [
     {
-      "slug": "invisibobble-original",
       "mediaKey": "invisibobble-original",
       "title": "Invisibobble Original",
       "series": "Original",
@@ -182,7 +183,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "True Black",
           "color": "#1f1f1f",
@@ -229,7 +230,6 @@
       ]
     },
     {
-      "slug": "hair-tie",
       "mediaKey": "hair-tie",
       "title": "Invisibobble Hair Tie",
       "series": "Hair Tie",
@@ -281,7 +281,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Black",
           "color": "#1f1f1f",
@@ -326,7 +326,6 @@
       ]
     },
     {
-      "slug": "loop-plus",
       "mediaKey": "loop-plus",
       "title": "Invisibobble Loop Plus",
       "series": "Loop",
@@ -371,7 +370,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Beachy Bliss",
           "color": "#e8662a",
@@ -385,7 +384,6 @@
       ]
     },
     {
-      "slug": "sprunchie",
       "mediaKey": "sprunchie",
       "title": "Invisibobble Sprunchie",
       "series": "Sprunchie",
@@ -437,7 +435,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Dusk till Dawn",
           "color": "#1f1f1f",
@@ -488,7 +486,6 @@
       ]
     },
     {
-      "slug": "beauties",
       "mediaKey": "beauties",
       "title": "Invisibobble Beauties",
       "series": "Beauties",
@@ -526,7 +523,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Satin Sorbet",
           "color": "#e9b6b5",
@@ -539,7 +536,6 @@
       ]
     },
     {
-      "slug": "clipstar",
       "mediaKey": "clipstar",
       "title": "Invisibobble Clipstar",
       "series": "Clipstar",
@@ -591,7 +587,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Petit Four",
           "color": "#d9a3a1",
@@ -740,7 +736,6 @@
       ]
     },
     {
-      "slug": "clipstar-premium",
       "mediaKey": "clipstar-premium",
       "title": "Invisibobble Clipstar Premium",
       "series": "Clipstar Premium",
@@ -792,7 +787,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Cherry Rush",
           "color": "#6e1f2e",
@@ -868,7 +863,6 @@
       ]
     },
     {
-      "slug": "clipstar-kids",
       "mediaKey": "clipstar-kids",
       "title": "Invisibobble Clipstar Kids",
       "series": "Clipstar Kids",
@@ -920,7 +914,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Happy World",
           "color": "#f5a3c3",
@@ -999,7 +993,6 @@
       ]
     },
     {
-      "slug": "everclaw",
       "mediaKey": "everclaw",
       "title": "Invisibobble Everclaw",
       "series": "Everclaw",
@@ -1051,7 +1044,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Leo Love",
           "color": "#b88a5e",
@@ -1138,7 +1131,6 @@
       ]
     },
     {
-      "slug": "myclaw",
       "mediaKey": "myclaw",
       "title": "Invisibobble Myclaw",
       "series": "Myclaw",
@@ -1183,7 +1175,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Hug Me, Baby",
           "color": "#f6c2c8",
@@ -1233,7 +1225,6 @@
       ]
     },
     {
-      "slug": "gift-set",
       "mediaKey": "gift-set",
       "title": "Invisibobble Gift Set",
       "series": "Gift Set",
@@ -1278,7 +1269,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Handle with Curl",
           "color": "#e9d2c4",

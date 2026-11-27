@@ -1,6 +1,8 @@
 {
   "category": {
-    "slug": "the-complete-carebrush",
+    "slug": "tangle-teezer-the-complete-carebrush",
+    "navTitle": { "uk": "The Complete\nCarebrush", "ru": "The Complete\nCarebrush" },
+    "navIcon": "carebrush",
     "mediaKey": "tcc-category",
     "order": 1,
     "showOnHome": true,
@@ -86,7 +88,7 @@
       "uk": [
         {
           "question": "Чим The Complete Carebrush відрізняється від The Ultimate Detangler?",
-          "answer": "**[The Ultimate Detangler](/the-ultimate-detangler)** створений насамперед для розплутування, зокрема вологого волосся в душі. **The Complete Carebrush** теж розплутує, але ще й розгладжує кутикулу, додає волоссю блиску й масажує шкіру голови. У нього збільшена щітка й зубчики, розташовані по діагоналі."
+          "answer": "**[The Ultimate Detangler](/tangle-teezer-the-ultimate-detangler)** створений насамперед для розплутування, зокрема вологого волосся в душі. **The Complete Carebrush** теж розплутує, але ще й розгладжує кутикулу, додає волоссю блиску й масажує шкіру голови. У нього збільшена щітка й зубчики, розташовані по діагоналі."
         },
         {
           "question": "Яку версію обрати?",
@@ -104,7 +106,7 @@
       "ru": [
         {
           "question": "Чем The Complete Carebrush отличается от The Ultimate Detangler?",
-          "answer": "**[The Ultimate Detangler](/ru/the-ultimate-detangler)** создан в первую очередь для распутывания, в том числе влажных волос в душе. **The Complete Carebrush** тоже распутывает, но еще и разглаживает кутикулу, придает волосам блеск и массирует кожу головы. У него увеличенная щетка и зубцы, расположенные по диагонали."
+          "answer": "**[The Ultimate Detangler](/ru/tangle-teezer-the-ultimate-detangler)** создан в первую очередь для распутывания, в том числе влажных волос в душе. **The Complete Carebrush** тоже распутывает, но еще и разглаживает кутикулу, придает волосам блеск и массирует кожу головы. У него увеличенная щетка и зубцы, расположенные по диагонали."
         },
         {
           "question": "Какую версию выбрать?",
@@ -121,9 +123,8 @@
       ]
     }
   },
-  "products": [
+  "series": [
     {
-      "slug": "straight-to-wavy",
       "mediaKey": "the-complete-carebrush-straight-to-wavy",
       "title": "The Complete Carebrush Straight to Wavy",
       "series": "Straight to Wavy",
@@ -139,7 +140,7 @@
           "Гибкие зубчики"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Glossed Raspberry",
           "color": "#a8274a",
@@ -235,7 +236,6 @@
       ]
     },
     {
-      "slug": "fine",
       "mediaKey": "the-complete-carebrush-fine",
       "title": "The Complete Carebrush Fine",
       "series": "Fine",
@@ -251,7 +251,7 @@
           "Мягкие зубчики"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Glazed Mocha",
           "color": "#c99a80",
@@ -325,7 +325,6 @@
       ]
     },
     {
-      "slug": "curly-to-coily",
       "mediaKey": "the-complete-carebrush-curly-to-coily",
       "title": "The Complete Carebrush Curly to Coily",
       "series": "Curly to Coily",
@@ -341,7 +340,7 @@
           "Жесткие зубчики"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Velvet Purple",
           "color": "#b4a3d6",

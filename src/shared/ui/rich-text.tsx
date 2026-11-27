@@ -20,19 +20,16 @@ type Props = {
 
 type LinkedDoc = { relationTo?: string; value?: unknown }
 
-// Path of a document picked with the editor's "internal link" (a product link needs depth 2, for its
-// category). Categories and pages live at /<slug>, a product under its category; anything else has no page.
+// Path of a document picked with the editor's "internal link". Categories, products and pages all live
+// at /<slug>; anything else has no page.
 function internalHref(doc: LinkedDoc | null | undefined) {
-  const value = doc?.value as { slug?: string; category?: unknown } | undefined
+  const value = doc?.value as { slug?: string } | undefined
   if (!value?.slug) return ''
   switch (doc?.relationTo) {
     case 'categories':
+    case 'products':
     case 'pages':
       return `/${value.slug}`
-    case 'products': {
-      const category = value.category as { slug?: string } | undefined
-      return category?.slug ? `/${category.slug}/${value.slug}` : ''
-    }
     default:
       return ''
   }

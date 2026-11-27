@@ -2,20 +2,13 @@ import type { CollectionBeforeValidateHook, GlobalAfterChangeHook } from 'payloa
 
 // Site prices are not typed in by hand: the admin enters the full price (the recommended retail price) and
 // the site price is the full price minus the shop discount (Shop settings, 20% by default), rounded to a
-// whole hryvnia. A product may set its own discount instead (0 for no discount), and a colour its own on
-// top of that, e.g. where the supplier discounts one design.
+// whole hryvnia. A product (one colour) may set its own discount instead (0 for no discount), e.g. where
+// the supplier discounts one design.
 
-type Variant = {
-  fullPrice?: number | null
-  discountPercent?: number | null
-  price?: number | null
-  [key: string]: unknown
-}
 type ProductPrices = {
   fullPrice?: number | null
   discountPercent?: number | null
   price?: number | null
-  variants?: Variant[] | null
 }
 
 // Multiplied before dividing: 325 × (1 − 0.3) is 227.4999… in floating point, 325 × 70 / 100 is 227.5.
@@ -53,13 +46,6 @@ export const computeSalePrices: CollectionBeforeValidateHook = async ({
         : (await req.payload.findGlobal({ slug: 'shop-settings', depth: 0, req })).discountPercent
 
   product.price = salePrice(fullPrice, discount)
-  const variants = pick(product, saved, 'variants')
-  if (variants) {
-    product.variants = variants.map((variant) => ({
-      ...variant,
-      price: salePrice(variant.fullPrice ?? fullPrice, variant.discountPercent ?? discount),
-    }))
-  }
   return data
 }
 

@@ -29,7 +29,7 @@ export type PlaceOrderResult =
 // field gets an empty success-like failure.
 export async function placeOrder(input: {
   form: CheckoutForm
-  items: { productId: number; variantId: string; quantity: number; price: number }[]
+  items: { productId: number; quantity: number; price: number }[]
   locale: string
   website?: string
 }): Promise<PlaceOrderResult> {
@@ -57,20 +57,20 @@ export async function placeOrder(input: {
   const items = (Array.isArray(input.items) ? input.items : []).slice(0, 100)
   if (!items.length) return { ok: false, reason: 'cartEmpty' }
   const data = await getCartLines(items, locale)
-  const byVariant = new Map(data.map((line) => [line.variantId, line]))
+  const byProduct = new Map(data.map((line) => [line.productId, line]))
   const lines: CartLine[] = items.flatMap((item) => {
-    const line = byVariant.get(item.variantId)
+    const line = byProduct.get(item.productId)
     if (!line) return []
-    const { productId, variantId, ...view } = line
+    const { productId, ...view } = line
     const quantity = Math.min(Math.max(Math.round(Number(item.quantity) || 1), 1), MAX_QUANTITY)
-    return [{ productId, variantId, quantity, view }]
+    return [{ productId, quantity, view }]
   })
   // The customer confirms what they buy: any colour gone, out of stock or at another price than the one
   // shown sends them back to the updated cart instead of ordering silently.
   const changed =
     lines.length !== items.length ||
     lines.some((line) => !line.view.inStock) ||
-    items.some((item) => byVariant.get(item.variantId)?.price !== item.price)
+    items.some((item) => byProduct.get(item.productId)?.price !== item.price)
   if (changed) return { ok: false, reason: 'cartChanged' }
 
   const totals = cartTotals(lines, await getBundleDiscount().catch(() => null))
@@ -90,7 +90,6 @@ export async function placeOrder(input: {
           product: line.productId,
           title: line.view.title,
           variant: line.view.variantName,
-          variantId: line.variantId,
           quantity: line.quantity,
           price: line.view.price,
           fullPrice: line.view.fullPrice,

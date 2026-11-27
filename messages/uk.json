@@ -18,30 +18,6 @@
   "LocaleSwitcher": {
     "label": "Мова сайту"
   },
-  "Navigation": {
-    "wetDetangler": "The Ultimate\nDetangler",
-    "carebrush": "The Complete\nCarebrush",
-    "childrenMini": "Children\nMini",
-    "compactStyler": "Compact\nStyler",
-    "easyDryGo": "Easy\nDry & Go",
-    "ultimateStyler": "The Ultimate\nStyler",
-    "backCombing": "Back\nCombing",
-    "scalp": "The Scalp\nExfoliator",
-    "petTeezer": "Pet\nTeezer",
-    "invisibobble": "Резинки\nInvisibobble"
-  },
-  "Catalog": {
-    "wetDetangler": "The Ultimate Detangler",
-    "carebrush": "The Complete Carebrush",
-    "childrenMini": "The Original Children Mini",
-    "compactStyler": "Compact Styler",
-    "easyDryGo": "Easy Dry & Go",
-    "ultimateStyler": "The Ultimate",
-    "backCombing": "Back-Combing Hairbrush",
-    "scalp": "The Scalp Exfoliator and Massager",
-    "petTeezer": "Pet Teezer",
-    "invisibobble": "Резинки Invisibobble"
-  },
   "Footer": {
     "home": "My-Tangle – на головну",
     "about": "Магазин оригінальних гребінців Tangle Teezer та резинок Invisibobble з 2007 року. Доставка по всій Україні.",
@@ -86,7 +62,8 @@
     "home": "Головна"
   },
   "CategoryPage": {
-    "products": "Серії {title}"
+    "products": "Серії {title}",
+    "colors": "Кольори {title}"
   },
   "SeriesFilter": {
     "label": "Фільтр за серією",
@@ -120,7 +97,8 @@
     "description": "Опис",
     "otherSeries": "Інші серії {title}",
     "metaTitle": "{name} – купити в Україні",
-    "metaDescription": "{brand, select, invisibobble {Оригінальний аксесуар для волосся} other {Оригінальний гребінець}} {name}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні."
+    "metaDescription": "{brand, select, invisibobble {Оригінальний аксесуар для волосся} other {Оригінальний гребінець}} {name}: {count, plural, one {# колір} few {# кольори} many {# кольорів} other {# кольору}}, ціна від {price, number} грн. Доставка Новою Поштою по всій Україні.",
+    "colorMetaDescription": "{brand, select, invisibobble {Оригінальний аксесуар для волосся} other {Оригінальний гребінець}} {name}, ціна {price, number} грн. Доставка Новою Поштою по всій Україні."
   },
   "ProductSpecs": {
     "title": "Характеристики",

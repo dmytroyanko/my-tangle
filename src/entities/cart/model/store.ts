@@ -21,7 +21,8 @@ const listeners = new Set<() => void>()
 // The saved cart is data from the browser, so it is checked line by line: a line in an old format, cut off
 // by a closed tab or edited by hand is dropped instead of breaking every page (the header and the cart panel
 // are in the layout). A different format version starts an empty cart.
-const FORMAT_VERSION = 1
+// Version 2: a line is a product (one colour per product), no longer a colour row of a product.
+const FORMAT_VERSION = 2
 
 const isImage = (value: unknown): value is CartLine['view']['image'] => {
   if (value === null) return true
@@ -41,7 +42,6 @@ function toLine(value: unknown): CartLine | null {
     !line ||
     !view ||
     !Number.isInteger(line.productId) ||
-    typeof line.variantId !== 'string' ||
     typeof line.quantity !== 'number' ||
     !Number.isFinite(line.quantity) ||
     typeof view.title !== 'string' ||
@@ -57,7 +57,6 @@ function toLine(value: unknown): CartLine | null {
     return null
   return {
     productId: line.productId as number,
-    variantId: line.variantId,
     quantity: clamp(line.quantity),
     view: view as CartLine['view'],
   }
@@ -67,11 +66,11 @@ function read(): CartLine[] {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null')
     if (saved?.version !== FORMAT_VERSION || !Array.isArray(saved.lines)) return []
-    const seen = new Set<string>()
+    const seen = new Set<number>()
     return saved.lines.flatMap((value: unknown) => {
       const line = toLine(value)
-      if (!line || seen.has(line.variantId)) return []
-      seen.add(line.variantId)
+      if (!line || seen.has(line.productId)) return []
+      seen.add(line.productId)
       return [line]
     })
   } catch {
@@ -115,7 +114,7 @@ function subscribe(listener: () => void) {
 export const cartActions = {
   // Adds a colour (or one more of it) and opens the cart.
   add(line: Omit<CartLine, 'quantity'>, quantity = 1) {
-    const existing = state.lines.find((item) => item.variantId === line.variantId)
+    const existing = state.lines.find((item) => item.productId === line.productId)
     // An existing line keeps its view: the server-confirmed one (price, brand) is newer than the card's.
     const lines = existing
       ? state.lines.map((item) =>
@@ -124,21 +123,21 @@ export const cartActions = {
       : [...state.lines, { ...line, quantity: clamp(quantity) }]
     set({ lines, open: true })
   },
-  setQuantity(variantId: string, quantity: number) {
+  setQuantity(productId: number, quantity: number) {
     set({
       lines: state.lines.map((item) =>
-        item.variantId === variantId ? { ...item, quantity: clamp(quantity) } : item,
+        item.productId === productId ? { ...item, quantity: clamp(quantity) } : item,
       ),
     })
   },
-  remove(variantId: string) {
-    set({ lines: state.lines.filter((item) => item.variantId !== variantId) })
+  remove(productId: number) {
+    set({ lines: state.lines.filter((item) => item.productId !== productId) })
   },
   // Current data from the server; lines it no longer knows (deleted products) are dropped.
-  refresh(views: Map<string, CartLine['view']>) {
+  refresh(views: Map<number, CartLine['view']>) {
     set({
       lines: state.lines.flatMap((item) => {
-        const view = views.get(item.variantId)
+        const view = views.get(item.productId)
         return view ? [{ ...item, view }] : []
       }),
     })

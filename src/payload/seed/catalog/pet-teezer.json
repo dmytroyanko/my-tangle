@@ -1,6 +1,8 @@
 {
   "category": {
-    "slug": "pet-teezer",
+    "slug": "tangle-teezer-pet-teezer",
+    "navTitle": { "uk": "Pet\nTeezer", "ru": "Pet\nTeezer" },
+    "navIcon": "pet-teezer",
     "mediaKey": "pet-category",
     "order": 8,
     "showOnHome": true,
@@ -128,9 +130,8 @@
       ]
     }
   },
-  "products": [
+  "series": [
     {
-      "slug": "de-shedding",
       "mediaKey": "pet-teezer-de-shedding",
       "title": "Pet Teezer De-shedding",
       "series": "De-shedding",
@@ -185,7 +186,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Purple & Grey",
           "color": "#5b3a8c",
@@ -275,7 +276,6 @@
       ]
     },
     {
-      "slug": "de-shedding-mini",
       "mediaKey": "pet-teezer-de-shedding-mini",
       "title": "Pet Teezer De-shedding Mini",
       "series": "De-shedding Mini",
@@ -330,7 +330,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Navy Sky",
           "color": "#2e3f73",
@@ -377,7 +377,6 @@
       ]
     },
     {
-      "slug": "detangling",
       "mediaKey": "pet-teezer-detangling",
       "title": "Pet Teezer Detangling",
       "series": "Detangling",
@@ -432,7 +431,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Pink & Yellow",
           "color": "#f4a6b8",
@@ -522,7 +521,6 @@
       ]
     },
     {
-      "slug": "detangling-mini",
       "mediaKey": "pet-teezer-detangling-mini",
       "title": "Pet Teezer Detangling Mini",
       "series": "Detangling Mini",
@@ -577,7 +575,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Lilac Butter",
           "color": "#c5b3e3",
@@ -624,7 +622,6 @@
       ]
     },
     {
-      "slug": "cat-grooming",
       "mediaKey": "pet-teezer-cat-grooming",
       "title": "Pet Teezer Cat Grooming",
       "series": "Cat Grooming",
@@ -679,7 +676,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Green",
           "color": "#a8e2c0",
@@ -769,7 +766,6 @@
       ]
     },
     {
-      "slug": "puppy",
       "mediaKey": "pet-teezer-puppy",
       "title": "Pet Teezer Puppy",
       "series": "Puppy",
@@ -824,7 +820,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Pistachio",
           "color": "#bfe3b4",

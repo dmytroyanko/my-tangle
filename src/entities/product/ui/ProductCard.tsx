@@ -7,7 +7,6 @@ import { useState, type ReactNode } from 'react'
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
 
-import { colorKey } from '../model/colorKey'
 import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
 import { SelectedVariantContext } from '../model/selectedVariant'
 import type { ProductCardData } from '../model/types'
@@ -16,8 +15,6 @@ import { ProductPrice } from './ProductPrice'
 
 type Props = {
   product: ProductCardData
-  // Product page path without the locale, e.g. /the-ultimate-detangler/matte.
-  href: string
   priority?: boolean
   // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
   buy?: ReactNode
@@ -26,20 +23,18 @@ type Props = {
 }
 
 // One series with its colours: picking a swatch switches the photo, price and availability; the photo and
-// title open the product page with that colour. With `variantIndex` the card is that one colour. Sizes
-// follow the card's container (@container on the parent).
-export function ProductCard({ product, href, priority = false, buy, variantIndex }: Props) {
+// title open the page of that colour. With `variantIndex` the card is that one colour. Sizes follow the
+// card's container (@container on the parent).
+export function ProductCard({ product, priority = false, buy, variantIndex }: Props) {
   const t = useTranslations('ProductCard')
-  const defaultIndex = defaultVariantIndex(product.variants)
-  const [picked, setPicked] = useState(defaultIndex)
+  const [picked, setPicked] = useState(() => defaultVariantIndex(product.variants))
   const selected = variantIndex ?? picked
   const single = variantIndex !== undefined
 
   const variant = product.variants[selected]
   if (!variant) return null
   const image = variant.images[0]
-  // The default colour needs no parameter, so the plain product URL is what gets linked and crawled.
-  const link = selected === defaultIndex ? href : `${href}?color=${colorKey(variant.name)}`
+  const link = `/${variant.slug}`
   // A colour that cannot be bought is shown muted: photo, title and price; the palette stays clear, so
   // another colour can be picked.
   const muted = !variant.inStock && 'opacity-60'
@@ -121,7 +116,7 @@ export function ProductCard({ product, href, priority = false, buy, variantIndex
           className={muted || undefined}
         />
         {variant.inStock ? (
-          <SelectedVariantContext.Provider value={{ product, variant, href: link }}>
+          <SelectedVariantContext.Provider value={{ product, variant }}>
             {buy}
           </SelectedVariantContext.Provider>
         ) : (

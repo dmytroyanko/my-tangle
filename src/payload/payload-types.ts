@@ -141,25 +141,37 @@ export interface UserAuthOperations {
  */
 export interface Product {
   id: number;
+  /**
+   * Без кольору, як у серії: «The Ultimate Detangler Large»
+   */
   title: string;
+  /**
+   * Назва кольору або розміру: «Black Gloss», «150 мл»
+   */
+  colorName?: string | null;
+  /**
+   * Назва й колір, складається автоматично
+   */
+  fullTitle?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
-  category: number | Category;
   /**
-   * Серія для бейджа на картці, наприклад «Fine & Fragile»
+   * Підкатегорія серії, або категорія, якщо підкатегорій у ній немає
    */
-  series?: string | null;
+  category: number | Category;
   /**
    * Порядок у категорії, менше – вище
    */
   order?: number | null;
+  inStock?: boolean | null;
   /**
-   * Короткі ярлики на картці, наприклад «Вологе й сухе волосся»
+   * HEX, наприклад #e3b8c0; порожньо – без палітри (спрей)
    */
-  tags?: string[] | null;
+  color?: string | null;
+  sku?: string | null;
   /**
    * РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника
    */
@@ -172,6 +184,14 @@ export interface Product {
    * Рахується автоматично при збереженні
    */
   price?: number | null;
+  images?: (number | Media)[] | null;
+  /**
+   * Порожньо – ярлики категорії
+   */
+  tags?: string[] | null;
+  /**
+   * Порожньо – опис товарів із категорії
+   */
   description?: {
     root: {
       type: string;
@@ -188,37 +208,12 @@ export interface Product {
     [k: string]: unknown;
   } | null;
   /**
-   * Таблиця під описом на сторінці товару. Бренд і країна бренду додаються автоматично.
+   * Порожньо – характеристики з категорії. Бренд і країна бренду додаються автоматично.
    */
   specs?:
     | {
         key: 'animal' | 'hairType' | 'coat' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
         value: string;
-        id?: string | null;
-      }[]
-    | null;
-  variants?:
-    | {
-        /**
-         * Колір, наприклад «Radiant Teal»
-         */
-        name: string;
-        sku?: string | null;
-        /**
-         * Колір кружечка в палітрі, HEX, наприклад #e3b8c0
-         */
-        color?: string | null;
-        /**
-         * Якщо відрізняється від повної ціни товару
-         */
-        fullPrice?: number | null;
-        /**
-         * Якщо відрізняється від знижки товару
-         */
-        discountPercent?: number | null;
-        price?: number | null;
-        inStock?: boolean | null;
-        images?: (number | Media)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -243,6 +238,14 @@ export interface Category {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Заповнюється в підкатегорії (серії)
+   */
+  parent?: (number | null) | Category;
+  /**
+   * Бейдж на картці й кнопка фільтра в батьківській категорії: «Large»
+   */
+  seriesName?: string | null;
   /**
    * Заголовок блоку на головній, якщо відрізняється від назви
    */
@@ -298,11 +301,69 @@ export interface Category {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Для товарів саме цієї категорії (кольорів серії); товар може задати своє замість цього
+   */
+  productInfo?: {
+    /**
+     * Ярлики на картці серії, наприклад «Вологе й сухе волосся»
+     */
+    tags?: string[] | null;
+    /**
+     * Опис на сторінці кожного кольору
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Таблиця на сторінці кожного кольору. Бренд і країна бренду додаються автоматично.
+     */
+    specs?:
+      | {
+          key: 'animal' | 'hairType' | 'coat' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   image?: (number | null) | Media;
   /**
-   * Порядок у меню та на головній
+   * Порядок у меню, на головній і серед серій категорії
    */
   order?: number | null;
+  /**
+   * Коротко, у два рядки (перенос – Enter); порожньо – повна назва
+   */
+  navTitle?: string | null;
+  /**
+   * Категорія з іконкою показується в меню каталогу
+   */
+  navIcon?:
+    | (
+        | 'wet-detangler'
+        | 'carebrush'
+        | 'children-mini'
+        | 'compact-styler'
+        | 'easy-dry-go'
+        | 'ultimate-styler'
+        | 'back-combing'
+        | 'scalp'
+        | 'pet-teezer'
+        | 'invisibobble'
+      )
+    | null;
   /**
    * Бренд товарів категорії: у характеристиках і розмітці
    */
@@ -373,7 +434,6 @@ export interface Order {
     product: number | Product;
     title?: string | null;
     variant?: string | null;
-    variantId?: string | null;
     quantity: number;
     price: number;
     fullPrice?: number | null;
@@ -605,34 +665,26 @@ export interface PayloadMigration {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  colorName?: T;
+  fullTitle?: T;
   generateSlug?: T;
   slug?: T;
   category?: T;
-  series?: T;
   order?: T;
-  tags?: T;
+  inStock?: T;
+  color?: T;
+  sku?: T;
   fullPrice?: T;
   discountPercent?: T;
   price?: T;
+  images?: T;
+  tags?: T;
   description?: T;
   specs?:
     | T
     | {
         key?: T;
         value?: T;
-        id?: T;
-      };
-  variants?:
-    | T
-    | {
-        name?: T;
-        sku?: T;
-        color?: T;
-        fullPrice?: T;
-        discountPercent?: T;
-        price?: T;
-        inStock?: T;
-        images?: T;
         id?: T;
       };
   meta?:
@@ -654,6 +706,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  parent?: T;
+  seriesName?: T;
   heading?: T;
   subtitle?: T;
   benefits?:
@@ -672,8 +726,23 @@ export interface CategoriesSelect<T extends boolean = true> {
         answer?: T;
         id?: T;
       };
+  productInfo?:
+    | T
+    | {
+        tags?: T;
+        description?: T;
+        specs?:
+          | T
+          | {
+              key?: T;
+              value?: T;
+              id?: T;
+            };
+      };
   image?: T;
   order?: T;
+  navTitle?: T;
+  navIcon?: T;
   brand?: T;
   productView?: T;
   homeProductView?: T;
@@ -707,7 +776,6 @@ export interface OrdersSelect<T extends boolean = true> {
         product?: T;
         title?: T;
         variant?: T;
-        variantId?: T;
         quantity?: T;
         price?: T;
         fullPrice?: T;

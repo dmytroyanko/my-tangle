@@ -18,3 +18,50 @@ export const metaField: Field = {
     { name: 'image', type: 'upload', relationTo: 'media' },
   ],
 }
+
+// Short labels on a product card, e.g. «Вологе й сухе волосся».
+export const tagsField = (description: string): Field => ({
+  name: 'tags',
+  label: 'Ярлики',
+  type: 'text',
+  hasMany: true,
+  localized: true,
+  admin: { description },
+})
+
+// Characteristics of a product: rows shared by both languages, only the value is translated, so the list
+// keeps the same order. Keys match src/entities/product/model/specKeys.ts; site labels are in messages
+// (ProductSpecs).
+export const specsField = (description: string): Field => ({
+  name: 'specs',
+  label: 'Характеристики',
+  type: 'array',
+  labels: { singular: 'Характеристика', plural: 'Характеристики' },
+  admin: { initCollapsed: true, description },
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'key',
+          label: 'Характеристика',
+          type: 'select',
+          required: true,
+          options: [
+            { label: 'Для кого (тварини)', value: 'animal' },
+            { label: 'Тип волосся', value: 'hairType' },
+            { label: 'Шерсть (тварини)', value: 'coat' },
+            { label: 'Використання', value: 'use' },
+            { label: 'Зубчики', value: 'teeth' },
+            { label: 'Розмір', value: 'size' },
+            { label: 'Покриття', value: 'finish' },
+            { label: 'Особливості', value: 'features' },
+            { label: 'Довжина', value: 'length' },
+            { label: 'Вага', value: 'weight' },
+          ],
+        },
+        { name: 'value', label: 'Значення', type: 'text', required: true, localized: true },
+      ],
+    },
+  ],
+})

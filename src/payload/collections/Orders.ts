@@ -93,13 +93,7 @@ export const Orders: CollectionConfig = {
             { name: 'title', label: 'Назва', type: 'text' },
           ],
         },
-        {
-          type: 'row',
-          fields: [
-            { name: 'variant', label: 'Колір', type: 'text' },
-            { name: 'variantId', label: 'Id кольору', type: 'text', admin: { readOnly: true } },
-          ],
-        },
+        { name: 'variant', label: 'Колір', type: 'text' },
         {
           type: 'row',
           fields: [

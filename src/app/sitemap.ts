@@ -52,27 +52,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       new Set(categories.map((category) => category.slugs[locale]).filter(Boolean)),
     ]),
   ) as Record<Locale, Set<string | null | undefined>>
+  const takenByProducts = Object.fromEntries(
+    routing.locales.map((locale) => [
+      locale,
+      new Set(products.map((product) => product.slugs[locale]).filter(Boolean)),
+    ]),
+  ) as Record<Locale, Set<string | null | undefined>>
 
   return [
     ...entries(all('/')),
     ...categories.flatMap((category) =>
       entries(pathsOf(slugPath(category.slugs)), category.updatedAt),
     ),
+    // A category wins a slug both use (see the /[slug] route), so such a product has no address of its own.
     ...products.flatMap((product) =>
       entries(
-        pathsOf((locale) => {
-          const category = product.categorySlugs[locale]
-          const slug = product.slugs[locale]
-          return category && slug ? `/${category}/${slug}` : null
-        }),
+        pathsOf((locale) =>
+          taken[locale].has(product.slugs[locale] ?? '') ? null : slugPath(product.slugs)(locale),
+        ),
         product.updatedAt,
       ),
     ),
-    // A category wins a slug both use (see the /[slug] route), so such a page has no address of its own.
+    // A category or product wins a slug a page also uses (see the /[slug] route), so such a page has no
+    // address of its own.
     ...pages.flatMap((page) =>
       entries(
         pathsOf((locale) =>
-          taken[locale].has(page.slugs[locale] ?? '') ? null : slugPath(page.slugs)(locale),
+          taken[locale].has(page.slugs[locale] ?? '') ||
+          takenByProducts[locale].has(page.slugs[locale] ?? '')
+            ? null
+            : slugPath(page.slugs)(locale),
         ),
         page.updatedAt,
       ),

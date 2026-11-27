@@ -9,12 +9,10 @@ import { ProductCard } from './ProductCard'
 // Product cards: large (photo, palette, button), so 2 columns, 3 from md. `view` "groups" shows a card per
 // series with its palette; "grid" a card per colour (for categories with one or two series), colours in
 // stock first. Each item is a size container for the card, carries its series key for the series filter,
-// and the first card of each product is its anchor target (#product-slug). `eager` loads the photos of the first cards at high
-// priority, for a grid at the top of the page (its first row is the LCP).
+// and the first card of each series is its anchor target (#series-slug). `eager` loads the photos of the
+// first cards at high priority, for a grid at the top of the page (its first row is the LCP).
 type Props = {
   products: ProductCardData[]
-  // Category path without the locale (/the-ultimate-detangler); a card links to basePath/product-slug.
-  basePath: string
   eager?: number
   // The buy button for every card (see ProductCard).
   buy?: ReactNode
@@ -24,14 +22,7 @@ type Props = {
 
 export type ProductListView = 'groups' | 'grid'
 
-export function ProductGrid({
-  products,
-  basePath,
-  eager = 0,
-  buy,
-  view = 'groups',
-  className,
-}: Props) {
+export function ProductGrid({ products, eager = 0, buy, view = 'groups', className }: Props) {
   const cards =
     view === 'grid'
       ? products
@@ -52,7 +43,7 @@ export function ProductGrid({
       {cards.map(({ product, variant, variantIndex }, index) => (
         <li
           key={variant ? `${product.id}-${variant.id}` : product.id}
-          // The product's anchor (#slug) on its series card, or on its first colour card.
+          // The series' anchor (#slug) on its card, or on its first colour card.
           id={
             !variant || cards.findIndex((card) => card.product.id === product.id) === index
               ? product.slug
@@ -63,7 +54,6 @@ export function ProductGrid({
         >
           <ProductCard
             product={product}
-            href={`${basePath}/${product.slug}`}
             priority={index < eager}
             buy={buy}
             variantIndex={variantIndex}

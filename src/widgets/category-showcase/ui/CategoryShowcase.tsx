@@ -32,7 +32,6 @@ export async function CategoryShowcase({ category, products, className }: Props)
 
         <ProductGrid
           products={products}
-          basePath={`/${slug}`}
           buy={<AddToCartButton />}
           view={category.homeProductView}
           className="mt-8 md:mt-10"

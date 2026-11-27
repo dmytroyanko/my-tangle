@@ -1,7 +1,6 @@
 export { getProductBySlug, type ProductDetailsData } from './api/getProductBySlug'
 export { getProductPaths } from './api/getProductPaths'
 export { getProductsByCategory } from './api/getProductsByCategory'
-export { colorKey } from './model/colorKey'
 export { seriesKey } from './model/seriesKey'
 export type { ProductSpec, SpecKey } from './model/specKeys'
 export type { ProductCardData, ProductVariant } from './model/types'

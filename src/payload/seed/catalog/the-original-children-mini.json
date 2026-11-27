@@ -1,6 +1,8 @@
 {
   "category": {
-    "slug": "the-original-children-mini",
+    "slug": "tangle-teezer-the-original-children-mini",
+    "navTitle": { "uk": "Children\nMini", "ru": "Children\nMini" },
+    "navIcon": "children-mini",
     "mediaKey": "ocm-category",
     "order": 2,
     "showOnHome": true,
@@ -90,7 +92,7 @@
         },
         {
           "question": "Чи підходить гребінець дорослим?",
-          "answer": "Так. Однотонні **Millennial Pink**, **Marine Splash** і **Buttercup Yellow** часто беруть як компактний гребінець для сумки чи подорожей. Якщо потрібен маленький гребінець з ручкою, подивіться **[The Ultimate Detangler Mini](/the-ultimate-detangler/mini)**."
+          "answer": "Так. Однотонні **Millennial Pink**, **Marine Splash** і **Buttercup Yellow** часто беруть як компактний гребінець для сумки чи подорожей. Якщо потрібен маленький гребінець з ручкою, подивіться **[The Ultimate Detangler Mini](/tangle-teezer-the-ultimate-detangler-mini)**."
         },
         {
           "question": "Чи можна розчісувати вологе волосся?",
@@ -112,7 +114,7 @@
         },
         {
           "question": "Подходит ли расческа взрослым?",
-          "answer": "Да. Однотонные **Millennial Pink**, **Marine Splash** и **Buttercup Yellow** часто берут как компактную расческу для сумки или путешествий. Если нужна маленькая расческа с ручкой, посмотрите **[The Ultimate Detangler Mini](/ru/the-ultimate-detangler/mini)**."
+          "answer": "Да. Однотонные **Millennial Pink**, **Marine Splash** и **Buttercup Yellow** часто берут как компактную расческу для сумки или путешествий. Если нужна маленькая расческа с ручкой, посмотрите **[The Ultimate Detangler Mini](/ru/tangle-teezer-the-ultimate-detangler-mini)**."
         },
         {
           "question": "Можно ли расчесывать влажные волосы?",
@@ -129,9 +131,8 @@
       ]
     }
   },
-  "products": [
+  "series": [
     {
-      "slug": "the-original-mini",
       "mediaKey": "the-original-mini",
       "title": "The Original Mini",
       "series": "Mini",
@@ -189,7 +190,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "Rainbow Unicorn",
           "color": "#f6c3d4",
@@ -248,7 +249,6 @@
       ]
     },
     {
-      "slug": "detangling-spray-kids",
       "mediaKey": "detangling-spray-kids",
       "title": "Detangling Spray for Kids",
       "series": "Kids",
@@ -306,7 +306,7 @@
           }
         }
       ],
-      "variants": [
+      "colours": [
         {
           "name": "150 мл",
           "inStock": true,

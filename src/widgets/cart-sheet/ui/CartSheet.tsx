@@ -58,7 +58,7 @@ export function CartSheet({ bundlePercent }: { bundlePercent: number | null }) {
           <>
             <ul className="flex-1 divide-y divide-border overflow-y-auto px-5">
               {lines.map((line) => (
-                <CartLineItem key={line.variantId} line={line} onNavigate={close} />
+                <CartLineItem key={line.productId} line={line} onNavigate={close} />
               ))}
             </ul>
 
@@ -135,7 +135,7 @@ function CartLineItem({ line, onNavigate }: { line: CartLine; onNavigate: () => 
                 size="icon"
                 className="size-8 rounded-full"
                 disabled={line.quantity <= 1}
-                onClick={() => cartActions.setQuantity(line.variantId, line.quantity - 1)}
+                onClick={() => cartActions.setQuantity(line.productId, line.quantity - 1)}
                 aria-label={t('decrease', { name })}
               >
                 <MinusIcon className="size-3.5" />
@@ -149,7 +149,7 @@ function CartLineItem({ line, onNavigate }: { line: CartLine; onNavigate: () => 
                 size="icon"
                 className="size-8 rounded-full"
                 disabled={line.quantity >= MAX_QUANTITY}
-                onClick={() => cartActions.setQuantity(line.variantId, line.quantity + 1)}
+                onClick={() => cartActions.setQuantity(line.productId, line.quantity + 1)}
                 aria-label={t('increase', { name })}
               >
                 <PlusIcon className="size-3.5" />
@@ -166,7 +166,7 @@ function CartLineItem({ line, onNavigate }: { line: CartLine; onNavigate: () => 
         variant="ghost"
         size="icon"
         className="-mr-2 size-8 shrink-0 text-muted-foreground"
-        onClick={() => cartActions.remove(line.variantId)}
+        onClick={() => cartActions.remove(line.productId)}
         aria-label={t('remove', { name })}
       >
         <Trash2Icon className="size-4" />

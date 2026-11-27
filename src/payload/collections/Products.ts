@@ -1,16 +1,30 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, FieldHook } from 'payload'
 import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
 import { contentEditors, publishedOrEditors } from '../access'
+import { metaField, specsField, tagsField } from '../fields'
 import { computeSalePrices } from '../hooks/salePrices'
 
+// The admin list and the slug use the name with the colour; a field the update did not send keeps its saved
+// value.
+const composeFullTitle: FieldHook = ({ siblingData, originalDoc }) => {
+  const title = siblingData.title ?? originalDoc?.title
+  const colorName = siblingData.colorName ?? originalDoc?.colorName
+  return [title, colorName].filter(Boolean).join(' ')
+}
+
+// One colour of a series is one product with its own page (/tangle-teezer-the-ultimate-detangler-large-
+// black-gloss). The colours of a series are the products of one category: a subcategory, or a category
+// without subcategories. Description, characteristics and tags shared by the series are set once in that
+// category; a product fills them in only to differ.
 export const Products: CollectionConfig = {
   slug: 'products',
+  labels: { singular: 'Товар', plural: 'Товари' },
   admin: {
-    useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'price', '_status'],
+    useAsTitle: 'fullTitle',
+    defaultColumns: ['fullTitle', 'category', 'price', 'inStock', '_status'],
   },
   access: {
     read: publishedOrEditors,
@@ -26,19 +40,47 @@ export const Products: CollectionConfig = {
     beforeValidate: [computeSalePrices],
   },
   fields: [
-    { name: 'title', type: 'text', required: true, localized: true },
-    slugField({ useAsSlug: 'title', localized: true, slugify }),
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'title',
+          label: 'Назва',
+          type: 'text',
+          required: true,
+          localized: true,
+          admin: { description: 'Без кольору, як у серії: «The Ultimate Detangler Large»' },
+        },
+        {
+          name: 'colorName',
+          label: 'Колір',
+          type: 'text',
+          // Checked here instead of `required`, which would make the column NOT NULL.
+          validate: (value: string | null | undefined) => Boolean(value?.trim()) || 'Вкажіть колір',
+          admin: { description: 'Назва кольору або розміру: «Black Gloss», «150 мл»' },
+        },
+      ],
+    },
+    {
+      name: 'fullTitle',
+      label: 'Повна назва',
+      type: 'text',
+      localized: true,
+      // Before the slug field, whose value is generated from this one.
+      hooks: { beforeValidate: [composeFullTitle] },
+      admin: { readOnly: true, description: 'Назва й колір, складається автоматично' },
+    },
+    slugField({ useAsSlug: 'fullTitle', localized: true, slugify }),
     {
       name: 'category',
+      label: 'Категорія',
       type: 'relationship',
       relationTo: 'categories',
       required: true,
-      admin: { position: 'sidebar' },
-    },
-    {
-      name: 'series',
-      type: 'text',
-      admin: { description: 'Серія для бейджа на картці, наприклад «Fine & Fragile»' },
+      admin: {
+        position: 'sidebar',
+        description: 'Підкатегорія серії, або категорія, якщо підкатегорій у ній немає',
+      },
     },
     {
       name: 'order',
@@ -47,11 +89,25 @@ export const Products: CollectionConfig = {
       admin: { position: 'sidebar', description: 'Порядок у категорії, менше – вище' },
     },
     {
-      name: 'tags',
-      type: 'text',
-      hasMany: true,
-      localized: true,
-      admin: { description: 'Короткі ярлики на картці, наприклад «Вологе й сухе волосся»' },
+      name: 'inStock',
+      label: 'Є в наявності',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: { position: 'sidebar' },
+    },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'color',
+          label: 'Колір у палітрі',
+          type: 'text',
+          admin: { description: 'HEX, наприклад #e3b8c0; порожньо – без палітри (спрей)' },
+          validate: (value: string | null | undefined) =>
+            !value || /^#[0-9a-f]{6}$/i.test(value) || 'Формат #rrggbb',
+        },
+        { name: 'sku', label: 'Артикул', type: 'text' },
+      ],
     },
     {
       type: 'row',
@@ -60,12 +116,14 @@ export const Products: CollectionConfig = {
           name: 'fullPrice',
           label: 'Повна ціна, грн',
           type: 'number',
-          // Checked here instead of `required`, which would make the column NOT NULL and stop the schema
-          // update on products that already exist.
+          // Checked here instead of `required`, which would make the column NOT NULL.
           validate: (value: number | null | undefined) =>
             typeof value === 'number' || 'Вкажіть повну ціну',
           min: 0,
-          admin: { description: 'РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника' },
+          admin: {
+            description:
+              'РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника',
+          },
         },
         {
           name: 'discountPercent',
@@ -84,105 +142,18 @@ export const Products: CollectionConfig = {
         },
       ],
     },
-    { name: 'description', type: 'richText', localized: true },
+    { name: 'images', label: 'Фото', type: 'upload', relationTo: 'media', hasMany: true },
+    tagsField('Порожньо – ярлики категорії'),
     {
-      name: 'specs',
-      label: 'Характеристики',
-      type: 'array',
-      // Rows are shared by both languages, only the value is translated, so the list keeps the same order.
-      labels: { singular: 'Характеристика', plural: 'Характеристики' },
-      admin: {
-        initCollapsed: true,
-        description:
-          'Таблиця під описом на сторінці товару. Бренд і країна бренду додаються автоматично.',
-      },
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'key',
-              label: 'Характеристика',
-              type: 'select',
-              required: true,
-              // Keys match src/entities/product/model/specKeys.ts; site labels are in messages (ProductSpecs).
-              options: [
-                { label: 'Для кого (тварини)', value: 'animal' },
-                { label: 'Тип волосся', value: 'hairType' },
-                { label: 'Шерсть (тварини)', value: 'coat' },
-                { label: 'Використання', value: 'use' },
-                { label: 'Зубчики', value: 'teeth' },
-                { label: 'Розмір', value: 'size' },
-                { label: 'Покриття', value: 'finish' },
-                { label: 'Особливості', value: 'features' },
-                { label: 'Довжина', value: 'length' },
-                { label: 'Вага', value: 'weight' },
-              ],
-            },
-            { name: 'value', label: 'Значення', type: 'text', required: true, localized: true },
-          ],
-        },
-      ],
+      name: 'description',
+      label: 'Опис',
+      type: 'richText',
+      localized: true,
+      admin: { description: 'Порожньо – опис товарів із категорії' },
     },
-    {
-      name: 'variants',
-      type: 'array',
-      labels: { singular: 'Варіант', plural: 'Варіанти' },
-      admin: { initCollapsed: true },
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'name', type: 'text', required: true, admin: { description: 'Колір, наприклад «Radiant Teal»' } },
-            { name: 'sku', type: 'text' },
-          ],
-        },
-        {
-          name: 'color',
-          type: 'text',
-          admin: { description: 'Колір кружечка в палітрі, HEX, наприклад #e3b8c0' },
-          validate: (value: string | null | undefined) =>
-            !value || /^#[0-9a-f]{6}$/i.test(value) || 'Формат #rrggbb',
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'fullPrice',
-              label: 'Повна ціна, грн',
-              type: 'number',
-              min: 0,
-              admin: { description: 'Якщо відрізняється від повної ціни товару' },
-            },
-            {
-              name: 'discountPercent',
-              label: 'Знижка, %',
-              type: 'number',
-              min: 0,
-              max: 90,
-              admin: { description: 'Якщо відрізняється від знижки товару' },
-            },
-            {
-              name: 'price',
-              label: 'Ціна на сайті, грн',
-              type: 'number',
-              min: 0,
-              admin: { readOnly: true },
-            },
-            { name: 'inStock', type: 'checkbox', defaultValue: true },
-          ],
-        },
-        { name: 'images', type: 'upload', relationTo: 'media', hasMany: true },
-      ],
-    },
-    {
-      name: 'meta',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    specsField(
+      'Порожньо – характеристики з категорії. Бренд і країна бренду додаються автоматично.',
+    ),
+    metaField,
   ],
 }

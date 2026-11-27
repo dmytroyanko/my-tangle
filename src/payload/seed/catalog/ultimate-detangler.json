@@ -1,6 +1,8 @@
 {
   "category": {
-    "slug": "the-ultimate-detangler",
+    "slug": "tangle-teezer-the-ultimate-detangler",
+    "navTitle": { "uk": "The Ultimate\nDetangler", "ru": "The Ultimate\nDetangler" },
+    "navIcon": "wet-detangler",
     "mediaKey": "ud-category",
     "order": 0,
     "showOnHome": true,
@@ -43,7 +45,7 @@
         },
         {
           "question": "Чим The Ultimate Detangler відрізняється від The Ultimate Styler і Compact Styler?",
-          "answer": "- **The Ultimate Detangler** – для розплутування вологого й сухого волосся, зокрема в душі. Зручно розподіляє кондиціонер чи маску.\n- **[The Ultimate Styler](/the-ultimate)** – для укладки й фінішу на сухому волоссі. Зубчики у формі пляшечки розчісують локони, підходять для нарощеного волосся й тресів і надають гладкості та блиску. Тонка ручка зручна для зачісок і об'єму. Для розплутування вузликів він не призначений.\n- **[Compact Styler](/compact-styler)** – компактний гребінець без ручки, з кришкою, яка захищає зубчики в сумочці. Підходить для тонкого й нормального волосся, щоб швидко поправити зачіску протягом дня."
+          "answer": "- **The Ultimate Detangler** – для розплутування вологого й сухого волосся, зокрема в душі. Зручно розподіляє кондиціонер чи маску.\n- **[The Ultimate Styler](/tangle-teezer-the-ultimate-styler)** – для укладки й фінішу на сухому волоссі. Зубчики у формі пляшечки розчісують локони, підходять для нарощеного волосся й тресів і надають гладкості та блиску. Тонка ручка зручна для зачісок і об'єму. Для розплутування вузликів він не призначений.\n- **[Compact Styler](/tangle-teezer-compact-styler)** – компактний гребінець без ручки, з кришкою, яка захищає зубчики в сумочці. Підходить для тонкого й нормального волосся, щоб швидко поправити зачіску протягом дня."
         },
         {
           "question": "Який розмір обрати?",
@@ -69,7 +71,7 @@
         },
         {
           "question": "Чем The Ultimate Detangler отличается от The Ultimate Styler и Compact Styler?",
-          "answer": "- **The Ultimate Detangler** – для распутывания влажных и сухих волос, в том числе в душе. Удобно распределяет кондиционер или маску.\n- **[The Ultimate Styler](/ru/the-ultimate)** – для укладки и финиша на сухих волосах. Зубчики в форме бутылочки расчесывают локоны, подходят для нарощенных волос и трессов и придают гладкость и блеск. Тонкая ручка удобна для причесок и объема. Для распутывания узелков он не предназначен.\n- **[Compact Styler](/ru/compact-styler)** – компактная расческа без ручки, с крышкой, которая защищает зубчики в сумочке. Подходит для тонких и нормальных волос, чтобы быстро поправить прическу в течение дня."
+          "answer": "- **The Ultimate Detangler** – для распутывания влажных и сухих волос, в том числе в душе. Удобно распределяет кондиционер или маску.\n- **[The Ultimate Styler](/ru/tangle-teezer-the-ultimate-styler)** – для укладки и финиша на сухих волосах. Зубчики в форме бутылочки расчесывают локоны, подходят для нарощенных волос и трессов и придают гладкость и блеск. Тонкая ручка удобна для причесок и объема. Для распутывания узелков он не предназначен.\n- **[Compact Styler](/ru/tangle-teezer-compact-styler)** – компактная расческа без ручки, с крышкой, которая защищает зубчики в сумочке. Подходит для тонких и нормальных волос, чтобы быстро поправить прическу в течение дня."
         },
         {
           "question": "Какой размер выбрать?",
@@ -136,9 +138,8 @@
       ]
     }
   },
-  "products": [
+  "series": [
     {
-      "slug": "original",
       "mediaKey": "the-ultimate-detangler",
       "title": "The Ultimate Detangler",
       "series": "Original",
@@ -154,7 +155,7 @@
           "Без боли и ломкости"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Midnight Black",
           "color": "#363536",
@@ -347,8 +348,8 @@
         }
       ],
       "description": {
-        "uk": "The Ultimate Detangler – найпопулярніший гребінець Tangle Teezer для вологого волосся. Він легко проходить крізь волосся просто в душі, а ручка не вислизає з мокрих рук.\n\nЗапатентовані дворівневі зубчики працюють разом: довгі розплутують, короткі розгладжують. Тому розчісування проходить без смикання, а волосся менше ламається. Гребінцем зручно розподіляти кондиціонер чи маску по всій довжині.\n\nЗубчики звичайної гнучкості підходять для прямого, хвилястого й кучерявого волосся. Для довгого й густого волосся є [Large](/the-ultimate-detangler/large), для дороги – [Mini](/the-ultimate-detangler/mini).",
-        "ru": "The Ultimate Detangler – самая популярная расческа Tangle Teezer для влажных волос. Она легко проходит сквозь волосы прямо в душе, а ручка не выскальзывает из мокрых рук.\n\nЗапатентованные двухуровневые зубчики работают вместе: длинные распутывают, короткие разглаживают. Поэтому расчесывание проходит без рывков, а волосы меньше ломаются. Расческой удобно распределять кондиционер или маску по всей длине.\n\nЗубчики обычной гибкости подходят для прямых, волнистых и вьющихся волос. Для длинных и густых волос есть [Large](/ru/the-ultimate-detangler/large), для поездок – [Mini](/ru/the-ultimate-detangler/mini)."
+        "uk": "The Ultimate Detangler – найпопулярніший гребінець Tangle Teezer для вологого волосся. Він легко проходить крізь волосся просто в душі, а ручка не вислизає з мокрих рук.\n\nЗапатентовані дворівневі зубчики працюють разом: довгі розплутують, короткі розгладжують. Тому розчісування проходить без смикання, а волосся менше ламається. Гребінцем зручно розподіляти кондиціонер чи маску по всій довжині.\n\nЗубчики звичайної гнучкості підходять для прямого, хвилястого й кучерявого волосся. Для довгого й густого волосся є [Large](/tangle-teezer-the-ultimate-detangler-large), для дороги – [Mini](/tangle-teezer-the-ultimate-detangler-mini).",
+        "ru": "The Ultimate Detangler – самая популярная расческа Tangle Teezer для влажных волос. Она легко проходит сквозь волосы прямо в душе, а ручка не выскальзывает из мокрых рук.\n\nЗапатентованные двухуровневые зубчики работают вместе: длинные распутывают, короткие разглаживают. Поэтому расчесывание проходит без рывков, а волосы меньше ломаются. Расческой удобно распределять кондиционер или маску по всей длине.\n\nЗубчики обычной гибкости подходят для прямых, волнистых и вьющихся волос. Для длинных и густых волос есть [Large](/ru/tangle-teezer-the-ultimate-detangler-large), для поездок – [Mini](/ru/tangle-teezer-the-ultimate-detangler-mini)."
       },
       "specs": [
         {
@@ -382,7 +383,6 @@
       ]
     },
     {
-      "slug": "fine-fragile",
       "mediaKey": "the-ultimate-detangler-fine-fragile",
       "title": "The Ultimate Detangler Fine & Fragile",
       "series": "Fine & Fragile",
@@ -398,7 +398,7 @@
           "Мягкие зубчики"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Pink Whisper",
           "color": "#e6c6cf",
@@ -460,7 +460,6 @@
       ]
     },
     {
-      "slug": "large",
       "mediaKey": "the-ultimate-detangler-large",
       "title": "The Ultimate Detangler Large",
       "series": "Large",
@@ -474,7 +473,7 @@
           "Густые и длинные волосы"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Black Gloss",
           "color": "#252525",
@@ -548,7 +547,6 @@
       ]
     },
     {
-      "slug": "matte",
       "mediaKey": "the-ultimate-detangler-matte",
       "title": "The Ultimate Detangler Matte",
       "series": "Matte",
@@ -562,7 +560,7 @@
           "Матовое покрытие"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Pumice Grey",
           "color": "#cdc4bb",
@@ -643,7 +641,6 @@
       ]
     },
     {
-      "slug": "chrome",
       "mediaKey": "the-ultimate-detangler-chrome",
       "title": "The Ultimate Detangler Chrome",
       "series": "Chrome",
@@ -657,7 +654,7 @@
           "Металлический блеск"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Neo Gold",
           "color": "#c7a96b",
@@ -758,7 +755,6 @@
       ]
     },
     {
-      "slug": "mini",
       "mediaKey": "the-ultimate-detangler-mini",
       "title": "The Ultimate Detangler Mini",
       "series": "Mini",
@@ -774,7 +770,7 @@
           "Для детей и в дорогу"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "Wisteria Leaf",
           "color": "#b9a6d6",
@@ -975,7 +971,6 @@
       ]
     },
     {
-      "slug": "chrome-mini",
       "mediaKey": "the-ultimate-detangler-chrome-mini",
       "title": "The Ultimate Detangler Chrome Mini",
       "series": "Chrome Mini",
@@ -991,7 +986,7 @@
           "Металлический блеск"
         ]
       },
-      "variants": [
+      "colours": [
         {
           "name": "The Devil Wears Prada",
           "color": "#4d1112",

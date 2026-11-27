@@ -1,8 +1,9 @@
 import { MapPinIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 
+import { getCatalogMenu } from '@/entities/category'
 import { getFooterPages } from '@/entities/page'
-import { catalog, foundedYear, messengers, phones, routes } from '@/shared/config'
+import { foundedYear, messengers, phones, routes } from '@/shared/config'
 import { Link, type Locale } from '@/shared/i18n'
 import { externalLinkProps, isExternalUrl } from '@/shared/lib/links'
 import { Logo } from '@/shared/ui/logo'
@@ -25,7 +26,7 @@ export async function Footer() {
     })),
     { key: 'contacts', href: routes.contacts[locale], title: t('contacts') },
   ]
-  const tCatalog = await getTranslations('Catalog')
+  const catalog = await getCatalogMenu(locale).catch(() => [])
 
   return (
     <footer className="bg-dark text-dark-foreground">
@@ -42,10 +43,10 @@ export async function Footer() {
             {t('catalog')}
           </h2>
           <ul className="grid gap-2.5">
-            {catalog.map(({ key, href }) => (
-              <li key={key}>
+            {catalog.map(({ id, href, title }) => (
+              <li key={id}>
                 <Link href={href} className={linkClass}>
-                  {tCatalog(key)}
+                  {title}
                 </Link>
               </li>
             ))}

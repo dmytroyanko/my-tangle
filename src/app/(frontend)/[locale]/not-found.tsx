@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import { catalog } from '@/shared/config'
-import { Link } from '@/shared/i18n'
+import { getCatalogMenu } from '@/entities/category'
+import { Link, type Locale } from '@/shared/i18n'
 import { Button } from '@/shared/ui/button'
 import { pageTitleClassName } from '@/shared/ui/page-header'
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function NotFound() {
   const t = await getTranslations('NotFound')
-  const tCatalog = await getTranslations('Catalog')
+  const catalog = await getCatalogMenu((await getLocale()) as Locale).catch(() => [])
 
   return (
     <div className="container py-12 md:py-20">
@@ -33,13 +33,13 @@ export default async function NotFound() {
           {t('catalog')}
         </h2>
         <ul className="mt-5 flex flex-wrap gap-2">
-          {catalog.map(({ key, href }) => (
-            <li key={key}>
+          {catalog.map(({ id, href, title }) => (
+            <li key={id}>
               <Link
                 href={href}
                 className="inline-block rounded-full border border-border px-4 py-2 text-sm font-medium transition-colors hover:bg-muted"
               >
-                {tCatalog(key)}
+                {title}
               </Link>
             </li>
           ))}

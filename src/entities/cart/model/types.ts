@@ -9,17 +9,16 @@ export type CartLineView = {
   price: number
   // Price before the discount, shown crossed out.
   fullPrice: number | null
-  // Product page path without the locale, with the colour.
+  // Product page path without the locale.
   href: string
   inStock: boolean
   // Brand name, for the bundle discount; known once the server has confirmed the line.
   brand?: string
 }
 
-// One colour of a product in the cart. A colour is a row of the product's variants, so its id is unique.
+// One product (a colour) in the cart.
 export type CartLine = {
   productId: number
-  variantId: string
   quantity: number
   view: CartLineView
 }
@@ -27,6 +26,5 @@ export type CartLine = {
 // A line as the server sees it.
 export type CartLineData = CartLineView & {
   productId: number
-  variantId: string
   brand: string
 }

@@ -11,22 +11,13 @@ import { cartActions, useCart } from './store'
 export function useRefreshCart(active: boolean, locale: string) {
   const { lines } = useCart()
   // Which lines to check: changes when a colour is added or removed, not when a quantity changes.
-  const key = lines.map((line) => line.variantId).join(',')
+  const key = lines.map((line) => line.productId).join(',')
 
   const refresh = useCallback(async () => {
-    const items = key
-      ? key.split(',').map((variantId) => {
-          const line = lines.find((item) => item.variantId === variantId)!
-          return { productId: line.productId, variantId }
-        })
-      : []
+    const items = key ? key.split(',').map((id) => ({ productId: Number(id) })) : []
     if (!items.length) return
     const data = await getCartLines(items, locale)
-    cartActions.refresh(
-      new Map(data.map(({ productId: _, variantId, ...view }) => [variantId, view])),
-    )
-    // `lines` is read for the ids only; `key` stands for them.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    cartActions.refresh(new Map(data.map(({ productId, ...view }) => [productId, view])))
   }, [key, locale])
 
   useEffect(() => {

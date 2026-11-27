@@ -18,30 +18,6 @@
   "LocaleSwitcher": {
     "label": "Язык сайта"
   },
-  "Navigation": {
-    "wetDetangler": "The Ultimate\nDetangler",
-    "carebrush": "The Complete\nCarebrush",
-    "childrenMini": "Children\nMini",
-    "compactStyler": "Compact\nStyler",
-    "easyDryGo": "Easy\nDry & Go",
-    "ultimateStyler": "The Ultimate\nStyler",
-    "backCombing": "Back\nCombing",
-    "scalp": "The Scalp\nExfoliator",
-    "petTeezer": "Pet\nTeezer",
-    "invisibobble": "Резинки\nInvisibobble"
-  },
-  "Catalog": {
-    "wetDetangler": "The Ultimate Detangler",
-    "carebrush": "The Complete Carebrush",
-    "childrenMini": "The Original Children Mini",
-    "compactStyler": "Compact Styler",
-    "easyDryGo": "Easy Dry & Go",
-    "ultimateStyler": "The Ultimate",
-    "backCombing": "Back-Combing Hairbrush",
-    "scalp": "The Scalp Exfoliator and Massager",
-    "petTeezer": "Pet Teezer",
-    "invisibobble": "Резинки Invisibobble"
-  },
   "Footer": {
     "home": "My-Tangle – на главную",
     "about": "Магазин оригинальных расчёсок Tangle Teezer и резинок Invisibobble с 2007 года. Доставка по всей Украине.",
@@ -86,7 +62,8 @@
     "home": "Главная"
   },
   "CategoryPage": {
-    "products": "Серии {title}"
+    "products": "Серии {title}",
+    "colors": "Цвета {title}"
   },
   "SeriesFilter": {
     "label": "Фильтр по серии",
@@ -120,7 +97,8 @@
     "description": "Описание",
     "otherSeries": "Другие серии {title}",
     "metaTitle": "{name} – купить в Украине",
-    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине."
+    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине.",
+    "colorMetaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}, цена {price, number} грн. Доставка Новой Почтой по всей Украине."
   },
   "ProductSpecs": {
     "title": "Характеристики",

@@ -105,7 +105,7 @@ No page is served until it gets an answer. Two ways out:
 
 ### Catalog import
 
-Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`, `rezinki-invisibobble.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
+Categories with their series, colours and photos are loaded into the database by a script. A file describes a category by series (`series[].colours[]`); the script makes a subcategory per series when a category has several, and a product with its own page per colour. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`, `rezinki-invisibobble.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
 
 ```bash
 pnpm payload run src/payload/seed/catalog.ts                                  # every category
@@ -148,11 +148,21 @@ CLEANUP_APPLY=1 pnpm payload run src/payload/seed/cleanup-media.ts
 
 ## Redirects at cutover
 
-The old Webflow site's URLs end in `.html` (`/kontakty.html`); without `.html` they return 404. At cutover every old (Russian) URL `/<slug>.html` is redirected with 301 to `/ru/<slug>`. URLs whose slug itself changed:
+The old Webflow site's URLs end in `.html` (`/kontakty.html`); without `.html` they return 404. At cutover every old (Russian) URL `/<slug>.html` is redirected with 301 to `/ru/<slug>`. URLs whose slug itself changed (catalog slugs got the full name with the brand on 2026-11-26), each straight to the new address, without a chain:
 
 | Old URL | New URL |
 |---|---|
-| `/the-wet-detangler.html` | `/ru/the-ultimate-detangler` |
+| `/the-wet-detangler.html` | `/ru/tangle-teezer-the-ultimate-detangler` |
+| `/the-complete-carebrush.html` | `/ru/tangle-teezer-the-complete-carebrush` |
+| `/the-original-children-mini.html` | `/ru/tangle-teezer-the-original-children-mini` |
+| `/compact-styler.html` | `/ru/tangle-teezer-compact-styler` |
+| `/easy-dry-go.html` | `/ru/tangle-teezer-easy-dry-go` |
+| `/the-ultimate.html` | `/ru/tangle-teezer-the-ultimate-styler` |
+| `/back-combing-hairbrush.html` | `/ru/tangle-teezer-back-combing-hairbrush` |
+| `/the-scalp-exfoliator-and-massager.html` | `/ru/tangle-teezer-the-scalp-exfoliator-and-massager` |
+| `/rezinki-invisibobble.html` | `/ru/rezinki-invisibobble` (unchanged) |
+
+Pet Teezer is a new category (not on the old site). Check the list against the crawl of the old site before cutover.
 
 ## Docker (production)
 

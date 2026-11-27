@@ -157,7 +157,6 @@ export function CheckoutForm({ bundlePercent, legalLinks }: Props) {
         form,
         items: inStock.map((line) => ({
           productId: line.productId,
-          variantId: line.variantId,
           quantity: line.quantity,
           price: line.view.price,
         })),
@@ -372,7 +371,7 @@ function OrderLines({
     <>
       <ul className="divide-y divide-border">
         {lines.map((line) => (
-          <li key={line.variantId} className="flex gap-3 py-3">
+          <li key={line.productId} className="flex gap-3 py-3">
             <div className="relative size-16 shrink-0 overflow-hidden rounded-md bg-white">
               {line.view.image && (
                 <Image

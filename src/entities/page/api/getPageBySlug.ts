@@ -1,9 +1,9 @@
-import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext'
 import { cache } from 'react'
 
 import { findBySlug } from '@/payload/lib/findBySlug'
 import type { Locale } from '@/shared/i18n'
 import { toImage } from '@/shared/lib/media'
+import { toPlainText } from '@/shared/lib/plain-text'
 
 // Length of the description made from the text when the page has no SEO description of its own.
 const EXCERPT_LENGTH = 160
@@ -31,9 +31,7 @@ export const getPageBySlug = cache(
     })
     if (!found) return null
     const { doc: page, slugs } = found
-    const text = page.content
-      ? convertLexicalToPlaintext({ data: page.content }).replace(/\s+/g, ' ').trim()
-      : ''
+    const text = page.content ? toPlainText(page.content) : ''
 
     return {
       id: page.id,
@@ -45,7 +43,7 @@ export const getPageBySlug = cache(
         items: (group.items ?? []).map((item) => ({
           question: item.question,
           answer: item.answer,
-          answerText: convertLexicalToPlaintext({ data: item.answer }).replace(/\s+/g, ' ').trim(),
+          answerText: toPlainText(item.answer),
         })),
       })),
       updatedAt: page.updatedAt,

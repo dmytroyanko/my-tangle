@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { siteUrl } from '@/shared/config'
-import { alternates, getPathname } from '@/shared/i18n'
+import { absoluteUrl, alternates, type Locale } from '@/shared/i18n'
 import { storeJsonLd } from '@/shared/lib/structured-data'
 import { JsonLd } from '@/shared/ui/json-ld'
 import { BundleDiscount } from '@/widgets/bundle-discount'
 import { CategoryShowcases } from '@/widgets/category-showcase'
+import { HomeFaq } from '@/widgets/home-faq'
 import { HomeHero } from '@/widgets/home-hero'
 
 // Products come from Payload, so the page renders per request: the build has no database, and admin edits
@@ -29,7 +29,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <>
       <JsonLd
         data={storeJsonLd({
-          homeUrl: new URL(getPathname({ locale, href: '/' }), siteUrl).href,
+          homeUrl: absoluteUrl(locale as Locale, '/'),
           locale,
           description: tMeta('description'),
           streetAddress: tOrg('streetAddress'),
@@ -40,6 +40,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <BundleDiscount className="pt-4 lg:pt-6" />
       {/* Categories marked for the home page in the admin. The banner button scrolls here. */}
       <CategoryShowcases id="catalog" />
+      <HomeFaq className="pt-4 pb-16 md:pb-20" />
     </>
   )
 }

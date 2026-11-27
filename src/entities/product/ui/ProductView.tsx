@@ -8,29 +8,32 @@ import { useState, type ReactNode } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/ui/button'
 
-import { colorKey } from '../model/colorKey'
-import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
+import { hasPalette } from '../model/defaultVariant'
+import { SelectedVariantContext } from '../model/selectedVariant'
 import type { ProductCardData } from '../model/types'
-import { ColorSwatches } from './ColorSwatches'
+import { ColorSwatchLinks } from './ColorSwatches'
 import { ProductGallery } from './ProductGallery'
 import { ProductPrice } from './ProductPrice'
 
 type Props = {
+  // The series of the product, with every colour for the palette.
   product: ProductCardData
-  // Colour key from ?color=, read by the page on the server.
-  initialColor?: string
+  // Index of this product's colour in the series.
+  selected: number
+  // The page heading: the name with the colour.
+  name: string
+  // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
+  buy?: ReactNode
   // Shown under the buy button (delivery terms).
   children?: ReactNode
 }
 
-// Top of the product page: photos of the selected colour on the left (the large photo opens the full-screen
-// gallery), title, palette, price and buy button on the right. A picked colour is kept in ?color= without
-// a navigation.
-export function ProductView({ product, initialColor, children }: Props) {
+// Top of the product page: photos of the colour on the left (the large photo opens the full-screen
+// gallery), title, palette, price and buy button on the right. Each colour of the palette is a link to its
+// own page.
+export function ProductView({ product, selected, name, buy, children }: Props) {
   const t = useTranslations('ProductCard')
   const tPage = useTranslations('ProductPage')
-  const fromUrl = product.variants.findIndex((variant) => colorKey(variant.name) === initialColor)
-  const [selected, setSelected] = useState(fromUrl >= 0 ? fromUrl : defaultVariantIndex(product.variants))
   const [imageIndex, setImageIndex] = useState(0)
   const [galleryOpen, setGalleryOpen] = useState(false)
 
@@ -38,19 +41,6 @@ export function ProductView({ product, initialColor, children }: Props) {
   if (!variant) return null
   const images = variant.images
   const image = images[imageIndex] ?? images[0]
-  const fullName = `${product.title} ${variant.name}`
-
-  const select = (index: number) => {
-    setSelected(index)
-    setImageIndex(0)
-    // Every colour the visitor picks gets its own address to share, the default one too. The canonical
-    // URL stays without the parameter.
-    const chosen = product.variants[index]
-    if (!chosen) return
-    const url = new URL(window.location.href)
-    url.searchParams.set('color', colorKey(chosen.name))
-    window.history.replaceState(window.history.state, '', url)
-  }
   const step = (delta: number) =>
     setImageIndex((imageIndex + delta + images.length) % images.length)
 
@@ -62,7 +52,7 @@ export function ProductView({ product, initialColor, children }: Props) {
             <button
               type="button"
               onClick={() => setGalleryOpen(true)}
-              aria-label={t('openGallery', { name: fullName })}
+              aria-label={t('openGallery', { name })}
               className="absolute inset-0 cursor-zoom-in"
             >
               <Image
@@ -130,7 +120,7 @@ export function ProductView({ product, initialColor, children }: Props) {
             {product.series}
           </p>
         )}
-        <h1 className="mt-2 text-[1.75rem] leading-tight md:text-3xl">{product.title}</h1>
+        <h1 className="mt-2 text-[1.75rem] leading-tight md:text-3xl">{name}</h1>
 
         {product.tags.length > 0 && (
           <ul className="mt-3 flex flex-wrap gap-1.5">
@@ -163,25 +153,16 @@ export function ProductView({ product, initialColor, children }: Props) {
             <p className="mt-6 text-sm text-muted-foreground">
               {t('colour')}: <span className="font-semibold text-foreground">{variant.name}</span>
             </p>
-            <ColorSwatches
-              variants={product.variants}
-              selected={selected}
-              onSelect={select}
-              size="lg"
-              className="mt-3"
-            />
+            <ColorSwatchLinks variants={product.variants} selected={selected} className="mt-3" />
           </>
         )}
 
         {variant.inStock ? (
-          // Buying is not wired yet: the button is a placeholder until the cart exists.
-          <Button
-            type="button"
-            size="lg"
-            className="mt-8 h-12 w-full rounded-full px-10 text-sm font-semibold tracking-[0.1em] uppercase sm:w-auto"
-          >
-            {t('buy')}
-          </Button>
+          <div className="mt-8">
+            <SelectedVariantContext.Provider value={{ product, variant }}>
+              {buy}
+            </SelectedVariantContext.Provider>
+          </div>
         ) : (
           <p className="mt-8 text-base font-semibold text-muted-foreground">{t('outOfStock')}</p>
         )}
@@ -190,7 +171,7 @@ export function ProductView({ product, initialColor, children }: Props) {
       </div>
 
       <ProductGallery
-        title={fullName}
+        title={name}
         images={images}
         index={imageIndex}
         onIndexChange={setImageIndex}

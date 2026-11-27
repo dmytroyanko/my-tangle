@@ -3,6 +3,9 @@ import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { contentEditors, publishedOrEditors } from '../access'
+import { faqItemFields, metaField } from '../fields'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -10,14 +13,60 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', '_status'],
   },
   access: {
-    read: ({ req: { user } }) => (user ? true : { _status: { equals: 'published' } }),
+    read: publishedOrEditors,
+    readVersions: contentEditors,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   versions: {
     drafts: true,
   },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
+    {
+      name: 'navTitle',
+      label: 'Коротка назва',
+      type: 'text',
+      localized: true,
+      admin: { description: 'Для посилань у футері; порожньо – повна назва' },
+    },
     slugField({ useAsSlug: 'title', localized: true, slugify }),
+    {
+      type: 'row',
+      admin: { position: 'sidebar' },
+      fields: [
+        {
+          name: 'showInFooter',
+          label: 'Показувати у футері',
+          type: 'checkbox',
+          defaultValue: false,
+        },
+        {
+          name: 'footerOrder',
+          label: 'Порядок у футері',
+          type: 'number',
+          defaultValue: 0,
+          admin: { description: 'Менше – вище' },
+        },
+      ],
+    },
+    {
+      name: 'serviceRole',
+      label: 'Службова роль',
+      type: 'select',
+      // The checkout links the offer and the privacy policy by this, not by a slug. Not unique, so a page
+      // can be duplicated for a new edition; the most recently updated published page with a role wins.
+      index: true,
+      options: [
+        { label: 'Публічна оферта', value: 'offer' },
+        { label: 'Політика конфіденційності', value: 'privacy' },
+      ],
+      admin: {
+        position: 'sidebar',
+        description: 'На цю сторінку посилається рядок згоди під кнопкою «Підтвердити замовлення»',
+      },
+    },
     { name: 'content', type: 'richText', localized: true },
     {
       name: 'faq',
@@ -37,21 +86,10 @@ export const Pages: CollectionConfig = {
           label: 'Питання',
           type: 'array',
           labels: { singular: 'Питання', plural: 'Питання' },
-          fields: [
-            { name: 'question', label: 'Питання', type: 'text', required: true },
-            { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
-          ],
+          fields: faqItemFields,
         },
       ],
     },
-    {
-      name: 'meta',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    metaField,
   ],
 }

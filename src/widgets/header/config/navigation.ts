@@ -1,6 +1,6 @@
 import type { StaticImageData } from 'next/image'
 
-import { catalog, type CatalogKey } from '@/shared/config'
+import type { CatalogMenuItem } from '@/entities/category'
 
 import backCombing from '../ui/nav-icons/back-combing.png'
 import carebrush from '../ui/nav-icons/carebrush.png'
@@ -13,18 +13,17 @@ import scalp from '../ui/nav-icons/scalp.png'
 import ultimateStyler from '../ui/nav-icons/ultimate-styler.png'
 import wetDetangler from '../ui/nav-icons/wet-detangler.png'
 
-// Catalog menu icons are the current site's PNGs (Pet Teezer drawn in the same style). Later they move to Payload categories.
-const icons: Record<CatalogKey, StaticImageData> = {
-  wetDetangler,
+// Catalog menu icons are the current site's PNGs (Pet Teezer drawn in the same style), picked per category
+// in the admin (navIcon; the keys match the options in src/payload/collections/Categories.ts).
+export const navIcons: Record<CatalogMenuItem['icon'], StaticImageData> = {
+  'wet-detangler': wetDetangler,
   carebrush,
-  childrenMini,
-  compactStyler,
-  easyDryGo,
-  ultimateStyler,
-  backCombing,
+  'children-mini': childrenMini,
+  'compact-styler': compactStyler,
+  'easy-dry-go': easyDryGo,
+  'ultimate-styler': ultimateStyler,
+  'back-combing': backCombing,
   scalp,
-  petTeezer,
+  'pet-teezer': petTeezer,
   invisibobble,
 }
-
-export const navigation = catalog.map((item) => ({ ...item, icon: icons[item.key] }))

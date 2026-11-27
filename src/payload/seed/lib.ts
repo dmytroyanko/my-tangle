@@ -1,12 +1,35 @@
-// Helpers shared by the seed scripts (catalog.ts, pages.ts): the light rich text markup used in their JSON,
-// photo download and upload to Payload media, and saving a document in both languages.
+// Helpers shared by the seed scripts (catalog.ts, pages.ts, home.ts): reading their JSON, the light rich
+// text markup used in it, photo download and upload to Payload media, and saving a document in both languages.
 import { createHash, randomBytes } from 'crypto'
+import { readdirSync, readFileSync } from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import type { Payload } from 'payload'
 import sharp from 'sharp'
 
 export type Locale = 'uk' | 'ru'
 export type Localized<T> = Record<Locale, T>
+
+// The same shape built for each language: byLocale((locale) => ({ title: page.title[locale] })).
+export const byLocale = <T>(make: (locale: Locale) => T): Localized<T> => ({
+  uk: make('uk'),
+  ru: make('ru'),
+})
+
+// A path next to the calling script (pass its import.meta.url); fileURLToPath also decodes spaces.
+export const seedPath = (scriptUrl: string, name: string) =>
+  path.join(path.dirname(fileURLToPath(scriptUrl)), name)
+
+// The JSON files of a seed folder, one document each, in file name order; `only` (a file name without
+// .json, from an env var) picks one.
+export function readSeedFiles<T>(dir: string, only?: string): T[] {
+  const files = readdirSync(dir)
+    .filter((file) => file.endsWith('.json') && (!only || file === `${only}.json`))
+    .sort()
+  if (!files.length) throw new Error(`No seed file ${only ? `${only}.json ` : ''}in ${dir}`)
+  return files.map((file) => JSON.parse(readFileSync(path.join(dir, file), 'utf8')) as T)
+}
 
 // A photo URL, or a part of a photo, optionally padded onto a larger canvas: a retailer photo, the brush
 // alone from a packshot with its box (so the card preview matches the close-ups of other colours), or a

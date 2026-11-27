@@ -36,7 +36,7 @@ After changing collections: `pnpm generate:types` (and `pnpm generate:importmap`
 
 The site is bilingual: Ukrainian is the main language, Russian the second one.
 
-- URLs: Ukrainian without a prefix (`/`, `/the-ultimate-detangler`), Russian under `/ru` (`/ru`, `/ru/the-ultimate-detangler`). `/uk/...` redirects to the address without a prefix. The language comes only from the URL; there is no redirect by browser language.
+- URLs: Ukrainian without a prefix (`/`, `/tangle-teezer-the-ultimate-detangler`), Russian under `/ru` (`/ru`, `/ru/tangle-teezer-the-ultimate-detangler`). `/uk/...` redirects to the address without a prefix. The language comes only from the URL; there is no redirect by browser language.
 - UI text (buttons, labels): `messages/uk.json` and `messages/ru.json`, with the same keys in both files.
 - Content in the admin: the language switcher at the top of a document. Titles, slugs, descriptions, SEO fields and photo alt texts are filled in per language; prices, variants and photos are shared. Without a Russian translation the Ukrainian text is shown.
 - Slugs are generated from the title by transliteration: Ukrainian by the official standard (Cabinet of Ministers resolution No. 55), Russian by common web transliteration.
@@ -47,9 +47,35 @@ The site is bilingual: Ukrainian is the main language, Russian the second one.
 
 The admin enters only the **full price** of a product: for brushes and sprays the supplier's full price minus 1 UAH, for Invisibobble the supplier's full price as is. A colour whose full price differs from the product's has its own full price.
 
-The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin (20% by default); saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field, 0 for none), which then takes priority over the shop one, and a colour can have its own on top of that. Invisibobble products have 0, with a colour discount only where the supplier discounts that design.
+The site price is calculated by Payload on every save: the full price minus the discount, rounded to a whole hryvnia. The discount is set in **Shop settings** in the admin: 0 normally (the site price is the full price), 20% for Black Friday; saving a new value reprices every product. A product can have its own discount (the "Знижка, %" field, 0 for none), which then takes priority over the shop one, and a colour can have its own on top of that. Invisibobble products have 0; during a sale a colour gets a discount only where the supplier discounts that design.
 
-The site shows the site price with the full price crossed out and the discount next to it. The calculation is in `src/payload/hooks/salePrices.ts`.
+With a discount, the site shows the site price with the full price crossed out and the discount next to it; without one, just the price. The calculation is in `src/payload/hooks/salePrices.ts`.
+
+The bundle discount (Tangle Teezer with Invisibobble in one order, 7%) is switched on in **Shop settings** with its percent: on normally, off during a sale. While it is off, the site shows no bundle banner and the cart no bundle discount; texts in Payload that mention it (FAQ, category descriptions) are edited by hand.
+
+## Checkout
+
+The cart (a side panel) leads to the checkout, `/oformlennia-zamovlennia` (`/ru/oformlenie-zakaza`), noindex. The visitor gives their name, phone, a Nova Poshta city and branch or parcel locker picked from the Nova Poshta directory (searched from our server; `NOVA_POSHTA_API_KEY` in `.env` is optional), a payment method and a comment. The order is placed with a method switched on in the admin, and keeps its name as it was then. The order is created in Payload (Orders) with prices, names and stock read from the products, never taken from the browser; if anything in the cart changed meanwhile, the visitor sees the updated summary and confirms again. The phone is also stored as `+380XXXXXXXXX` (`phoneNormalized`) so a customer who registers later can see orders placed as a guest. The order number is the order id.
+
+Next to the button the visitor accepts the public offer and the privacy policy: links to the published pages whose "service role" (sidebar of a page in the admin) is the offer or the privacy policy.
+
+Payment methods are the **"Способи оплати"** collection in the admin: a name and an explanation per language, on/off and order (the first one switched on is the checkout's default). The checkout and the delivery and payment block on product and category pages list the methods switched on. Apple Pay / Google Pay is switched off until a payment provider is connected. Seed them (a new database has none, and the checkout needs at least one):
+
+```bash
+pnpm payload run src/payload/seed/payment-methods.ts
+```
+
+Pages in code whose path differs by language are served from one folder named after their key (`checkout/`): `src/proxy.ts` rewrites each language's path to it and redirects the other language's path; the paths themselves are in `src/shared/config/routes.ts`.
+
+## Admin users and order notifications
+
+Admin accounts (`users`) have a role: **admin** (everything, including users and Shop settings) or **content editor** (products, categories, pages, photos), plus two rights for orders: **view orders** and **receive orders** (view, change the status and get an email about every new order). Rights are set by an admin; the first account created becomes an admin, and the last admin cannot lose the role or be deleted. Drafts and version history of products and pages are visible only to admins and content editors.
+
+A new order sends a Telegram message to the orders chats (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_ORDERS_CHAT_ID`: one or more chat ids, comma-separated) and an email to every user with "receive orders" (SMTP settings in `.env`; without them Payload prints emails to the console). Notifications go out after the response, so the customer never waits for them; a channel that is not set up is skipped, and the order is saved either way. To find the chat id, write to the bot and open `https://api.telegram.org/bot<token>/getUpdates`.
+
+## Analytics tags
+
+Analytics and advertising tags are managed in the admin, **Маркетинг → Теги відстеження**: Google Tag Manager (`GTM-…`), a Google tag (Analytics 4 `G-…`, Google Ads `AW-…`) or Meta Pixel, each with an on/off switch. A tag is entered by its id, never as code; the site adds the vendor's standard snippet to every page. Tags run only in the production build (`next start`), so development visits stay out of the statistics.
 
 ## Home page
 
@@ -89,7 +115,7 @@ No page is served until it gets an answer. Two ways out:
 
 ### Catalog import
 
-Categories with their series, colours and photos are loaded into the database by a script. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`, `rezinki-invisibobble.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
+Categories with their series, colours and photos are loaded into the database by a script. A file describes a category by series (`series[].colours[]`); the script makes a subcategory per series when a category has several, and a product with its own page per colour. Each category is a separate file in `src/payload/seed/catalog/` (`ultimate-detangler.json`, `the-complete-carebrush.json`, `the-original-children-mini.json`, `compact-styler.json`, `easy-dry-go.json`, `the-ultimate.json`, `back-combing-hairbrush.json`, `the-scalp-exfoliator-and-massager.json`, `pet-teezer.json`, `rezinki-invisibobble.json`): names and series from the current site (Pet Teezer, a new category: stock from the supplier, names and texts from the manufacturer), full prices from the supplier, photos only from the manufacturer's site (a few colours it never photographed keep the current site's photos for now, see `AGENTS.md`).
 
 ```bash
 pnpm payload run src/payload/seed/catalog.ts                                  # every category
@@ -115,6 +141,12 @@ PAGE=kak-myt-tangle-teezer pnpm payload run src/payload/seed/pages.ts  # one pag
 
 Animated GIFs are stored as animated WebP, at most 640px wide (about 300 KB).
 
+The questions under the catalog on the home page (care tips shared by every brush) are the "Головна сторінка" global in the admin. Category descriptions have no care section: care is a question in each category's FAQ. Seed them from `src/payload/seed/home.json`:
+
+```bash
+pnpm payload run src/payload/seed/home.ts
+```
+
 ### Unused media
 
 After replacing photos or removing products, old files stay in media. The script lists the files that no product, category or page uses (both languages, drafts included), and with `CLEANUP_APPLY=1` deletes them. Deletion cannot be undone, so review the list first:
@@ -126,11 +158,21 @@ CLEANUP_APPLY=1 pnpm payload run src/payload/seed/cleanup-media.ts
 
 ## Redirects at cutover
 
-The old Webflow site's URLs end in `.html` (`/kontakty.html`); without `.html` they return 404. At cutover every old (Russian) URL `/<slug>.html` is redirected with 301 to `/ru/<slug>`. URLs whose slug itself changed:
+The old Webflow site's URLs end in `.html` (`/kontakty.html`); without `.html` they return 404. At cutover every old (Russian) URL `/<slug>.html` is redirected with 301 to `/ru/<slug>`. URLs whose slug itself changed (catalog slugs got the full name with the brand on 2026-11-26), each straight to the new address, without a chain:
 
 | Old URL | New URL |
 |---|---|
-| `/the-wet-detangler.html` | `/ru/the-ultimate-detangler` |
+| `/the-wet-detangler.html` | `/ru/tangle-teezer-the-ultimate-detangler` |
+| `/the-complete-carebrush.html` | `/ru/tangle-teezer-the-complete-carebrush` |
+| `/the-original-children-mini.html` | `/ru/tangle-teezer-the-original-children-mini` |
+| `/compact-styler.html` | `/ru/tangle-teezer-compact-styler` |
+| `/easy-dry-go.html` | `/ru/tangle-teezer-easy-dry-go` |
+| `/the-ultimate.html` | `/ru/tangle-teezer-the-ultimate-styler` |
+| `/back-combing-hairbrush.html` | `/ru/tangle-teezer-back-combing-hairbrush` |
+| `/the-scalp-exfoliator-and-massager.html` | `/ru/tangle-teezer-the-scalp-exfoliator-and-massager` |
+| `/rezinki-invisibobble.html` | `/ru/rezinki-invisibobble` (unchanged) |
+
+Pet Teezer is a new category (not on the old site). Check the list against the crawl of the old site before cutover.
 
 ## Docker (production)
 

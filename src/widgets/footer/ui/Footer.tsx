@@ -1,23 +1,15 @@
-import { MapPinIcon, PhoneIcon } from 'lucide-react'
+import { MapPinIcon, MessageCircleIcon, PhoneIcon } from 'lucide-react'
 import { getLocale, getTranslations } from 'next-intl/server'
 
-import { catalog, foundedYear, phones } from '@/shared/config'
+import { getCatalogMenu } from '@/entities/category'
+import { getFooterPages } from '@/entities/page'
+import { foundedYear, messengers, phones, routes } from '@/shared/config'
 import { Link, type Locale } from '@/shared/i18n'
+import { externalLinkProps, isExternalUrl } from '@/shared/lib/links'
 import { Logo } from '@/shared/ui/logo'
 
 import { BritishFlag } from './BritishFlag'
 
-// Information pages, by language: the articles have a Ukrainian slug and the current site's Russian one.
-// Later these come from Payload pages.
-const infoLinks = [
-  {
-    key: 'howToSpotOriginal',
-    href: { uk: '/yak-vidriznyty-oryhinal', ru: '/kak-otlichit-original' },
-  },
-  { key: 'howToClean', href: { uk: '/yak-myty-tangle-teezer', ru: '/kak-myt-tangle-teezer' } },
-  { key: 'faq', href: { uk: '/chasti-pytannia', ru: '/chastye-voprosy' } },
-  { key: 'contacts', href: { uk: '/kontakty', ru: '/kontakty' } },
-] as const
 
 const headingClass = 'mb-4 text-xs font-semibold tracking-wider text-dark-foreground uppercase'
 const linkClass = 'text-dark-foreground/70 transition-colors hover:text-dark-foreground'
@@ -25,7 +17,16 @@ const linkClass = 'text-dark-foreground/70 transition-colors hover:text-dark-for
 export async function Footer() {
   const t = await getTranslations('Footer')
   const locale = (await getLocale()) as Locale
-  const tCatalog = await getTranslations('Catalog')
+  // Information pages come from Payload (marked for the footer in the admin); contacts is a page in code.
+  const infoLinks = [
+    ...(await getFooterPages(locale).catch(() => [])).map((page) => ({
+      key: `page-${page.id}`,
+      href: page.href,
+      title: page.title,
+    })),
+    { key: 'contacts', href: routes.contacts[locale], title: t('contacts') },
+  ]
+  const catalog = await getCatalogMenu(locale).catch(() => [])
 
   return (
     <footer className="bg-dark text-dark-foreground">
@@ -42,10 +43,10 @@ export async function Footer() {
             {t('catalog')}
           </h2>
           <ul className="grid gap-2.5">
-            {catalog.map(({ key, href }) => (
-              <li key={key}>
+            {catalog.map(({ id, href, title }) => (
+              <li key={id}>
                 <Link href={href} className={linkClass}>
-                  {tCatalog(key)}
+                  {title}
                 </Link>
               </li>
             ))}
@@ -57,10 +58,10 @@ export async function Footer() {
             {t('info')}
           </h2>
           <ul className="grid gap-2.5">
-            {infoLinks.map(({ key, href }) => (
+            {infoLinks.map(({ key, href, title }) => (
               <li key={key}>
-                <Link href={href[locale]} className={linkClass}>
-                  {t(key)}
+                <Link href={href} className={linkClass}>
+                  {title}
                 </Link>
               </li>
             ))}
@@ -74,6 +75,17 @@ export async function Footer() {
               <a key={phone.href} href={phone.href} className="flex items-center gap-2 font-semibold hover:underline">
                 <PhoneIcon className="size-4 text-dark-foreground/50" aria-hidden="true" />
                 {phone.display}
+              </a>
+            ))}
+            {messengers.map((messenger) => (
+              <a
+                key={messenger.name}
+                href={messenger.href}
+                {...(isExternalUrl(messenger.href) ? externalLinkProps : {})}
+                className={`flex items-center gap-2 ${linkClass}`}
+              >
+                <MessageCircleIcon className="size-4 text-dark-foreground/50" aria-hidden="true" />
+                {messenger.name}
               </a>
             ))}
             <p className="flex gap-2 text-dark-foreground/70">

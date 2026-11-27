@@ -2,37 +2,39 @@
 
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 
 import { Link } from '@/shared/i18n'
 import { cn } from '@/shared/lib/utils'
-import { Button } from '@/shared/ui/button'
 
-import { colorKey } from '../model/colorKey'
 import { defaultVariantIndex, hasPalette } from '../model/defaultVariant'
+import { SelectedVariantContext } from '../model/selectedVariant'
 import type { ProductCardData } from '../model/types'
 import { ColorSwatches } from './ColorSwatches'
 import { ProductPrice } from './ProductPrice'
 
 type Props = {
   product: ProductCardData
-  // Product page path without the locale, e.g. /the-ultimate-detangler/matte.
-  href: string
   priority?: boolean
+  // The buy button, shown for a colour in stock; it reads the picked colour from SelectedVariantContext.
+  buy?: ReactNode
+  // One colour only (the colours-as-cards list): no palette, and the colour name is part of the title.
+  variantIndex?: number
 }
 
 // One series with its colours: picking a swatch switches the photo, price and availability; the photo and
-// title open the product page with that colour. Sizes follow the card's container (@container on the parent).
-export function ProductCard({ product, href, priority = false }: Props) {
+// title open the page of that colour. With `variantIndex` the card is that one colour. Sizes follow the
+// card's container (@container on the parent).
+export function ProductCard({ product, priority = false, buy, variantIndex }: Props) {
   const t = useTranslations('ProductCard')
-  const defaultIndex = defaultVariantIndex(product.variants)
-  const [selected, setSelected] = useState(defaultIndex)
+  const [picked, setPicked] = useState(() => defaultVariantIndex(product.variants))
+  const selected = variantIndex ?? picked
+  const single = variantIndex !== undefined
 
   const variant = product.variants[selected]
   if (!variant) return null
   const image = variant.images[0]
-  // The default colour needs no parameter, so the plain product URL is what gets linked and crawled.
-  const link = selected === defaultIndex ? href : `${href}?color=${colorKey(variant.name)}`
+  const link = `/${variant.slug}`
   // A colour that cannot be bought is shown muted: photo, title and price; the palette stays clear, so
   // another colour can be picked.
   const muted = !variant.inStock && 'opacity-60'
@@ -72,6 +74,10 @@ export function ProductCard({ product, href, priority = false }: Props) {
       <h3 className={cn('mt-3 text-sm leading-snug font-semibold @2xs:text-base', muted)}>
         <Link href={link} className="hover:underline">
           {product.title}
+          {/* In the link, so each colour card's link names its colour (or size). */}
+          {single && product.variants.length > 1 && (
+            <span className="block font-normal text-muted-foreground">{variant.name}</span>
+          )}
         </Link>
       </h3>
 
@@ -88,12 +94,12 @@ export function ProductCard({ product, href, priority = false }: Props) {
         </ul>
       )}
 
-      {hasPalette(product.variants) && (
+      {!single && hasPalette(product.variants) && (
         <>
           <ColorSwatches
             variants={product.variants}
             selected={selected}
-            onSelect={setSelected}
+            onSelect={setPicked}
             className="mt-3"
           />
 
@@ -110,10 +116,9 @@ export function ProductCard({ product, href, priority = false }: Props) {
           className={muted || undefined}
         />
         {variant.inStock ? (
-          // Buying is not wired yet: the button is a placeholder until the cart exists.
-          <Button type="button" className="w-full rounded-full px-6 @2xs:w-auto">
-            {t('buy')}
-          </Button>
+          <SelectedVariantContext.Provider value={{ product, variant }}>
+            {buy}
+          </SelectedVariantContext.Provider>
         ) : (
           <p className="text-sm font-semibold text-muted-foreground">{t('outOfStock')}</p>
         )}

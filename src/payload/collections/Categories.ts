@@ -1,20 +1,72 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Where } from 'payload'
 import { slugField } from 'payload'
 
 import { slugify } from '@/shared/lib/slugify'
 
+import { contentEditors } from '../access'
+import { faqItemFields, metaField, specsField, tagsField } from '../fields'
+
+// How a category lists its products; values match ProductGrid's `view` (ProductListView).
+const productViewOptions = [
+  { label: 'Серії з вибором кольору', value: 'groups' },
+  { label: 'Кожен колір окремою карткою', value: 'grid' },
+]
+
+// Catalog menu icons; files are in src/widgets/header/ui/nav-icons, keys match its navIcons.
+const navIconOptions = [
+  { label: 'The Ultimate Detangler', value: 'wet-detangler' },
+  { label: 'The Complete Carebrush', value: 'carebrush' },
+  { label: 'Children Mini', value: 'children-mini' },
+  { label: 'Compact Styler', value: 'compact-styler' },
+  { label: 'Easy Dry & Go', value: 'easy-dry-go' },
+  { label: 'The Ultimate Styler', value: 'ultimate-styler' },
+  { label: 'Back Combing', value: 'back-combing' },
+  { label: 'The Scalp Exfoliator', value: 'scalp' },
+  { label: 'Pet Teezer', value: 'pet-teezer' },
+  { label: 'Invisibobble', value: 'invisibobble' },
+]
+
+// A category with a parent is a subcategory: one series (The Ultimate Detangler Large), whose colours are
+// its products. A category without subcategories holds the colours of its only series itself. Every
+// category has its own page at the site root.
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: { singular: 'Категорія', plural: 'Категорії' },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'slug', 'order'],
+    defaultColumns: ['title', 'parent', 'slug', 'order'],
   },
   access: {
     read: () => true,
+    create: contentEditors,
+    update: contentEditors,
+    delete: contentEditors,
   },
   fields: [
     { name: 'title', type: 'text', required: true, localized: true },
     slugField({ useAsSlug: 'title', localized: true, slugify }),
+    {
+      name: 'parent',
+      label: 'Батьківська категорія',
+      type: 'relationship',
+      relationTo: 'categories',
+      // One level: a subcategory cannot be a parent, and a category is not its own parent.
+      filterOptions: ({ id }): Where => {
+        const conditions: Where[] = [{ parent: { exists: false } }]
+        if (id) conditions.push({ id: { not_equals: id } })
+        return { and: conditions }
+      },
+      admin: { position: 'sidebar', description: 'Заповнюється в підкатегорії (серії)' },
+    },
+    {
+      name: 'seriesName',
+      label: 'Коротка назва серії',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        description: 'Бейдж на картці й кнопка фільтра в батьківській категорії: «Large»',
+      },
+    },
     {
       name: 'heading',
       type: 'text',
@@ -72,9 +124,28 @@ export const Categories: CollectionConfig = {
       localized: true,
       labels: { singular: 'Питання', plural: 'Питання' },
       admin: { initCollapsed: true },
+      fields: faqItemFields,
+    },
+    {
+      name: 'productInfo',
+      label: 'Спільне для товарів',
+      type: 'group',
+      admin: {
+        description:
+          'Для товарів саме цієї категорії (кольорів серії); товар може задати своє замість цього',
+      },
       fields: [
-        { name: 'question', label: 'Питання', type: 'text', required: true },
-        { name: 'answer', label: 'Відповідь', type: 'richText', required: true },
+        tagsField('Ярлики на картці серії, наприклад «Вологе й сухе волосся»'),
+        {
+          name: 'description',
+          label: 'Опис товару',
+          type: 'richText',
+          localized: true,
+          admin: { description: 'Опис на сторінці кожного кольору' },
+        },
+        specsField(
+          'Таблиця на сторінці кожного кольору. Бренд і країна бренду додаються автоматично.',
+        ),
       ],
     },
     { name: 'image', type: 'upload', relationTo: 'media' },
@@ -82,7 +153,30 @@ export const Categories: CollectionConfig = {
       name: 'order',
       type: 'number',
       defaultValue: 0,
-      admin: { position: 'sidebar', description: 'Порядок у меню та на головній' },
+      admin: {
+        position: 'sidebar',
+        description: 'Порядок у меню, на головній і серед серій категорії',
+      },
+    },
+    {
+      name: 'navTitle',
+      label: 'Назва в меню',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        position: 'sidebar',
+        description: 'Коротко, у два рядки (перенос – Enter); порожньо – повна назва',
+      },
+    },
+    {
+      name: 'navIcon',
+      label: 'Іконка в меню',
+      type: 'select',
+      options: navIconOptions,
+      admin: {
+        position: 'sidebar',
+        description: 'Категорія з іконкою показується в меню каталогу',
+      },
     },
     {
       name: 'brand',
@@ -97,6 +191,29 @@ export const Categories: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Бренд товарів категорії: у характеристиках і розмітці',
+      },
+    },
+    {
+      name: 'productView',
+      label: 'Вигляд списку товарів',
+      type: 'select',
+      defaultValue: 'groups',
+      options: productViewOptions,
+      admin: {
+        position: 'sidebar',
+        description:
+          'На сторінці категорії; покупець може перемкнути. Окремі картки зручніші, коли серій 1–2',
+      },
+    },
+    {
+      name: 'homeProductView',
+      label: 'Вигляд на головній',
+      type: 'select',
+      defaultValue: 'groups',
+      options: productViewOptions,
+      admin: {
+        position: 'sidebar',
+        description: 'Блок категорії на головній (якщо його показано)',
       },
     },
     {
@@ -115,14 +232,6 @@ export const Categories: CollectionConfig = {
       collection: 'products',
       on: 'category',
     },
-    {
-      name: 'meta',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', localized: true },
-        { name: 'description', type: 'textarea', localized: true },
-        { name: 'image', type: 'upload', relationTo: 'media' },
-      ],
-    },
+    metaField,
   ],
 }

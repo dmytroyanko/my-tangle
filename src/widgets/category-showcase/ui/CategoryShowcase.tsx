@@ -2,6 +2,7 @@ import { getLocale } from 'next-intl/server'
 
 import { CategoryAbout, type CategoryData } from '@/entities/category'
 import { ProductGrid, type ProductCardData } from '@/entities/product'
+import { AddToCartButton } from '@/features/add-to-cart'
 import type { Locale } from '@/shared/i18n'
 
 type Props = {
@@ -29,7 +30,12 @@ export async function CategoryShowcase({ category, products, className }: Props)
           )}
         </header>
 
-        <ProductGrid products={products} basePath={`/${slug}`} className="mt-8 md:mt-10" />
+        <ProductGrid
+          products={products}
+          buy={<AddToCartButton />}
+          view={category.homeProductView}
+          className="mt-8 md:mt-10"
+        />
         <CategoryAbout category={category} headingLevel="h3" className="mt-12 md:mt-16" />
       </div>
     </section>

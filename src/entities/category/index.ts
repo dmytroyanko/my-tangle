@@ -1,3 +1,4 @@
+export { getCatalogMenu, type CatalogMenuItem } from './api/getCatalogMenu'
 export { getCategoryBySlug, type CategoryData } from './api/getCategoryBySlug'
 export { getCategoryPaths } from './api/getCategoryPaths'
 export { getHomeCategories } from './api/getHomeCategories'

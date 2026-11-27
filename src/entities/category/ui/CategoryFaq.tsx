@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 
-import { FaqList } from '@/shared/ui/faq-list'
+import { FaqSection } from '@/shared/ui/faq-section'
 
 import type { CategoryData } from '../api/toCategoryData'
 
@@ -14,13 +14,5 @@ export async function CategoryFaq({
 }) {
   if (!faq.length) return null
   const t = await getTranslations('CategoryFaq')
-
-  return (
-    <section aria-labelledby="faq-title" className={className}>
-      <h2 id="faq-title" className="text-xl md:text-2xl">
-        {t('title')}
-      </h2>
-      <FaqList items={faq} className="mt-4" />
-    </section>
-  )
+  return <FaqSection title={t('title')} items={faq} id="faq-title" className={className} />
 }

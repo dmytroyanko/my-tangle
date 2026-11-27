@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { en } from '@payloadcms/translations/languages/en'
@@ -15,6 +16,9 @@ import { Categories } from './collections/Categories'
 import { Products } from './collections/Products'
 import { Pages } from './collections/Pages'
 import { Orders } from './collections/Orders'
+import { PaymentMethods } from './collections/PaymentMethods'
+import { TrackingTags } from './collections/TrackingTags'
+import { HomePage } from './globals/HomePage'
 import { ShopSettings } from './globals/ShopSettings'
 import { requireEnv } from '@/shared/lib/env'
 import { migrations } from './migrations'
@@ -37,8 +41,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname, '..'),
     },
   },
-  collections: [Products, Categories, Orders, Pages, Media, Users],
-  globals: [ShopSettings],
+  collections: [Products, Categories, Orders, PaymentMethods, Pages, Media, Users, TrackingTags],
+  globals: [ShopSettings, HomePage],
   editor: lexicalEditor(),
   // Content languages. Keep in sync with src/shared/i18n/routing.ts.
   localization: {
@@ -68,6 +72,23 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
+  // Emails (new-order notifications, password resets) go through SMTP when SMTP_HOST is set; without it
+  // Payload prints them to the console.
+  email: process.env.SMTP_HOST
+    ? nodemailerAdapter({
+        defaultFromAddress: process.env.EMAIL_FROM || 'orders@my-tangle.com.ua',
+        defaultFromName: 'My-Tangle',
+        transportOptions: {
+          host: process.env.SMTP_HOST,
+          port: Number(process.env.SMTP_PORT || 587),
+          secure: Number(process.env.SMTP_PORT) === 465,
+          // A relay without a login gets no auth.
+          auth: process.env.SMTP_USER
+            ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD }
+            : undefined,
+        },
+      })
+    : undefined,
   plugins: [
     // Media goes to S3-compatible storage (Cloudflare R2) when S3_BUCKET is set, otherwise to MEDIA_DIR on disk.
     s3Storage({

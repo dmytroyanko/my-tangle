@@ -3,33 +3,26 @@ import { getPayload } from 'payload'
 
 import type { Locale } from '@/shared/i18n'
 
-import { variantPrice } from '../model/variantPrice'
+import { productPrice } from '../model/productPrice'
 
 type Slugs = Partial<Record<Locale, string | null>>
 
-// Every published product that has a page (a colour with a price, see variantPrice): its slug and its
-// category's slug per language, and the last change, for the sitemap.
+// Every published product that has a page (it has a category and a price, see getProductBySlug and
+// productPrice): its slug per language and the last change, for the sitemap. A language without its own
+// slug is left out by the sitemap.
 export async function getProductPaths() {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'products',
-    where: { _status: { equals: 'published' } },
+    where: { _status: { equals: 'published' }, category: { exists: true } },
     locale: 'all',
-    depth: 1,
+    depth: 0,
     pagination: false,
-    select: { slug: true, category: true, price: true, variants: { price: true }, updatedAt: true },
-    // Only the category's slug is needed, not its texts in every language.
-    populate: { categories: { slug: true } },
+    select: { slug: true, price: true, updatedAt: true },
   })
-  return docs.flatMap((doc) => {
-    // A deleted category leaves null, an unpopulated one its id: no page either way.
-    const category = doc.category as unknown as { slug?: Slugs } | number | null
-    const priced = (doc.variants ?? []).some((variant) => variantPrice(variant, doc) !== null)
-    if (!priced || !category || typeof category === 'number' || !category.slug) return []
-    return {
-      slugs: (doc.slug ?? {}) as unknown as Slugs,
-      categorySlugs: category.slug,
-      updatedAt: doc.updatedAt,
-    }
-  })
+  return docs.flatMap((doc) =>
+    productPrice(doc) === null
+      ? []
+      : [{ slugs: (doc.slug ?? {}) as unknown as Slugs, updatedAt: doc.updatedAt }],
+  )
 }

@@ -1,20 +1,28 @@
-import { PhoneIcon, ShoppingBagIcon, UserIcon } from 'lucide-react'
+import { PhoneIcon } from 'lucide-react'
 import Image from 'next/image'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 
+import { CartButton } from '@/entities/cart'
+import { getCatalogMenu } from '@/entities/category'
 import { LocaleSwitcher } from '@/features/locale-switcher'
 import { phones } from '@/shared/config'
-import { Link } from '@/shared/i18n'
+import { Link, type Locale } from '@/shared/i18n'
 import { Button } from '@/shared/ui/button'
 import { Logo } from '@/shared/ui/logo'
 
-import { navigation } from '../config/navigation'
+import { navIcons } from '../config/navigation'
 import { MobileMenu } from './MobileMenu'
 import { NavLink } from './NavLink'
 
 export async function Header() {
   const t = await getTranslations('Header')
-  const tNav = await getTranslations('Navigation')
+  // Categories come from Payload; the header still renders when the database is unavailable.
+  const menu = await getCatalogMenu((await getLocale()) as Locale).catch((error) => {
+    console.error('Header:', error)
+    return []
+  })
+  // An icon value saved before an option was renamed has no image; such an item is left out, not broken.
+  const navigation = menu.filter(({ icon }) => icon in navIcons)
 
   return (
     <header>
@@ -23,7 +31,7 @@ export async function Header() {
         <div className="container flex h-8 items-center gap-4">
           <p className="mr-auto">
             <span className="font-semibold">My-Tangle</span>
-            <span className="hidden sm:inline"> — {t('tagline')}</span>
+            <span className="hidden sm:inline"> – {t('tagline')}</span>
           </p>
           <div className="hidden items-center gap-1.5 font-semibold md:flex">
             <PhoneIcon className="size-3.5 text-muted-foreground" aria-hidden="true" />
@@ -44,21 +52,21 @@ export async function Header() {
         </div>
       </div>
 
-      {/* Logo, catalog (from xl), account and cart */}
+      {/* Logo, catalog (from xl) and cart */}
       <div className="border-b border-border">
         <div className="container flex h-16 items-center gap-1 lg:h-20 lg:gap-4 xl:h-auto">
           <MobileMenu title={t('menu')} openLabel={t('openMenu')} closeLabel={t('closeMenu')}>
             <nav aria-label={t('catalog')}>
               <ul className="grid grid-cols-2 gap-2">
-                {navigation.map(({ key, href, icon }) => (
-                  <li key={key}>
+                {navigation.map(({ id, href, icon, navTitle }) => (
+                  <li key={id}>
                     <NavLink
                       href={href}
                       className="flex h-full items-center gap-2 rounded-md border border-border p-2 text-xs leading-tight font-semibold transition-colors hover:bg-accent aria-[current=page]:border-foreground"
                     >
                       {/* Decorative: the label next to it names the item. */}
-                      <Image src={icon} alt="" className="size-[35px] shrink-0" />
-                      <span className="whitespace-pre-line">{tNav(key)}</span>
+                      <Image src={navIcons[icon]} alt="" className="size-[35px] shrink-0" />
+                      <span className="whitespace-pre-line">{navTitle}</span>
                     </NavLink>
                   </li>
                 ))}
@@ -89,19 +97,19 @@ export async function Header() {
               className="grid h-full"
               style={{ gridTemplateColumns: `repeat(${navigation.length}, minmax(0, 1fr))` }}
             >
-              {navigation.map(({ key, href, icon }) => (
-                <li key={key}>
+              {navigation.map(({ id, href, icon, navTitle }) => (
+                <li key={id}>
                   <NavLink
                     href={href}
                     className="group flex h-full flex-col items-center justify-center gap-1.5 border-b-2 border-transparent px-1 pt-3 pb-2.5 text-center transition-colors hover:border-border aria-[current=page]:border-foreground"
                   >
                     <Image
-                      src={icon}
+                      src={navIcons[icon]}
                       alt=""
                       className="size-[35px] opacity-80 transition-opacity group-hover:opacity-100"
                     />
                     <span className="text-xs leading-tight font-semibold whitespace-pre-line">
-                      {tNav(key)}
+                      {navTitle}
                     </span>
                   </NavLink>
                 </li>
@@ -114,16 +122,7 @@ export async function Header() {
               <PhoneIcon className="size-5" />
             </a>
           </Button>
-          <Button variant="ghost" size="icon-lg" asChild>
-            <Link href="/account" aria-label={t('account')}>
-              <UserIcon className="size-5" />
-            </Link>
-          </Button>
-          <Button variant="ghost" size="icon-lg" className="-mr-2" asChild>
-            <Link href="/cart" aria-label={t('cart')}>
-              <ShoppingBagIcon className="size-5" />
-            </Link>
-          </Button>
+          <CartButton className="-mr-2" />
         </div>
       </div>
     </header>

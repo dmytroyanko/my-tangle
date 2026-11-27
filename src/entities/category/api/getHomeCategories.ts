@@ -5,13 +5,13 @@ import type { Locale } from '@/shared/i18n'
 
 import { toCategoryData } from './toCategoryData'
 
-// Categories marked "show on the home page" in the admin, in their menu order. The slug comes in the
-// requested locale (Payload falls back to the Ukrainian one), which is all the home page links need.
+// Top-level categories marked "show on the home page" in the admin, in their menu order. The slug comes in
+// the requested locale (Payload falls back to the Ukrainian one), which is all the home page links need.
 export async function getHomeCategories(locale: Locale) {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
     collection: 'categories',
-    where: { showOnHome: { equals: true } },
+    where: { showOnHome: { equals: true }, parent: { exists: false } },
     sort: 'order',
     locale,
     // Rich text links to products need the product's category (see findBySlug); joins are not read.

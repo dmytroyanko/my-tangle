@@ -70,9 +70,11 @@ export interface Config {
     products: Product;
     categories: Category;
     orders: Order;
+    'payment-methods': PaymentMethod;
     pages: Page;
     media: Media;
     users: User;
+    'tracking-tags': TrackingTag;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -87,9 +89,11 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
+    'payment-methods': PaymentMethodsSelect<false> | PaymentMethodsSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'tracking-tags': TrackingTagsSelect<false> | TrackingTagsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -101,9 +105,11 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('uk' | 'ru') | ('uk' | 'ru')[];
   globals: {
     'shop-settings': ShopSetting;
+    'home-page': HomePage;
   };
   globalsSelect: {
     'shop-settings': ShopSettingsSelect<false> | ShopSettingsSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
   };
   locale: 'uk' | 'ru';
   widgets: {
@@ -139,37 +145,57 @@ export interface UserAuthOperations {
  */
 export interface Product {
   id: number;
+  /**
+   * Без кольору, як у серії: «The Ultimate Detangler Large»
+   */
   title: string;
+  /**
+   * Назва кольору або розміру: «Black Gloss», «150 мл»
+   */
+  colorName?: string | null;
+  /**
+   * Назва й колір, складається автоматично
+   */
+  fullTitle?: string | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Підкатегорія серії, або категорія, якщо підкатегорій у ній немає
+   */
   category: number | Category;
   /**
-   * Серія для бейджа на картці, наприклад «Fine & Fragile»
-   */
-  series?: string | null;
-  /**
-   * Порядок у категорії, менше — вище
+   * Порядок у категорії, менше – вище
    */
   order?: number | null;
+  inStock?: boolean | null;
   /**
-   * Короткі ярлики на картці, наприклад «Вологе й сухе волосся»
+   * HEX, наприклад #e3b8c0; порожньо – без палітри (спрей)
    */
-  tags?: string[] | null;
+  color?: string | null;
+  sku?: string | null;
   /**
-   * РРЦ: щітки — ціна постачальника мінус 1 грн, Invisibobble — як у постачальника
+   * РРЦ: щітки – ціна постачальника мінус 1 грн, Invisibobble – як у постачальника
    */
   fullPrice?: number | null;
   /**
-   * Порожньо — знижка з «Налаштувань магазину», 0 — без знижки
+   * Порожньо – знижка з «Налаштувань магазину», 0 – без знижки
    */
   discountPercent?: number | null;
   /**
    * Рахується автоматично при збереженні
    */
   price?: number | null;
+  images?: (number | Media)[] | null;
+  /**
+   * Порожньо – ярлики категорії
+   */
+  tags?: string[] | null;
+  /**
+   * Порожньо – опис товарів із категорії
+   */
   description?: {
     root: {
       type: string;
@@ -186,37 +212,12 @@ export interface Product {
     [k: string]: unknown;
   } | null;
   /**
-   * Таблиця під описом на сторінці товару. Бренд і країна бренду додаються автоматично.
+   * Порожньо – характеристики з категорії. Бренд і країна бренду додаються автоматично.
    */
   specs?:
     | {
         key: 'animal' | 'hairType' | 'coat' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
         value: string;
-        id?: string | null;
-      }[]
-    | null;
-  variants?:
-    | {
-        /**
-         * Колір, наприклад «Radiant Teal»
-         */
-        name: string;
-        sku?: string | null;
-        /**
-         * Колір кружечка в палітрі, HEX, наприклад #e3b8c0
-         */
-        color?: string | null;
-        /**
-         * Якщо відрізняється від повної ціни товару
-         */
-        fullPrice?: number | null;
-        /**
-         * Якщо відрізняється від знижки товару
-         */
-        discountPercent?: number | null;
-        price?: number | null;
-        inStock?: boolean | null;
-        images?: (number | Media)[] | null;
         id?: string | null;
       }[]
     | null;
@@ -241,6 +242,14 @@ export interface Category {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Заповнюється в підкатегорії (серії)
+   */
+  parent?: (number | null) | Category;
+  /**
+   * Бейдж на картці й кнопка фільтра в батьківській категорії: «Large»
+   */
+  seriesName?: string | null;
   /**
    * Заголовок блоку на головній, якщо відрізняється від назви
    */
@@ -296,15 +305,81 @@ export interface Category {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Для товарів саме цієї категорії (кольорів серії); товар може задати своє замість цього
+   */
+  productInfo?: {
+    /**
+     * Ярлики на картці серії, наприклад «Вологе й сухе волосся»
+     */
+    tags?: string[] | null;
+    /**
+     * Опис на сторінці кожного кольору
+     */
+    description?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    /**
+     * Таблиця на сторінці кожного кольору. Бренд і країна бренду додаються автоматично.
+     */
+    specs?:
+      | {
+          key: 'animal' | 'hairType' | 'coat' | 'use' | 'teeth' | 'size' | 'finish' | 'features' | 'length' | 'weight';
+          value: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   image?: (number | null) | Media;
   /**
-   * Порядок у меню та на головній
+   * Порядок у меню, на головній і серед серій категорії
    */
   order?: number | null;
+  /**
+   * Коротко, у два рядки (перенос – Enter); порожньо – повна назва
+   */
+  navTitle?: string | null;
+  /**
+   * Категорія з іконкою показується в меню каталогу
+   */
+  navIcon?:
+    | (
+        | 'wet-detangler'
+        | 'carebrush'
+        | 'children-mini'
+        | 'compact-styler'
+        | 'easy-dry-go'
+        | 'ultimate-styler'
+        | 'back-combing'
+        | 'scalp'
+        | 'pet-teezer'
+        | 'invisibobble'
+      )
+    | null;
   /**
    * Бренд товарів категорії: у характеристиках і розмітці
    */
   brand?: ('tangle-teezer' | 'invisibobble') | null;
+  /**
+   * На сторінці категорії; покупець може перемкнути. Окремі картки зручніші, коли серій 1–2
+   */
+  productView?: ('groups' | 'grid') | null;
+  /**
+   * Блок категорії на головній (якщо його показано)
+   */
+  homeProductView?: ('groups' | 'grid') | null;
   /**
    * Блок категорії з серіями на головній, у порядку поля «Порядок»
    */
@@ -350,24 +425,64 @@ export interface Media {
 export interface Order {
   id: number;
   status?: ('new' | 'confirmed' | 'shipped' | 'completed' | 'cancelled') | null;
-  customerName: string;
+  locale?: ('uk' | 'ru') | null;
+  lastName?: string | null;
+  firstName?: string | null;
   phone: string;
   email?: string | null;
+  /**
+   * +380XXXXXXXXX: за ним клієнт після реєстрації побачить свої замовлення
+   */
+  phoneNormalized?: string | null;
   items: {
     product: number | Product;
+    title?: string | null;
     variant?: string | null;
     quantity: number;
     price: number;
+    fullPrice?: number | null;
     id?: string | null;
   }[];
+  fullTotal?: number | null;
+  discount?: number | null;
   total: number;
   delivery?: {
-    method?: ('nova-poshta' | 'pickup') | null;
+    method?: 'nova-poshta' | null;
     city?: string | null;
+    cityRef?: string | null;
     warehouse?: string | null;
+    warehouseRef?: string | null;
   };
-  payment?: ('cod' | 'online') | null;
+  paymentMethod?: (number | null) | PaymentMethod;
+  payment?: string | null;
   comment?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Способи оплати на сторінці оформлення замовлення і в блоці «Доставка і оплата». Перший увімкнений обрано за замовчуванням.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-methods".
+ */
+export interface PaymentMethod {
+  id: number;
+  /**
+   * Як бачить покупець: «Післяплата»
+   */
+  title: string;
+  /**
+   * Під назвою: як і коли платити, комісія. Наприклад: «Оплата при отриманні. Комісія «Нової Пошти» – 2% від вартості замовлення + 20 грн.»
+   */
+  note?: string | null;
+  /**
+   * Вимкнений спосіб не показується на сайті
+   */
+  enabled?: boolean | null;
+  /**
+   * Менше – вище
+   */
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -379,10 +494,23 @@ export interface Page {
   id: number;
   title: string;
   /**
+   * Для посилань у футері; порожньо – повна назва
+   */
+  navTitle?: string | null;
+  /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
+  showInFooter?: boolean | null;
+  /**
+   * Менше – вище
+   */
+  footerOrder?: number | null;
+  /**
+   * На цю сторінку посилається рядок згоди під кнопкою «Підтвердити замовлення»
+   */
+  serviceRole?: ('offer' | 'privacy') | null;
   content?: {
     root: {
       type: string;
@@ -443,6 +571,16 @@ export interface Page {
  */
 export interface User {
   id: number;
+  name?: string | null;
+  /**
+   * Порожньо – без доступу до контенту (наприклад, лише замовлення)
+   */
+  role?: ('admin' | 'editor') | null;
+  viewOrders?: boolean | null;
+  /**
+   * Отримує лист про кожне нове замовлення і може змінювати його статус
+   */
+  receiveOrders?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -462,6 +600,27 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
+}
+/**
+ * Google Analytics, Google Ads, Tag Manager, Meta Pixel. Працюють на всіх сторінках сайту, лише на робочому сервері.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tracking-tags".
+ */
+export interface TrackingTag {
+  id: number;
+  /**
+   * Для себе: «Google Analytics 4»
+   */
+  name: string;
+  type: 'gtm' | 'gtag' | 'meta';
+  /**
+   * GTM-XXXXXXX, G-XXXXXXXXXX, AW-123456789 або номер пікселя
+   */
+  tagId: string;
+  enabled?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -500,6 +659,10 @@ export interface PayloadLockedDocument {
         value: number | Order;
       } | null)
     | ({
+        relationTo: 'payment-methods';
+        value: number | PaymentMethod;
+      } | null)
+    | ({
         relationTo: 'pages';
         value: number | Page;
       } | null)
@@ -510,6 +673,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'tracking-tags';
+        value: number | TrackingTag;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -559,34 +726,26 @@ export interface PayloadMigration {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  colorName?: T;
+  fullTitle?: T;
   generateSlug?: T;
   slug?: T;
   category?: T;
-  series?: T;
   order?: T;
-  tags?: T;
+  inStock?: T;
+  color?: T;
+  sku?: T;
   fullPrice?: T;
   discountPercent?: T;
   price?: T;
+  images?: T;
+  tags?: T;
   description?: T;
   specs?:
     | T
     | {
         key?: T;
         value?: T;
-        id?: T;
-      };
-  variants?:
-    | T
-    | {
-        name?: T;
-        sku?: T;
-        color?: T;
-        fullPrice?: T;
-        discountPercent?: T;
-        price?: T;
-        inStock?: T;
-        images?: T;
         id?: T;
       };
   meta?:
@@ -608,6 +767,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
+  parent?: T;
+  seriesName?: T;
   heading?: T;
   subtitle?: T;
   benefits?:
@@ -626,9 +787,26 @@ export interface CategoriesSelect<T extends boolean = true> {
         answer?: T;
         id?: T;
       };
+  productInfo?:
+    | T
+    | {
+        tags?: T;
+        description?: T;
+        specs?:
+          | T
+          | {
+              key?: T;
+              value?: T;
+              id?: T;
+            };
+      };
   image?: T;
   order?: T;
+  navTitle?: T;
+  navIcon?: T;
   brand?: T;
+  productView?: T;
+  homeProductView?: T;
   showOnHome?: T;
   products?: T;
   meta?:
@@ -647,28 +825,50 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface OrdersSelect<T extends boolean = true> {
   status?: T;
-  customerName?: T;
+  locale?: T;
+  lastName?: T;
+  firstName?: T;
   phone?: T;
   email?: T;
+  phoneNormalized?: T;
   items?:
     | T
     | {
         product?: T;
+        title?: T;
         variant?: T;
         quantity?: T;
         price?: T;
+        fullPrice?: T;
         id?: T;
       };
+  fullTotal?: T;
+  discount?: T;
   total?: T;
   delivery?:
     | T
     | {
         method?: T;
         city?: T;
+        cityRef?: T;
         warehouse?: T;
+        warehouseRef?: T;
       };
+  paymentMethod?: T;
   payment?: T;
   comment?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payment-methods_select".
+ */
+export interface PaymentMethodsSelect<T extends boolean = true> {
+  title?: T;
+  note?: T;
+  enabled?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -678,8 +878,12 @@ export interface OrdersSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
+  navTitle?: T;
   generateSlug?: T;
   slug?: T;
+  showInFooter?: T;
+  footerOrder?: T;
+  serviceRole?: T;
   content?: T;
   faq?:
     | T
@@ -730,6 +934,10 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  viewOrders?: T;
+  receiveOrders?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -747,6 +955,18 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tracking-tags_select".
+ */
+export interface TrackingTagsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  tagId?: T;
+  enabled?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -798,6 +1018,44 @@ export interface ShopSetting {
    * Ціна на сайті = повна ціна мінус знижка, округлено до гривні. Після збереження ціни всіх товарів перераховуються (крім товарів з власною знижкою).
    */
   discountPercent: number;
+  /**
+   * Tangle Teezer разом з Invisibobble в одному замовленні: банер на сайті й знижка в кошику
+   */
+  bundleDiscountEnabled?: boolean | null;
+  bundleDiscountPercent: number;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  /**
+   * Блок під категоріями на головній; порожньо – блок не показується
+   */
+  faq?:
+    | {
+        question: string;
+        answer: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -807,6 +1065,24 @@ export interface ShopSetting {
  */
 export interface ShopSettingsSelect<T extends boolean = true> {
   discountPercent?: T;
+  bundleDiscountEnabled?: T;
+  bundleDiscountPercent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

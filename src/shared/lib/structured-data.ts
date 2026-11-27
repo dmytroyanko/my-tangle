@@ -196,3 +196,48 @@ export function productJsonLd({
           },
   }
 }
+
+type ProductGroupJsonLdInput = {
+  name: string
+  brand: string
+  description?: string
+  url: string
+  // A stable id of the series, e.g. its slug.
+  groupId: string
+  // The colours, each a product page of its own.
+  variants: { name: string; url: string; image?: string; price: number; inStock: boolean }[]
+}
+
+// A series page: the series as a ProductGroup varying by colour, each colour with its own page and offer.
+export function productGroupJsonLd({
+  name,
+  brand,
+  description,
+  url,
+  groupId,
+  variants,
+}: ProductGroupJsonLdInput) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProductGroup',
+    name,
+    description,
+    url,
+    productGroupID: groupId,
+    brand: { '@type': 'Brand', name: brand },
+    variesBy: 'https://schema.org/color',
+    hasVariant: variants.map((variant) => ({
+      '@type': 'Product',
+      name: variant.name,
+      url: variant.url,
+      image: variant.image,
+      offers: {
+        '@type': 'Offer',
+        price: variant.price,
+        priceCurrency: 'UAH',
+        availability: `https://schema.org/${variant.inStock ? 'InStock' : 'OutOfStock'}`,
+        url: variant.url,
+      },
+    })),
+  }
+}

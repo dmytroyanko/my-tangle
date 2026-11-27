@@ -5,55 +5,28 @@
   },
   "Header": {
     "tagline": "магазин оригинальных Tangle Teezer",
-    "home": "My-Tangle — на главную",
+    "home": "My-Tangle – на главную",
     "menu": "Меню",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню",
     "catalog": "Каталог",
     "phones": "Телефоны",
     "call": "Позвонить",
-    "account": "Личный кабинет",
     "cart": "Корзина"
   },
   "LocaleSwitcher": {
     "label": "Язык сайта"
   },
-  "Navigation": {
-    "wetDetangler": "The Ultimate\nDetangler",
-    "carebrush": "The Complete\nCarebrush",
-    "childrenMini": "Children\nMini",
-    "compactStyler": "Compact\nStyler",
-    "easyDryGo": "Easy\nDry & Go",
-    "ultimateStyler": "The Ultimate\nStyler",
-    "backCombing": "Back\nCombing",
-    "scalp": "The Scalp\nExfoliator",
-    "petTeezer": "Pet\nTeezer",
-    "invisibobble": "Резинки\nInvisibobble"
-  },
-  "Catalog": {
-    "wetDetangler": "The Ultimate Detangler",
-    "carebrush": "The Complete Carebrush",
-    "childrenMini": "The Original Children Mini",
-    "compactStyler": "Compact Styler",
-    "easyDryGo": "Easy Dry & Go",
-    "ultimateStyler": "The Ultimate",
-    "backCombing": "Back-Combing Hairbrush",
-    "scalp": "The Scalp Exfoliator and Massager",
-    "petTeezer": "Pet Teezer",
-    "invisibobble": "Резинки Invisibobble"
-  },
   "Footer": {
-    "home": "My-Tangle — на главную",
+    "home": "My-Tangle – на главную",
     "about": "Магазин оригинальных расчёсок Tangle Teezer и резинок Invisibobble с 2007 года. Доставка по всей Украине.",
     "catalog": "Каталог",
     "info": "Покупателям",
-    "howToSpotOriginal": "Как отличить оригинал",
-    "howToClean": "Как мыть Tangle Teezer",
-    "faq": "Частые вопросы",
     "contacts": "Контакты",
     "address": "г. Киев, ул. Верховинная, 41",
     "rights": "Все права защищены.",
-    "madeIn": "Designed, manufactured and made in Great Britain"
+    "madeIn": "Designed, manufactured and made in Great Britain",
+    "toTop": "Наверх"
   },
   "Organization": {
     "streetAddress": "ул. Верховинная, 41",
@@ -67,8 +40,8 @@
   },
   "BundleDiscount": {
     "label": "Скидка на комплект",
-    "text": "<sr>Скидка 7%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте",
-    "badge": "−7%"
+    "text": "<sr>Скидка {percent}%: </sr>При заказе расчесок <b>Tangle Teezer</b> и резинок <b>Invisibobble</b> в комплекте",
+    "badge": "−{percent}%"
   },
   "ProductCard": {
     "openGallery": "Открыть фото: {name}",
@@ -88,31 +61,40 @@
     "home": "Главная"
   },
   "CategoryPage": {
-    "products": "Серии {title}"
+    "products": "Серии {title}",
+    "colors": "Цвета {title}"
   },
   "SeriesFilter": {
     "label": "Фильтр по серии",
     "all": "Все",
     "shown": "Показано {count} из {total}"
   },
+  "ProductViewSwitch": {
+    "label": "Вид списка",
+    "groups": "Сериями",
+    "grid": "Каждый цвет"
+  },
   "DeliveryInfo": {
     "title": "Доставка и оплата",
-    "hint": "Новая Почта по всей Украине · оплата при получении или картой онлайн",
+    "hint": "«Новая Почта» по всей Украине",
     "deliveryTitle": "Доставка",
-    "novaPoshta": "<b>«Новая Почта»</b> — по всей Украине, по тарифам перевозчика.",
-    "paymentTitle": "Оплата",
-    "cashOnDelivery": "<b>Наложенным платежом</b> — в отделении «Новой Почты» после осмотра заказа.",
-    "cardOnline": "<b>Картой онлайн</b> — перед отправкой заказа."
+    "novaPoshta": "<b>В отделение или почтомат «Новой Почты»</b> – по всей Украине, по тарифам перевозчика.",
+    "shipping": "Отправляем в течение 1–2 дней с момента оформления, как только подтвердим наличие.",
+    "paymentTitle": "Оплата"
   },
   "CategoryFaq": {
+    "title": "Частые вопросы"
+  },
+  "HomeFaq": {
     "title": "Частые вопросы"
   },
   "ProductPage": {
     "inStock": "В наличии",
     "description": "Описание",
     "otherSeries": "Другие серии {title}",
-    "metaTitle": "{name} — купить в Украине",
-    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине."
+    "metaTitle": "{name} – купить в Украине",
+    "metaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}: {count, plural, one {# цвет} few {# цвета} many {# цветов} other {# цвета}}, цена от {price, number} грн. Доставка Новой Почтой по всей Украине.",
+    "colorMetaDescription": "{brand, select, invisibobble {Оригинальный аксессуар для волос} other {Оригинальная расческа}} {name}, цена {price, number} грн. Доставка Новой Почтой по всей Украине."
   },
   "ProductSpecs": {
     "title": "Характеристики",
@@ -136,23 +118,100 @@
     }
   },
   "NotFound": {
-    "metaTitle": "Страница не найдена — My-Tangle",
+    "metaTitle": "Страница не найдена – My-Tangle",
     "title": "Страница не найдена",
     "text": "Возможно, ее перенесли или в адресе есть ошибка. Перейдите на главную или выберите раздел каталога.",
     "home": "На главную",
     "catalog": "Каталог"
   },
+  "Error": {
+    "title": "Что-то пошло не так",
+    "text": "Страница не загрузилась из-за ошибки на нашей стороне. Попробуйте еще раз через минуту или позвоните нам – мы поможем оформить заказ.",
+    "retry": "Попробовать еще раз",
+    "home": "На главную"
+  },
+  "Cart": {
+    "title": "Корзина",
+    "open": "Открыть корзину",
+    "openWithCount": "Корзина: {count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+    "close": "Закрыть корзину",
+    "items": "{count, plural, one {# товар} few {# товара} many {# товаров} other {# товара}}",
+    "empty": "В корзине пока пусто.",
+    "toCatalog": "В каталог",
+    "price": "{price, number} грн",
+    "fullTotal": "Без скидки",
+    "saleDiscount": "Скидка",
+    "oldPrice": "Старая цена:",
+    "bundleDiscount": "Скидка за комплект −{percent}%",
+    "bundleHint": "Закажите расческу Tangle Teezer вместе с резинками Invisibobble – и получите скидку {percent}% на весь заказ.",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "continue": "Продолжить покупки",
+    "decrease": "Меньше: {name}",
+    "increase": "Больше: {name}",
+    "quantity": "Количество",
+    "remove": "Удалить {name}",
+    "outOfStock": "Нет в наличии"
+  },
   "CatalogCta": {
-    "text": "Выберите расческу или резинки в каталоге — доставим Новой Почтой по всей Украине.",
+    "text": "Выбери свою расческу в каталоге.",
     "link": "В каталог"
+  },
+  "Checkout": {
+    "metaTitle": "Оформление заказа – My-Tangle",
+    "title": "Оформление заказа",
+    "contacts": "Контактные данные",
+    "lastName": "Фамилия",
+    "firstName": "Имя",
+    "phone": "Телефон",
+    "phonePlaceholder": "067 123 45 67",
+    "email": "Email",
+    "optional": "необязательно",
+    "delivery": "Доставка Новой Почтой",
+    "city": "Город",
+    "cityPlaceholder": "Начните вводить название",
+    "warehouse": "Отделение или почтомат",
+    "warehousePlaceholder": "Номер или улица",
+    "warehouseDisabled": "Сначала выберите город",
+    "searching": "Ищем…",
+    "noCities": "Не нашли такой город",
+    "noWarehouses": "Не нашли отделений",
+    "deliveryNote": "Доставка по тарифам Новой Почты, оплачивает получатель.",
+    "payment": "Оплата",
+    "noPayments": "Оформление заказа на сайте временно недоступно. Позвоните нам, и мы примем заказ по телефону.",
+    "comment": "Комментарий к заказу",
+    "commentPlaceholder": "Например, удобное время для звонка",
+    "summary": "Ваш заказ",
+    "edit": "Изменить",
+    "submit": "Подтвердить заказ",
+    "submitting": "Оформляем…",
+    "consent": "Подтверждая заказ, вы принимаете условия <offer>публичной оферты</offer> и соглашаетесь с <privacy>политикой конфиденциальности</privacy>: мы используем эти данные, чтобы связаться с вами и отправить заказ.",
+    "empty": "В корзине нет товаров для заказа.",
+    "toCatalog": "В каталог",
+    "cartChanged": "Пока вы оформляли, в корзине кое-что изменилось: цена или наличие. Проверьте заказ и подтвердите еще раз.",
+    "failed": "Не удалось оформить заказ. Попробуйте еще раз или позвоните нам.",
+    "thanksTitle": "Спасибо за заказ!",
+    "thanksNumber": "Номер заказа: {number}",
+    "thanksText": "Мы свяжемся с вами в ближайшее время, чтобы позаботиться о вашем заказе.",
+    "thanksHome": "На главную",
+    "errors": {
+      "required": "Заполните это поле",
+      "name": "Только буквы, апостроф и дефис",
+      "phone": "Укажите номер полностью, например +38 067 123 45 67",
+      "email": "Проверьте email",
+      "city": "Выберите город из списка",
+      "warehouse": "Выберите отделение из списка",
+      "payment": "Выберите способ оплаты"
+    }
   },
   "ContactsPage": {
     "title": "Контакты",
-    "metaTitle": "Контакты магазина Tangle Teezer в Киеве — My-Tangle",
-    "metaDescription": "Телефоны, адрес и график работы My-Tangle — магазина оригинальных расчесок Tangle Teezer в Киеве. Доставка Новой Почтой по всей Украине.",
+    "metaTitle": "Контакты магазина Tangle Teezer в Киеве – My-Tangle",
+    "metaDescription": "Телефоны, адрес и график работы My-Tangle – магазина оригинальных расчесок Tangle Teezer в Киеве. Доставка Новой Почтой по всей Украине.",
     "lead": "Магазин оригинальных расчесок Tangle Teezer и резинок Invisibobble с 2007 года. Позвоните нам, чтобы оформить заказ или задать вопрос о товаре.",
     "phonesTitle": "Телефоны",
     "phonesHint": "Принимаем заказы и отвечаем на вопросы.",
+    "writeUs": "Или напишите нам:",
     "addressTitle": "Адрес",
     "address": "г. Киев, ул. Верховинная, 41",
     "openMap": "Открыть на карте",
